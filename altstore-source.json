@@ -1,0 +1,11 @@
+{
+  "name": "HOOP",
+  "identifier": "com.ganeshvarma1.hoop.altstore",
+  "sourceURL": "https://raw.githubusercontent.com/GaneshVarma1/HOOP/main/altstore-source.json",
+  "subtitle": "Your strap, your data, your phone.",
+  "description": "HOOP is an independent, on-device companion for compatible WHOOP straps. App downloads will appear here after a HOOP release is published.",
+  "iconURL": "https://raw.githubusercontent.com/GaneshVarma1/HOOP/main/docs/assets/hoop/hoop-logo-dark.png",
+  "website": "https://github.com/GaneshVarma1/HOOP",
+  "tintColor": "2257D6",
+  "apps": []
+}

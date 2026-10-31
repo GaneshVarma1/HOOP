@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# release.sh — cut a HOOP release on GitHub.
+# Run from your Mac at release time, after the binaries are built.
+#
+#   Tools/release.sh <version> <asset> [<asset> ...] [-- "release notes"]
+#   e.g. Tools/release.sh 4.7.0 \
+#          dist/HOOP-v4.7.0-macos.zip dist/HOOP-v4.7.0.ipa dist/HOOP-v4.7.0.apk \
+#          -- "Bug fixes and the new Lab Book."
+#
+# GitHub is canonical (GaneshVarma1/HOOP). An optional Forgejo mirror runs only
+# when FORGE_DOMAIN, FORGE_ORG and FORGE_REPO are explicitly configured.
+#
+# Same args as forgejo-release.sh: <version> <asset...> [-- notes].
+# Idempotent: re-running clobbers the release's assets (and edits the title/notes)
+# rather than erroring on an existing tag.
+#
+# GitHub authentication uses gh CLI. An optional Forgejo mirror needs explicit FORGE_* settings.
+# ─────────────────────────────────────────────────────────────────────────────
+set -uo pipefail
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+
+# canonical GitHub mirror coordinates (override via env if ever needed)
+GH_REPO="${GH_REPO:-GaneshVarma1/HOOP}"
+
+VER="${1:?usage: release.sh <version> <asset...> [-- notes]}"; shift
+TAG="v$VER"
+NOTES="HOOP $TAG — see CHANGELOG.md."
+ASSETS=()
+# split args into assets + optional "-- notes".
+while [ $# -gt 0 ]; do
+  if [ "$1" = "--" ]; then shift; NOTES="${1:-$NOTES}"; break; fi
+  ASSETS+=("$1"); shift
+done
+
+# #736: release notes credit third-party contributors by @handle, not display name — a plain name
+# neither notifies them nor links anywhere. Nothing here can know who contributed, so this only
+# nudges when the notes carry no handle at all (the default stub never does). Non-fatal by design:
+# a hotfix release with no outside contributions is legitimate, and re-running refreshes the notes.
+#
+# A bare `*@*` glob would count an email address as a credit, silencing the nudge on notes that credit
+# nobody; require an @ that is NOT preceded by an email local-part character. `=~` is bash 3.2-safe.
+NOTES_HANDLE_RE='(^|[^A-Za-z0-9._%+-])@[A-Za-z0-9]'
+if [[ ! "$NOTES" =~ $NOTES_HANDLE_RE ]]; then
+  # The tag is created by `gh release create` further down, so the latest tag right now is the PREVIOUS
+  # release — exactly the point to collect contributors since. Fall back to a placeholder in a bare repo.
+  PREV_TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo '<previous-tag>')"
+  echo "  note: these notes credit no @handle (#736) — Tools/release-contributors.sh $PREV_TAG"
+  echo "        re-run release.sh with -- \"<notes>\" to refresh them; publishing is idempotent"
+fi
+
+# ── iOS asset: ONE canonical name ────────────────────────────────────────────
+# The iOS .ipa ships under a SINGLE name: HOOP-v<V>-ios.ipa, which every doc
+# (README, docs/IOS.md, the wiki) and the AltStore source point at. We used to
+# upload BOTH HOOP-v<V>.ipa and a -ios alias for backward-compat with a v5.2.5
+# cached-source 404, but that transition is long done, and two byte-identical iOS
+# files only confused users about which to install. So: rename any plain
+# HOOP-v*.ipa to its -ios name and ship exactly one iOS file.
+NEW_ASSETS=()
+for f in ${ASSETS[@]+"${ASSETS[@]}"}; do
+  case "$f" in
+    *HOOP-v*.ipa)
+      if [ -f "$f" ] && [ "${f%-ios.ipa}" = "$f" ]; then   # a plain .ipa -> ship ONLY as -ios
+        ios_f="${f%.ipa}-ios.ipa"
+        cp -f "$f" "$ios_f" 2>/dev/null && NEW_ASSETS+=("$ios_f") \
+          && echo "  iOS asset: $(basename "$ios_f")"
+      else
+        NEW_ASSETS+=("$f")
+      fi ;;
+    *) NEW_ASSETS+=("$f") ;;
+  esac
+done
+ASSETS=("${NEW_ASSETS[@]}")
+# rebuild the forgejo arg list from the (now alias-expanded) assets + notes,
+# so the mirror uploads exactly the same set as GitHub.
+FORGE_ARGS=(${ASSETS[@]+"${ASSETS[@]}"} -- "$NOTES")
+
+# ── 1. GitHub (canonical) ────────────────────────────────────────────────────
+command -v gh >/dev/null 2>&1 || { echo "gh CLI not found on PATH" >&2; exit 1; }
+
+# ── Cadence guard (anti-suspension safeguard — see docs/SAFEGUARDS.md) ────────
+# GitHub once auto-flagged this account for activity that looked bot-like — a
+# rapid BURST of releases (its Acceptable Use Policy bars "excessive automated
+# bulk activity"). Releases should be BATCHED, not drip-shipped one tiny fix at
+# a time. This refuses to publish if we've already cut several today, or one was
+# just published, UNLESS you deliberately override — so a burst is always a
+# conscious choice, never an accident. Tunable: CADENCE_LIMIT, CADENCE_MIN_GAP_MIN.
+CADENCE_LIMIT="${CADENCE_LIMIT:-3}"                 # releases/day before the gate trips
+CADENCE_MIN_GAP_MIN="${CADENCE_MIN_GAP_MIN:-20}"    # minutes that must pass since the last
+if [ "${ALLOW_RAPID_RELEASE:-0}" != "1" ]; then
+  _rel_json="$(gh api "repos/$GH_REPO/releases?per_page=20" 2>/dev/null || echo '[]')"
+  _today="$(date -u +%Y-%m-%d)"
+  _count_today="$(printf '%s' "$_rel_json" | python3 -c "import sys,json
+try: d=json.load(sys.stdin)
+except Exception: d=[]
+print(sum(1 for r in d if str(r.get('created_at','')).startswith('$_today') and not r.get('draft')))" 2>/dev/null || echo 0)"
+  _gap_min="$(printf '%s' "$_rel_json" | python3 -c "import sys,json,datetime
+try: d=json.load(sys.stdin)
+except Exception: d=[]
+pub=[r['created_at'] for r in d if r.get('created_at') and not r.get('draft')]
+if not pub: print(99999)
+else:
+  last=max(datetime.datetime.strptime(p,'%Y-%m-%dT%H:%M:%SZ') for p in pub)
+  print(int((datetime.datetime.utcnow()-last).total_seconds()//60))" 2>/dev/null || echo 99999)"
+  if [ "${_count_today:-0}" -ge "$CADENCE_LIMIT" ] || [ "${_gap_min:-99999}" -lt "$CADENCE_MIN_GAP_MIN" ]; then
+    echo "────────────────────────────────────────────────────────────────────" >&2
+    echo "⛔ CADENCE GUARD — refusing to publish $TAG." >&2
+    echo "   ${_count_today} release(s) already today; last one ${_gap_min} min ago." >&2
+    echo "   Rapid release bursts are what tripped GitHub's abuse filter before." >&2
+    echo "   BATCH the fixes into one release and space them out. If this release" >&2
+    echo "   is genuinely warranted right now, re-run with:  ALLOW_RAPID_RELEASE=1" >&2
+    echo "────────────────────────────────────────────────────────────────────" >&2
+    exit 2
+  fi
+fi
+
+# collect the assets that actually exist on disk (warn, don't die, on a miss).
+# ${ARR[@]+"${ARR[@]}"} guards against the empty-array "unbound variable" trap
+# in macOS's stock bash 3.2 under `set -u`.
+GH_ASSETS=()
+for f in ${ASSETS[@]+"${ASSETS[@]}"}; do
+  if [ -f "$f" ]; then GH_ASSETS+=("$f"); else echo "  ⚠ missing asset: $f" >&2; fi
+done
+
+echo "→ release $TAG on GitHub $GH_REPO (canonical)"
+GH_OK=1
+if gh release view "$TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
+  # idempotent: release already exists → refresh notes + clobber assets
+  echo "  release exists — refreshing notes + clobbering assets"
+  gh release edit "$TAG" --repo "$GH_REPO" \
+      --title "HOOP $TAG" --notes "$NOTES" --latest >/dev/null \
+    || { echo "  ⚠ gh release edit failed" >&2; GH_OK=0; }
+  if [ "${#GH_ASSETS[@]}" -gt 0 ]; then
+    gh release upload "$TAG" "${GH_ASSETS[@]}" --repo "$GH_REPO" --clobber \
+      || { echo "  ⚠ gh release upload failed" >&2; GH_OK=0; }
+  fi
+else
+  gh release create "$TAG" ${GH_ASSETS[@]+"${GH_ASSETS[@]}"} --repo "$GH_REPO" \
+      --title "HOOP $TAG" --notes "$NOTES" --latest \
+    || { echo "  ⚠ gh release create failed" >&2; GH_OK=0; }
+fi
+[ "$GH_OK" = 1 ] \
+  && echo "✓ $TAG on GitHub: https://github.com/$GH_REPO/releases/tag/$TAG" \
+  || echo "✗ GitHub release for $TAG had errors (see above)" >&2
+
+# ── 2. Forgejo mirror (best-effort; never aborts) ────────────────────────────
+if [ -n "${FORGE_DOMAIN:-}" ] && [ -n "${FORGE_ORG:-}" ] && [ -n "${FORGE_REPO:-}" ]; then
+  echo "→ mirroring $TAG to the configured Forgejo repository"
+  "$HERE/forgejo-release.sh" "$VER" ${FORGE_ARGS[@]+"${FORGE_ARGS[@]}"} \
+    || echo "  ⚠ Forgejo mirror failed (GitHub release is available)" >&2
+fi
+
+# ── 3. AltStore source (when an iOS IPA is published) ─────────────────────────
+# The source file is committed and pushed separately after this script updates it.
+if [ "$GH_OK" = 1 ]; then
+  IPA_ASSET=""
+  for f in ${ASSETS[@]+"${ASSETS[@]}"}; do
+    case "$f" in
+      *HOOP-v*-ios.ipa|*HOOP-v*.ipa) [ -z "$IPA_ASSET" ] && [ -f "$f" ] && IPA_ASSET="$f" ;;
+    esac
+  done
+  if [ -n "$IPA_ASSET" ] && [ -x "$HERE/update-altstore-source.sh" ]; then
+    echo "→ refreshing AltStore source for $VER"
+    "$HERE/update-altstore-source.sh" "$VER" "$IPA_ASSET" \
+      || echo "  ⚠ AltStore source update failed — run Tools/update-altstore-source.sh by hand" >&2
+    echo "  ↳ remember to commit + push altstore-source.json"
+  fi
+fi
+
+# exit reflects the canonical (GitHub) outcome only
+[ "$GH_OK" = 1 ]

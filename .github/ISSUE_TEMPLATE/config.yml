@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: HOOP support
+    url: https://github.com/GaneshVarma1/HOOP/blob/main/SUPPORT.md
+    about: Build help, connection troubleshooting, and how to report a problem.
+  - name: Security policy
+    url: https://github.com/GaneshVarma1/HOOP/blob/main/SECURITY.md
+    about: Read this before sharing details of a security issue.
