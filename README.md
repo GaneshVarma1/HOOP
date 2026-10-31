@@ -14,16 +14,16 @@ device, and works out recovery, strain, HRV and sleep itself, with no account an
 > the hardware it talks to. HOOP is **not a medical device**: every score is an estimate. See
 > [DISCLAIMER.md](DISCLAIMER.md).
 
-## What's different in HOOP
+## Features
 
-- HOOP name, logo, app icons and a monochrome + cool blue look across iPhone, Mac and Android
-- A clearer Bluetooth-off screen that shows what's wrong and how to fix it
-- Everything else (pairing, scores, sleep, trends, imports) is the upstream app's
+- Connect to compatible WHOOP straps over Bluetooth
+- View recovery, effort, sleep, heart rate and trends on your device
+- Import health data and export your own records
+- See clear steps to reconnect when Bluetooth is off
 
 ## Build and run
 
-- **iPhone:** see [docs/IOS.md](docs/IOS.md). Set your own `BUNDLE_ID_PREFIX` and team in
-  `Config/BundleIdSecrets.xcconfig`, run `xcodegen generate`, then build the `NOOPiOS` scheme.
+- **iPhone:** follow the setup and build steps in [docs/IOS.md](docs/IOS.md).
 - **Mac:** see [docs/BUILD.md](docs/BUILD.md).
 - **Android:** `cd android && ./gradlew assembleFullDebug`.
 
@@ -32,9 +32,6 @@ The full feature tour, architecture notes and privacy details are in
 
 ## Credits and license
 
-HOOP is based on [NOOP by NoopApp](https://github.com/ryanbr/noop). The original NOOP code remains
-Copyright 2026 NoopApp, and HOOP's modifications are Copyright 2026 Sri Ganesh Shiramshetty.
-
-The whole project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE): free to
-use, change and share for **non-commercial** purposes only. Third-party components keep their own
-licenses; see [NOTICE](NOTICE) and [ATTRIBUTION.md](ATTRIBUTION.md).
+HOOP's modifications are Copyright 2026 Sri Ganesh Shiramshetty. The app's source is available under
+the [PolyForm Noncommercial License 1.0.0](LICENSE) for non-commercial use. Source and dependency
+credits are recorded in [NOTICE](NOTICE) and [ATTRIBUTION.md](ATTRIBUTION.md).
