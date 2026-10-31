@@ -39,7 +39,7 @@ object AppChangelog {
     val releases: List<Release> = listOf(
         Release(
             version = "12.0.0",
-            title = "HOOP baseline",
+            title = uiString(R.string.app_name),
             date = "October 2026",
             items = listOf(
                 "HOOP has its own name, icon and blue-accented interface across iPhone, Mac and Android.",
