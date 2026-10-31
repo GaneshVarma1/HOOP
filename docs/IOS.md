@@ -16,13 +16,13 @@ below.
 > 1. `cp Config/BundleIdSecrets.example.xcconfig Config/BundleIdSecrets.xcconfig` and set
 >    `BUNDLE_ID_PREFIX` to your own reverse-domain prefix (e.g. `com.yourdomain`), then re-run
 >    `xcodegen generate`. This one gitignored file drives **every** target's bundle id *and* the shared
->    App Group together (`$(BUNDLE_ID_PREFIX).noop`, `group.$(BUNDLE_ID_PREFIX).noop.staging`) — nothing
+>    App Group together (`$(BUNDLE_ID_PREFIX).hoop`, `group.$(BUNDLE_ID_PREFIX).hoop`) — nothing
 >    hard-coded in Swift, nothing else to edit, and it survives future regenerates.
 > 2. In Xcode, **select your Team** (Signing & Capabilities) for the `NOOPiOS` **and** `NOOPiOSWidgets`
 >    targets — the one step Apple still requires you to do by hand.
 >
-> Skip step 1 and the build still works under the default `com.noopapp` identifiers — fine if this is
-> the only HOOP install on your device.
+> Skip step 1 and the build uses this repository's default `com.ganeshvarma.hoop`
+> identifiers. Use your own prefix for an independent fork.
 
 > ℹ️ **Cross-platform engineering lives in [`CROSS_PLATFORM.md`](CROSS_PLATFORM.md)** — the shared-code
 > boundary across the macOS / iOS / Android clients, the `Platform.swift` shim convention, the

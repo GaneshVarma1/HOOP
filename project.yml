@@ -33,7 +33,7 @@ settings:
     # at runtime via the AppGroupIdentifier Info.plist key (WidgetSnapshot.suiteName) so the value is
     # never hard-coded in Swift. Built from $(BUNDLE_ID_PREFIX) (see Config/BundleId.xcconfig) — set
     # BUNDLE_ID_PREFIX in a gitignored Config/BundleIdSecrets.xcconfig to build under your own Apple ID.
-    APP_GROUP_ID: group.$(BUNDLE_ID_PREFIX).noop.staging
+    APP_GROUP_ID: group.$(BUNDLE_ID_PREFIX).hoop
     # Build for both Apple Silicon and Intel so the release runs on every Mac.
     ARCHS: "$(ARCHS_STANDARD)"
   configs:
@@ -137,7 +137,7 @@ targets:
         com.apple.security.network.client: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).noop.staging
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).hoop.staging
         PRODUCT_NAME: "HOOP Staging"
         # Pin the Swift module name so `@testable import Strand` resolves even though PRODUCT_NAME is
         # HOOP — the test target and shared sources refer to the app module as `Strand`.
@@ -342,7 +342,7 @@ targets:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).noop
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).hoop
         # NOT "HOOP Staging": 749c94118 dropped the .staging suffix from every iOS-family bundle id
         # because iOS has no App Store app to install beside (NoopApp is closed), so the overlay served
         # no purpose and only broke sideloading. The product name was missed by that same change. macOS
@@ -401,7 +401,7 @@ targets:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).noop.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).hoop.widgets
         PRODUCT_NAME: NOOPWidgets
         GENERATE_INFOPLIST_FILE: NO
         TARGETED_DEVICE_FAMILY: "1,2"
@@ -443,7 +443,7 @@ targets:
         # Pairs this watch app to the iPhone companion (must match NOOPiOS PRODUCT_BUNDLE_IDENTIFIER).
         # Built from the same $(BUNDLE_ID_PREFIX) rather than $(PRODUCT_BUNDLE_IDENTIFIER) because that
         # build setting would resolve to THIS target's own id, not NOOPiOS's.
-        WKCompanionAppBundleIdentifier: $(BUNDLE_ID_PREFIX).noop
+        WKCompanionAppBundleIdentifier: $(BUNDLE_ID_PREFIX).hoop
         NSHealthShareUsageDescription: "HOOP reads your heart rate from the Watch sensor to show a live readout on your wrist. It stays on your device."
         NSHealthUpdateUsageDescription: "HOOP records a basic workout session on your Watch for a higher-fidelity heart rate. The session stays on your device."
     entitlements:
@@ -455,7 +455,7 @@ targets:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).noop.watch
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).hoop.watch
         # The bundle FILE is NOOPWatch.app so it doesn't collide with the iPhone app's NOOP.app when it is
         # embedded at NOOP.app/Watch/NOOPWatch.app. The user still sees "NOOP" on the wrist via the
         # CFBundleName / CFBundleDisplayName above.
@@ -506,7 +506,7 @@ targets:
           - $(APP_GROUP_ID)
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).noop.watch.complications
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID_PREFIX).hoop.watch.complications
         PRODUCT_NAME: NOOPWatchComplications
         GENERATE_INFOPLIST_FILE: NO
         TARGETED_DEVICE_FAMILY: "4"
