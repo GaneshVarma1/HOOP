@@ -692,7 +692,7 @@ class WhoopBleClient(
          *  other firmware source, because the decoded one rides a framed command that needs the bond. */
         private val DIS_FW_REV_CHAR: UUID = UUID.fromString("00002a26-0000-1000-8000-00805f9b34fb")
 
-        /** The rest of the Device Information Service, which sits in the SAME service NOOP already reads
+        /** The rest of the Device Information Service, which sits in the SAME service HOOP already reads
          *  the serial, hardware revision and firmware from — and which has simply never been asked for.
          *  All read-only, all standard, and reachable on an unbonded link (a standard 0x2A19 read succeeded
          *  on one in the field), so they cost one round-trip each and can name a strap that will not pair. */
@@ -700,7 +700,7 @@ class WhoopBleClient(
         private val DIS_MODEL_NUMBER_CHAR: UUID = UUID.fromString("00002a24-0000-1000-8000-00805f9b34fb")
         private val DIS_SW_REV_CHAR: UUID = UUID.fromString("00002a28-0000-1000-8000-00805f9b34fb")
 
-        /** Every DIS characteristic NOOP reads, in ONE place. [noteReadFailure] tested three of them by
+        /** Every DIS characteristic HOOP reads, in ONE place. [noteReadFailure] tested three of them by
          *  name and would have gone silent on the three added beside them — the exact "a refused read is
          *  indistinguishable from one never issued" gap that reporter exists to close. */
         private val DIS_CHARS: Set<UUID> = setOf(
@@ -868,7 +868,7 @@ class WhoopBleClient(
         fun releasesOnDisable(wasEnabled: Boolean, nowEnabled: Boolean): Boolean =
             wasEnabled && !nowEnabled
 
-        /** #533: the PHY mask to ask the controller for. NOOP has never called `setPreferredPhy`, so every
+        /** #533: the PHY mask to ask the controller for. HOOP has never called `setPreferredPhy`, so every
          *  offload has run on the 1M PHY. LE 2M doubles the symbol rate, which for a bulk transfer means the
          *  SAME bytes spend HALF the air-time — unlike the connection-interval lever above it should cost
          *  LESS radio energy per byte, not more. The two are orthogonal and stack.
@@ -1102,7 +1102,7 @@ class WhoopBleClient(
          * involuntary drop (out of range, radio off, a walk away from the phone) would otherwise look like
          * "connects but never pairs" and march this counter toward a pause. That would undo the suppression
          * a few drops later and hand the user a re-pair guide blaming a stale pairing, for a strap whose
-         * unbonded state NOOP chose on purpose. Not-bonding is only evidence of a fault when we were
+         * unbonded state HOOP chose on purpose. Not-bonding is only evidence of a fault when we were
          * actually trying to bond.
          */
         internal fun shouldCountNeverBondedSelfDrop(
@@ -1636,7 +1636,7 @@ class WhoopBleClient(
                 payloadHex = pay.joinToString("") { "%02x".format(it) }
                 sb.append("\nPayload (").append(pay.size).append(" B, CRC excluded):\n")
                 sb.append(hexGrid(pay))
-                // NOOP's decoder reads the pack voltage at payload bytes 7..8 (LE) — but that offset is only
+                // HOOP's decoder reads the pack voltage at payload bytes 7..8 (LE) — but that offset is only
                 // confirmed on WHOOP 4.0 (the 5/MG response to 98 is an undecoded stub, #592), so DON'T print
                 // a decoded voltage for 5/MG where it'd be a guess presented as fact; the raw grid stands.
                 if (!isWhoop5 && pay.size >= 9) {
@@ -1844,7 +1844,7 @@ class WhoopBleClient(
          * response-command byte offset (6 on WHOOP4, 10 on 5/MG); the 4-byte CRC32 trailer is excluded.
          *
          * Protocol facts (0x54, the 4-byte layout, the location enum) are RE'd from the WHOOP app and
-         * reimplemented here in NOOP's own code — facts, not copied expression (see ATTRIBUTION.md).
+         * reimplemented here in HOOP's own code — facts, not copied expression (see ATTRIBUTION.md).
          */
         internal fun formatBodyLocationProbe(
             frame: ByteArray,
@@ -1997,7 +1997,7 @@ class WhoopBleClient(
          * #324/#928: the post-sync banner for a strap whose clock is set in the FUTURE. Unlike the
          * "clock lost / not banking" case ([classifyCompletedOffload]'s bankedNothing), this strap DOES
          * bank records every pass — but its RTC relatched to a future base, so every banked timestamp
-         * reads ahead of the wall clock and NOOP won't import them (importing would misfile the night
+         * reads ahead of the wall clock and HOOP won't import them (importing would misfile the night
          * days or years ahead). The clock-lost banner is gated on empty syncs and never fires here, so
          * this failure mode was silent (#324). Returns the user-facing string when the strap-reported
          * newest is future-dated beyond the 48 h skew allowance ([isFutureDatedNewest]), else null. Pure
@@ -3272,8 +3272,8 @@ class WhoopBleClient(
                         // loop just wrote (the "deep sleep window changes nothing" bug).
                         deepHrvWindow = UnitPrefs.hrvWindow(context) == HrvWindow.DEEP_SLEEP,
                         // #691: route the engine's per-day diagnostics (incl. the new RHR floor-vs-mean
-                        // line) into THIS sync's strap log, so a "NOOP RHR reads lower than my sleeping-HR
-                        // app" report carries the proof — the floor (NOOP's WHOOP-style resting HR) beside
+                        // line) into THIS sync's strap log, so a "HOOP RHR reads lower than my sleeping-HR
+                        // app" report carries the proof — the floor (HOOP's WHOOP-style resting HR) beside
                         // the night MEAN (the other app's number) — from the post-backfill scoring pass, not
                         // only the UI's 15-min loop. log() PII-scrubs at the sink. Best-effort + logging only.
                         diag = { s -> log(s) },
@@ -3803,7 +3803,7 @@ class WhoopBleClient(
     private fun connectInternal(model: WhoopModel, userInitiated: Boolean) {
         // #1881: only the SYSTEM path is gated. This class already draws that line — `connect()` is the
         // user's explicit Connect button, `connectFromSystem()` is every automatic path — and the report's
-        // complaint is only ever about NOOP acting on its own. Gating both would have made the Connect
+        // complaint is only ever about HOOP acting on its own. Gating both would have made the Connect
         // button silently dead while DevicesScreen showed a "Reconnecting…" toast.
         if (!userInitiated && !whoopConnectAllowed("connect-from-system")) return
         intentionalDisconnect = false
@@ -4156,11 +4156,11 @@ class WhoopBleClient(
 
     /**
      * H3 (#520): fully RELEASE the strap when the user REMOVES it from the Devices screen, so the band can
-     * enter pairing mode. Archiving the registry row alone left NOOP still holding the strap — the
+     * enter pairing mode. Archiving the registry row alone left HOOP still holding the strap — the
      * disconnect→3s-reconnect timer, the targeted-connect pin, and the persisted last-device address ALL
      * still pointed at it, so it stayed connected and the user could never put it into pairing mode (a
      * connected WHOOP can't show its blue pairing LEDs). This stops auto-reconnect, drops the live link,
-     * and clears EVERY reference that points at this strap so NOOP lets go for good — until the user
+     * and clears EVERY reference that points at this strap so HOOP lets go for good — until the user
      * deliberately reconnects (which clears intentionalDisconnect again via connect()). Kotlin twin of iOS
      * `BLEManager.forgetDevice` (which iOS already wires from DevicesView's Remove). Runs on the main looper.
      */
@@ -4978,7 +4978,7 @@ class WhoopBleClient(
 
     /**
      * Restart the connected strap (REBOOT_STRAP / opcode 29, empty body). Non-destructive: the strap keeps
-     * its stored data and re-advertises after boot; the BLE link drops and NOOP auto-reconnects. Gated to a
+     * its stored data and re-advertises after boot; the BLE link drops and HOOP auto-reconnects. Gated to a
      * connected + bonded strap; user-initiated and confirmation-gated at the call site (DevicesScreen).
      * Twin of macOS BLEManager.rebootStrap — emits the same reboot trail (request / sent / ack / link
      * dropped / reconnected) so a "restart did nothing" report, especially on the unverified 5/MG puffin
@@ -5160,7 +5160,7 @@ class WhoopBleClient(
      * `START_FF_KEY_EXCHANGE(117)` for the count, then `SEND_NEXT_FF(118)` repeatedly (its body is a
      * cursor, not an index) until the strap's own end marker. NOTHING is written: no `SET_FF_VALUE(120)`,
      * no `SET_DEVICE_CONFIG_VALUE(119)`, no value of any kind — this writes command frames purely to read,
-     * exactly like the Oura feature-status probes NOOP already ships. `GET_FF_VALUE(128)` is deliberately
+     * exactly like the Oura feature-status probes HOOP already ships. `GET_FF_VALUE(128)` is deliberately
      * NOT sent (its reply's value field is reported unreliable — see [FeatureFlagProbe]).
      *
      * The strap's own key list is the direct evidence #103 lacks: if a 5/MG names no oxygen-related flag,
@@ -5593,7 +5593,7 @@ class WhoopBleClient(
      * (the one `SET_DEVICE_CONFIG_VALUE`/119 writes) that 117/118 never covered.
      *
      * NOTHING is written: no `SET_FF_VALUE(120)`, no `SET_DEVICE_CONFIG_VALUE(119)`, no value of any kind
-     * — this writes command frames purely to read, exactly like the Oura feature-status probes NOOP
+     * — this writes command frames purely to read, exactly like the Oura feature-status probes HOOP
      * already ships.
      *
      * **Both target opcodes may simply be unimplemented.** The probe spends one round-trip per verb
@@ -5620,7 +5620,7 @@ class WhoopBleClient(
         }
         deviceConfigReport = DeviceConfigReadProbeReport(
             connectedFamily,
-            // The flag names come from NOOP's own R22 sequence — never restated here.
+            // The flag names come from HOOP's own R22 sequence — never restated here.
             Whoop5Config.enableR22Sequence.map { it.name },
             DeviceConfigReadProbe.OXYGEN_CANDIDATE_KEYS,
         )
@@ -6378,7 +6378,7 @@ class WhoopBleClient(
 
     /**
      * Arm the strap's **firmware** alarm for [epochSec] (absolute UTC seconds). WHOOP 4.0 fires
-     * at that instant even if the phone is asleep or NOOP is closed. SET_CLOCK is sent first so the
+     * at that instant even if the phone is asleep or HOOP is closed. SET_CLOCK is sent first so the
      * strap's RTC is UTC-correct (a wrong RTC fires the alarm at the wrong wall-clock time). The 4.0
      * payload is `[0x01] + u32 LE epoch + [0x00, 0x00] + [0x00, 0x00]` (9 bytes — see
      * [whoop4AlarmPayload]; the trailing two bytes are the haptic-mode field the official app sends,
@@ -6435,7 +6435,7 @@ class WhoopBleClient(
             // an identical evening short-horizon arm (same code path, same commands, no day/night branch
             // anywhere in armStrapAlarm) did not. One firmware-side explanation that would fit every
             // reported case: the physical alarm haptic might only fire while the strap's OWN sleep/rest
-            // detection considers the wearer sleep-adjacent, independent of anything NOOP sends. This
+            // detection considers the wearer sleep-adjacent, independent of anything HOOP sends. This
             // doesn't prove or fix that — it's a free read of state already tracked live, logged so the
             // next reported failure (ideally an evening one) can be compared against the resting HR of
             // the successful arms already on file. Absent key means no HR had streamed yet at arm time.
@@ -8857,7 +8857,7 @@ class WhoopBleClient(
                     }
                     log("reboot: strap acked result=${result ?: "none"} ($verdict)")
                 }
-                // #1823: the clock exchange, on BOTH families. NOOP wrote "clock synced" the moment it
+                // #1823: the clock exchange, on BOTH families. HOOP wrote "clock synced" the moment it
                 // queued the writes and never read the answer, so a strap log asserted the clock was set
                 // while the readout said 1970/71. Android has the DECODED result name here - the richer
                 // twin of the Apple raw byte, and the reason the reboot verdict was correct on this side -
@@ -8982,7 +8982,7 @@ class WhoopBleClient(
                 }
                 // #34 (issue comment 2026-07-12): the strap's OWN answer to the arm we just sent — the
                 // accept/reject datum previously thrown away. armStrapAlarm logs "armed" the instant the SET
-                // goes out, which only proves NOOP transmitted the frame; if the firmware drops it the
+                // goes out, which only proves HOOP transmitted the frame; if the firmware drops it the
                 // GET_ALARM_TIME readback then reads back epoch 0 (a silently-unpersisted alarm — the exact
                 // signature in this report). Logging the raw result byte lets a future report distinguish a
                 // strap that accepted the arm from one that rejected it. LOG-ONLY, never gates behaviour. The
@@ -9919,7 +9919,7 @@ class WhoopBleClient(
      * `BLEManager.disableWhoop5DeepData`.
      *
      * Why this exists: the Settings copy has promised since #174 that the R22 unlock is "reversible", and
-     * that was true about the hardware and false about the app — NOOP shipped an enable button and no way
+     * that was true about the hardware and false about the app — HOOP shipped an enable button and no way
      * back, so the only routes out were the official WHOOP app or a factory reset.
      *
      * Why it is staged rather than sixteen writes: '0' is the confirmed off value in the device-config
@@ -11054,7 +11054,7 @@ class WhoopBleClient(
     }
 
     /**
-     * App-active entry point (#267): call when NOOP comes to the foreground so opening the app pulls a
+     * App-active entry point (#267): call when HOOP comes to the foreground so opening the app pulls a
      * reasonably fresh sync instead of relying on the 900s periodic timer or an incidental reconnect.
      * Forwards to the SAME gated [requestSync] every other trigger uses — floored at the 90s event floor
      * and never empty-streak/clock-suppressed (see [BackfillPolicy.shouldRun]'s `.FOREGROUND` case) — so
@@ -11151,7 +11151,7 @@ class WhoopBleClient(
     /**
      * Stop an offload that is part-way through, at the user's request.
      *
-     * NOOP has been able to START a drain since day one (SEND_HISTORICAL_DATA) with no way to stop it:
+     * HOOP has been able to START a drain since day one (SEND_HISTORICAL_DATA) with no way to stop it:
      * a session ran to HISTORY_COMPLETE, the backfill timeout, or a dropped link.
      *
      * NOTHING IS LOST. The strap frees banked records when we ack a HISTORY_END, so acked records are
@@ -11268,7 +11268,7 @@ class WhoopBleClient(
             )
             // #1683: say HOW OLD the strap's newest stored record is. Without this the line above reads
             // identically for a strap that is caught up and one that stopped banking three weeks ago -
-            // NOOP knows the difference (GET_DATA_RANGE gave it) and simply never said so, which is why
+            // HOOP knows the difference (GET_DATA_RANGE gave it) and simply never said so, which is why
             // #1541 stayed open and unactionable. Rare-event evidence, so always-on.
             staleNewestSeen?.let { log(Backfiller.staleRecordLine(it, nowSec)) }
         }
@@ -11651,7 +11651,7 @@ class WhoopBleClient(
      * Run a raw GATT operation, swallowing the dead-binder exceptions that escape `BluetoothGatt`
      * once the OS Bluetooth radio is turned off mid-link, and route into full teardown if one fires.
      *
-     * The bug (#314, Pixel 7): turning Bluetooth off doesn't disconnect NOOP's `BluetoothGatt`; the
+     * The bug (#314, Pixel 7): turning Bluetooth off doesn't disconnect HOOP's `BluetoothGatt`; the
      * next write hits a dead binder and `writeCharacteristic` throws `android.os.DeadObjectException`
      * (an unchecked `RuntimeException`) — which the GATT layer never declared, so nothing caught it
      * and the app crashed on the next buzz/sync. We also see `IllegalStateException` (adapter off) and
@@ -12473,7 +12473,7 @@ class WhoopBleClient(
      * Durable append-only log of WHOOP 5.0/MG **high-rate R22 deep buffers** (#423) — the big type-0x2F
      * buffers (>= 1 KB: the 1244-B 6-axis IMU and 2140-B optical) that carry tens-of-Hz sensor data,
      * kept RAW in their own file so a byte-perfect decoder can be reversed offline from many
-     * (raw buffer, wall-clock) pairs. NOOP's historical decoder pulls only the 1 Hz gravity vector out
+     * (raw buffer, wall-clock) pairs. HOOP's historical decoder pulls only the 1 Hz gravity vector out
      * of these and discards the high-rate remainder. Gated on the same capture pref as the backfill
      * capture; one JSONL line per buffer (`{"ts_ms":…,"strap_ts":…,"size":…,"offload":…,"char":…,
      * "hex":"…"[,"imu":{…}]}`, same keys as the Swift twin `PuffinDeepBufferLog`). `strap_ts` is the unix

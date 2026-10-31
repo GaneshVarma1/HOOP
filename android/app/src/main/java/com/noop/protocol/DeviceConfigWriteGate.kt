@@ -402,7 +402,7 @@ class EcgRawDataGateReport(on: Boolean) {
 /**
  * The result of one Broadcast-HR (#181) write + mandatory read-back, as a copyable report.
  *
- * #1061: the strap-flag write (`whoop_live_hr_in_adv_ind_pkt`) was fire-and-forget — NOOP never read it
+ * #1061: the strap-flag write (`whoop_live_hr_in_adv_ind_pkt`) was fire-and-forget — HOOP never read it
  * back, so a reporter on FW 50.36.2.0 could not tell whether the firmware ACCEPTED the flag (and simply
  * doesn't advertise 0x180D) or IGNORED the write. That contradicts this file's own rule — read-back is the
  * proof, not the ack — which the ECG gate on the SAME opcode already follows. So the write now reads itself

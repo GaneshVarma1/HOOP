@@ -19,7 +19,7 @@ enum class AdaptiveExpenditureConfidence { BUILDING, MODERATE, HIGH }
  * A retrospective estimate of average daily energy expenditure, with an interval.
  *
  * Never a single number: the error is dominated by things this engine cannot see (hydration swings, an
- * under-logged weekend), so a bare figure would be the fabrication the rest of NOOP refuses to make.
+ * under-logged weekend), so a bare figure would be the fabrication the rest of HOOP refuses to make.
  */
 data class AdaptiveExpenditureEstimate(
     val estimatedDailyKcal: Double,

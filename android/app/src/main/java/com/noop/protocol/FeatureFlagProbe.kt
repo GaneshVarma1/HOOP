@@ -6,7 +6,7 @@ package com.noop.protocol
  * the decoded fields and the rendered report text are byte-identical across platforms, so a strap log
  * reads the same either side.
  *
- * NOOP already WRITES feature flags (`SET_FF_VALUE` / 0x78, the R22 unlock in [Whoop5Config]) but has
+ * HOOP already WRITES feature flags (`SET_FF_VALUE` / 0x78, the R22 unlock in [Whoop5Config]) but has
  * never been able to ASK a strap which flags it knows. The protocol's own `CommandNumber` table names
  * the read side — 117 `START_FF_KEY_EXCHANGE`, 118 `SEND_NEXT_FF` — and only the SET pair was ever
  * implemented. This decodes the ENUMERATION pair only: names, no values.
@@ -18,7 +18,7 @@ package com.noop.protocol
  * complete key dump, which is why the enumerate path is the one built here.
  *
  * **Read-only.** The probe writes command frames in order to read — like the Oura feature-status probe
- * NOOP already ships — but sets no value; 120/119 are never sent from this path.
+ * HOOP already ships — but sets no value; 120/119 are never sent from this path.
  *
  * Wire shape. Request: 117 or 118 with body `[0x01]` (the inner b3 convention CLIENT_HELLO and the
  * SET_CONFIG writes use); 118's body is a CURSOR, not an index, so the same frame is repeated to walk
@@ -35,7 +35,7 @@ package com.noop.protocol
  * (`{revision, numberOfFeatureFlags, padding}` and `{revision, index, validKey, keyStringId, padding}`)
  * and the hands-on WHOOP 4.0 dump above, whose literal replies are `0a 01 | 01 <count u16>` and
  * `0a 01 | 01 <index> 01 <key name…>`, with `0a 01 | 01 ff …` once the cursor is exhausted. Facts about
- * bytes on a wire, reimplemented in NOOP's own code — no client code or naming is copied
+ * bytes on a wire, reimplemented in HOOP's own code — no client code or naming is copied
  * (see ATTRIBUTION.md).
  *
  * UNVERIFIED on 5/MG: the hardware behind this layout is a WHOOP 4.0 with an R19-era key list. So

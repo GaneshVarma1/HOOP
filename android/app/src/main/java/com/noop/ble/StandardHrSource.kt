@@ -94,7 +94,7 @@ class StandardHrSource(
      *  Mirrors [FtmsSource.readingSink]. Default no-op keeps existing call sites compiling. */
     private val sensorSink: (SensorMetrics) -> Unit = {},
     /** #polar-debug: read live at connect. When true AND the connected strap identifies as Polar, the
-     *  model NOOP resolves it to (+ its PMD/HRV capability summary) is logged ONCE per connection. Gated by
+     *  model HOOP resolves it to (+ its PMD/HRV capability summary) is logged ONCE per connection. Gated by
      *  the Test Centre "Polar debug logging" toggle (only shown when a Polar strap is paired). Diagnostic-
      *  only — nothing gates behaviour on it. Default off keeps existing call sites / tests silent. */
     private val polarDebug: () -> Boolean = { false },
@@ -414,7 +414,7 @@ class StandardHrSource(
         }
     }
 
-    /** #polar-debug: when the toggle is on and the connected strap identifies as Polar, log the model NOOP
+    /** #polar-debug: when the toggle is on and the connected strap identifies as Polar, log the model HOOP
      *  resolves it to (+ PMD/HRV capability summary) ONCE per connection. Auto-detected from the advertised
      *  name via the pure [PolarModel] helper (same one the Test Centre uses on the paired record); a non-
      *  Polar strap returns null and logs nothing. Diagnostic-only. Twin of the iOS StandardHRSource hook. */

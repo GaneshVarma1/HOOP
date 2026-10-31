@@ -27,9 +27,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
-// MARK: - NoopLimitationsScreen — "what NOOP can (and can't) read off each strap"
+// MARK: - NoopLimitationsScreen — "what HOOP can (and can't) read off each strap"
 //
-// A More-tab page (Data group): the plain tri-state capability grid of what NOOP reads live off a WHOOP
+// A More-tab page (Data group): the plain tri-state capability grid of what HOOP reads live off a WHOOP
 // 4.0 vs a 5.0/MG, note-free, with a legend in place of per-row prose. Marks mirror the decoder/analytics
 // truth (Interpreter / AnalyticsEngine / HistoricalStreams): full = read live; partial = an on-device
 // estimate or an experimental / firmware-gated read; none = not off the strap (SpO₂ % is import-only on

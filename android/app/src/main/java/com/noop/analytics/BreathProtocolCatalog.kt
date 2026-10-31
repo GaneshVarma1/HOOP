@@ -18,7 +18,7 @@ object BreathProtocolCatalog {
 Consciously Connected Breathing (CCB): inhale and exhale in one continuous loop with no hold at the top or bottom. Find a comfortable rhythm — connectedness matters more than intensity. Typical practice is about 15 minutes, twice daily. Regular is the sustainable starter tempo; Mid is a quicker start for later rounds; Punching Through is only when you need to push through drowsiness or stuckness (not a beginner default).
 """.trimIndent()
 
-    /** All catalog entries in picker order (legacy NOOP paces first, then ANS, then Presence). */
+    /** All catalog entries in picker order (legacy HOOP paces first, then ANS, then Presence). */
     val all: List<BreathProtocol> by lazy {
         legacyNoop + ansPlayable + ansGuided + presence
     }
@@ -43,7 +43,7 @@ Consciously Connected Breathing (CCB): inhale and exhale in one continuous loop 
     val watchSubset: List<BreathProtocol>
         get() = watchSubsetIds.mapNotNull { protocolById(it) }
 
-    // MARK: - Legacy NOOP
+    // MARK: - Legacy HOOP
 
     private val legacyNoop: List<BreathProtocol> = listOf(
         BreathProtocol(

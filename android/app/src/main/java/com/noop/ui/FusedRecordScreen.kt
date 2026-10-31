@@ -54,7 +54,7 @@ import kotlin.math.roundToInt
 // it shows the BEST-sourced value, a provenance badge naming the source, the plain published reason
 // from MetricArbitrationPolicy ("counts directly" / "best stager"), and the inline agreement state
 // from FusionResolver (agree / minor delta / conflict). On a conflict it opens a compare detail
-// listing EVERY source side by side and which one NOOP is using and why — it NEVER silently merges.
+// listing EVERY source side by side and which one HOOP is using and why — it NEVER silently merges.
 //
 // SELF-CONTAINED: the screen takes a fully-resolved [FusedRecord] (the repository adapter that pulls
 // today's per-source metrics and runs FusionResolver.resolve lives in Wave 3). It does no I/O and
@@ -340,8 +340,8 @@ private fun conflictSummary(point: FusedMetricPoint): String {
 // MARK: - Conflict-compare dialog
 
 /**
- * A small read-only dialog: every source's value for the metric, side by side, with the one NOOP is
- * using marked and its trust reason named. NOOP never adjudicates which is "correct" — it shows the
+ * A small read-only dialog: every source's value for the metric, side by side, with the one HOOP is
+ * using marked and its trust reason named. HOOP never adjudicates which is "correct" — it shows the
  * spread and explains its best-signal pick. Transparency, not diagnosis.
  */
 @Composable

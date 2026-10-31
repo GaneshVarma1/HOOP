@@ -18,7 +18,7 @@ A per-version notes file docs/releases/v<VER>.md may carry a YAML front-matter b
         pt-PT: "..."
         zh: "..."
     ---
-    # NOOP v<VER>
+    # HOOP v<VER>
     <the full release notes — the GitHub release body; the front-matter is stripped there>
 
 Running `Tools/appchangelog-gen.py docs/releases/v8.2.2.md` prepends the generated Release entry to

@@ -60,14 +60,14 @@ private fun Throwable.writebackCategory(): WritebackFailure {
 }
 
 /**
- * OPT-IN writeback: pushes NOOP's on-device computed nightly metrics (resting HR, HRV RMSSD, sleep
+ * OPT-IN writeback: pushes HOOP's on-device computed nightly metrics (resting HR, HRV RMSSD, sleep
  * SpO2, respiratory rate) INTO Health Connect, so other apps can see what the strap measured.
  * Inverse of [HealthConnectImporter]; default OFF (NoopPrefs.hcWriteback), toggled in Data Sources.
  *
  * Two deliberate scope limits:
  *  - **Computed days only** (`repo.days(computedDeviceId)`) — never imported ones. Echoing imported
  *    WHOOP-export or Health-Connect-sourced rows back into HC would duplicate another app's data
- *    (or loop our own import). What NOOP computed from the strap is genuinely ours to contribute.
+ *    (or loop our own import). What HOOP computed from the strap is genuinely ours to contribute.
  *  - **Idempotent by clientRecordId** (`noop-<metric>-<day>`): Health Connect does NOT auto-dedupe
  *    on re-insert the way HealthKit does — without a client id every 15-min recompute would stack
  *    duplicates. With it, HC upserts: same id + higher [Metadata.clientRecordVersion] replaces, so
@@ -170,7 +170,7 @@ object HealthConnectWriter {
             }
         }
 
-        // NOTE: steps + active-calories are deliberately NOT written back (was #528). NOOP's strap
+        // NOTE: steps + active-calories are deliberately NOT written back (was #528). HOOP's strap
         // step/kcal figures are estimates, and the phone pedometer / a watch already feed Health
         // Connect the authoritative values — writing ours too would double-count in the OS's daily
         // totals. iOS (#249) excludes them for the same reason; this keeps the two platforms aligned.
@@ -217,7 +217,7 @@ object HealthConnectWriter {
     }
 
     /**
-     * #528 — export NOOP's heart-rate samples (raw [deviceId], not computed) above the persisted
+     * #528 — export HOOP's heart-rate samples (raw [deviceId], not computed) above the persisted
      * frontier. Inside workout/sleep windows the series is kept at full resolution; elsewhere it is
      * decimated to ~1 sample / 30 s so a continuous day doesn't flood Health Connect. The frontier
      * (a single epoch-second cursor in [NoopPrefs]) advances past every sample seen, so each 15-min
@@ -265,7 +265,7 @@ object HealthConnectWriter {
     }
 
     /**
-     * #528 — export finalized sleep sessions with the detailed stage timeline NOOP computed. Uses the
+     * #528 — export finalized sleep sessions with the detailed stage timeline HOOP computed. Uses the
      * MERGED view (imported wins, on-device-computed gap-fills) so a
      * strap-only user's locally-computed nights (stored under the "-noop" computed id) are included.
      * #364 — fragments are grouped into BRIDGED NIGHTS (the same #561 bridge the daily totals score
@@ -366,7 +366,7 @@ object HealthConnectWriter {
     }
 
     /**
-     * VO2 max writeback (#1525). NOOP computes this weekly and persists it as the `vo2max_est` metric
+     * VO2 max writeback (#1525). HOOP computes this weekly and persists it as the `vo2max_est` metric
      * series, keyed to the week's Saturday — nothing exported it before, so a value the app already had
      * never reached Health Connect.
      *

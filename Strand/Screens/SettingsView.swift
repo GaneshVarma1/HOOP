@@ -113,7 +113,7 @@ struct SettingsView: View {
     @AppStorage(UnitPrefs.temperatureKey) private var temperatureRaw = ""
     @AppStorage(UnitPrefs.skinTempDisplayKey) private var skinTempDisplayRaw = ""   // #1846
     // Effort display scale (#268). Display-only — Effort stays stored 0–100, this only chooses whether
-    // it's shown on NOOP's 0–100 axis or WHOOP's 0–21 Day Strain axis.
+    // it's shown on HOOP's 0–100 axis or WHOOP's 0–21 Day Strain axis.
     @AppStorage(UnitPrefs.effortScaleKey) private var effortScaleRaw = EffortScale.hundred.rawValue
     @AppStorage(UnitPrefs.trendChartStyleKey) private var trendChartStyleRaw = TrendChartStyle.line.rawValue
     @AppStorage(UnitPrefs.hrvWindowKey) private var hrvWindowRaw = HrvWindow.whole.rawValue
@@ -129,7 +129,7 @@ struct SettingsView: View {
     // Light/Dark/System theme. Read by both app roots' .preferredColorScheme; default follows the OS.
     @AppStorage(AppearanceMode.storageKey) private var appearanceRaw = AppearanceMode.system.rawValue
     // App-owned copy language. Apple binds a bundle localization at process launch, so this writes the
-    // standard AppleLanguages override and takes effect after the user reopens NOOP.
+    // standard AppleLanguages override and takes effect after the user reopens HOOP.
     @AppStorage(AppLanguage.storageKey) private var appLanguageRaw = AppLanguage.system.rawValue
     // Chart colour style: Titanium (brand) or Classic (throwback red→green). Re-colours gauges + charts.
     @AppStorage(ChartStyle.storageKey) private var chartStyleRaw = ChartStyle.titanium.rawValue
@@ -524,7 +524,7 @@ struct SettingsView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 rowDivider
                 // Tap-through to the WHOOP 4.0 steps-ESTIMATE calibration (a SEPARATE thing from the
-                // 5/MG @57 counter divisor above): a 4.0 sends no step count, so NOOP estimates steps
+                // 5/MG @57 counter divisor above): a 4.0 sends no step count, so HOOP estimates steps
                 // from motion and calibrates that to the phone. The sheet explains it, shows the fit +
                 // a recent estimated-vs-phone comparison, and offers a manual coefficient.
                 Button {
@@ -626,7 +626,7 @@ struct SettingsView: View {
 
     /// Custom background image controls (#custom-background): pick from Photos or Browse the files,
     /// choose the fill mode, and (once set) enable / remove. The store downscales + persists a
-    /// device-local file — nothing here is uploaded (NOOP is offline), and it is left out of `.noopbak`.
+    /// device-local file — nothing here is uploaded (HOOP is offline), and it is left out of `.noopbak`.
     /// Wrapped in a layout-transparent `Group` so the picker `onChange` + the file importer can hang off
     /// the whole cluster while it still flows inside the appearance VStack.
     @ViewBuilder
@@ -924,7 +924,7 @@ struct SettingsView: View {
     // MARK: - Units
 
     /// Independent body and exercise-distance unit choices plus temperature and Effort overrides.
-    /// Display-only — nothing stored changes; NOOP keeps everything in SI.
+    /// Display-only — nothing stored changes; HOOP keeps everything in SI.
     private var unitsCard: some View {
         SettingsSection(
             icon: "ruler",
@@ -981,7 +981,7 @@ struct SettingsView: View {
                     .accessibilityLabel("Skin temperature display")
                 }
                 rowDivider
-                // Effort scale (#268) — show NOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
+                // Effort scale (#268) — show HOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
                 // Display-only; the stored value never changes, so a flip just re-labels every Effort read-out.
                 FormRow(label: "Effort scale") {
                     Picker("Effort scale", selection: $effortScaleRaw) {
@@ -1095,7 +1095,7 @@ struct SettingsView: View {
         ) {
             VStack(spacing: 0) {
                 // App-owned copy language. Apple binds a bundle localization at process launch, so this
-                // takes effect after the user reopens NOOP (the note below says so). Sits above the theme
+                // takes effect after the user reopens HOOP (the note below says so). Sits above the theme
                 // controls because it re-words everything under it.
                 FormRow(label: "Language") {
                     Picker("Language", selection: $appLanguageRaw) {
@@ -1197,7 +1197,7 @@ struct SettingsView: View {
                 }
                 rowDivider   // #79: the segmented rows sat flush against each other (missing separator)
                 FormRow(label: "Chart colours") {
-                    // Default = NOOP's clean metric ramps; Classic = the throwback red→amber→green
+                    // Default = HOOP's clean metric ramps; Classic = the throwback red→amber→green
                     // readiness scale (cool→hot zones, green→red stress). Both schemes.
                     Picker("Chart colours", selection: $chartStyleRaw) {
                         ForEach(ChartStyle.allCases) { style in
@@ -1276,7 +1276,7 @@ struct SettingsView: View {
                 #endif
 
                 rowDivider
-                // MARK: Reduce motion in NOOP — pose every looping animation still and stop the tilt
+                // MARK: Reduce motion in HOOP — pose every looping animation still and stop the tilt
                 // sensor, WITHOUT requiring system Low Power Mode. Off by default; system Reduce Motion
                 // and Low Power Mode already force the same behaviour, this is the third, in-app signal.
                 Toggle(isOn: $quietMotion) {
@@ -1559,7 +1559,7 @@ struct SettingsView: View {
     /// `noop.hrvBaselineEpoch` and `noop.recoveryBaselineEpoch` settings the recovery engine reads, then
     /// kicks a recompute the same way the sleep-edit path does (analyzeRecent → refresh). History stays.
     #if os(iOS)
-    /// NOOP's live notifications — its Live Activities, on the Lock Screen and in the Dynamic Island — one switch
+    /// HOOP's live notifications — its Live Activities, on the Lock Screen and in the Dynamic Island — one switch
     /// each: the live heart rate, a Lift Log session, a strap sync. These three are every Live Activity the app has.
     /// A switch only decides whether its notification is SHOWN: the heart rate is still measured, recorded and
     /// scored, a session still runs and buzzes, a sync still runs, with any of them off.
@@ -1827,7 +1827,7 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
-                // HRV window (#141) — Whole night (NOOP's long-standing value) or DEEP sleep only
+                // HRV window (#141) — Whole night (HOOP's long-standing value) or DEEP sleep only
                 // (WHOOP-style, reads lower). Unlike the Effort scale this CHANGES the number, so a switch
                 // re-scores + re-baselines (like a sleep edit).
                 FormRow(label: "HRV window") {
@@ -2029,7 +2029,7 @@ struct SettingsView: View {
 
     // MARK: - Diagnostics (every model)
 
-    /// Raw-sensor CSV export — a read-only diagnostic over the decoded streams NOOP already stores
+    /// Raw-sensor CSV export — a read-only diagnostic over the decoded streams HOOP already stores
     /// (HR, R-R, motion, steps, PPG-HR, SpO₂, skin temp, resp, events). Split out of the 5/MG card so it
     /// stays visible on EVERY model (#22): a WHOOP 4.0 owner still needs this to share decoded data.
     private var rawSensorDiagnosticsCard: some View {
@@ -2040,7 +2040,7 @@ struct SettingsView: View {
         ) {
             VStack(alignment: .leading, spacing: NoopMetrics.rowSpacing) {
                 // MARK: Export raw sensor data (CSV) — a read-only diagnostic over the decoded streams
-                // NOOP already stores (HR, R-R, motion, steps, PPG-HR, SpO₂, skin temp, resp, events).
+                // HOOP already stores (HR, R-R, motion, steps, PPG-HR, SpO₂, skin temp, resp, events).
                 Button {
                     exportRawSensorCSV()
                 } label: {
@@ -2367,7 +2367,7 @@ struct SettingsView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 #endif
 
-                // How NOOP works — the plain-English primer: how sleep is sorted, how scores +
+                // How HOOP works — the plain-English primer: how sleep is sorted, how scores +
                 // calibration work, what recording means, and where the provenance badges come
                 // from. The "?" entry point to the four-section explainability primer.
                 Button {
@@ -2426,7 +2426,7 @@ struct SettingsView: View {
                 .buttonStyle(LiquidPressStyle())
                 .accessibilityLabel("How your scores work")
 
-                // About Apple Watch data: the honest capability/confidence page for running NOOP off
+                // About Apple Watch data: the honest capability/confidence page for running HOOP off
                 // just an Apple Watch (what it's great at, where it's lighter than a strap, why recovery
                 // calibrates, the SpO₂ caveat). Its primary action opens the watch setup + Health
                 // permission flow. Renders the same on macOS and iOS (pure reference content); the setup
@@ -2588,8 +2588,8 @@ struct SettingsView: View {
                         .foregroundStyle(StrandPalette.textTertiary)
                 }
 
-                // Project home — NOOP's code, releases, issues and wiki live on GitHub.
-                Link(destination: URL(string: "https://github.com/ryanbr/noop")!) {
+                // Project home — HOOP's code, releases, issues and wiki live on GitHub.
+                Link(destination: URL(string: "https://github.com/GaneshVarma1/HOOP")!) {
                     HStack(spacing: 10) {
                         Image(systemName: "chevron.left.forwardslash.chevron.right")
                             .foregroundStyle(StrandPalette.accent)
@@ -2799,7 +2799,7 @@ enum SettingsDisclosureDefaults {
 /// section card itself (the cards it wraps keep their own `SettingsSection` chrome). It's just a
 /// header row + a default-collapsed reveal, modelled on the Test Centre "Advanced" group. Nothing is
 /// removed: collapsed simply means the wrapped sections aren't drawn until the row is tapped open.
-/// A custom header (not SwiftUI's `DisclosureGroup`) is used so it matches NOOP's near-black
+/// A custom header (not SwiftUI's `DisclosureGroup`) is used so it matches HOOP's near-black
 /// instrument look, which the system control's tint and inset don't.
 private struct SettingsDisclosureGroup<Content: View>: View {
     let title: LocalizedStringKey

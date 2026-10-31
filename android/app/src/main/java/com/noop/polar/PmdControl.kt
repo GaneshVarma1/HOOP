@@ -5,7 +5,7 @@ package com.noop.polar
 // Faithful Kotlin twin of Packages/PolarProtocol/Sources/PolarProtocol/PmdControl.swift. The PMD Control
 // Point characteristic (FB005C81-…, write + indicate) STARTS / STOPS a measurement stream and reads its
 // supported settings, before data notifications arrive on the Data characteristic (FB005C82-…). Byte
-// layout per docs/DEVICE_SUPPORT_ROADMAP.md §PMD (official polar-ble-sdk, cross-verified) — NOOP's own
+// layout per docs/DEVICE_SUPPORT_ROADMAP.md §PMD (official polar-ble-sdk, cross-verified) — HOOP's own
 // byte builder, not Polar code.
 //
 // SCOPE: the pure command/response layer only. The android.bluetooth wiring (discover the service, write
@@ -37,7 +37,7 @@ object PolarPmdControl {
 
     /**
      * REQUEST_MEASUREMENT_START — begin a stream: `[0x02, (recording shl 7) or measType, settingBlocks…]`.
-     * recording=false (online streaming — what NOOP uses) leaves bit 7 clear. Each setting serialises as
+     * recording=false (online streaming — what HOOP uses) leaves bit 7 clear. Each setting serialises as
      * `[type, count, lo, hi, …]` with u16 LE values.
      */
     fun start(
@@ -66,7 +66,7 @@ object PolarPmdControl {
     /**
      * The control-point indicate reply `[0xF0, reqOpcode, measType, status, …]`. status==0 is success;
      * the rest (a "more" flag + GET_SETTINGS param blocks) is not parsed here. measurement is null when the
-     * reply names a type NOOP doesn't recognise.
+     * reply names a type HOOP doesn't recognise.
      */
     data class Response(val requestOpcode: Int, val measurement: PolarPmdMeasurement?, val status: Int) {
         val isSuccess: Boolean get() = status == 0x00

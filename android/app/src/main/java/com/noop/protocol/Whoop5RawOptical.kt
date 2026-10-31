@@ -6,7 +6,7 @@ package com.noop.protocol
  *
  * Names match the public write-up in issue #423 one-for-one, so code and published record agree:
  * `sample_count, source_a, drive_a, source_b, drive_b, detector_a_select, range_a, offset_a,
- * detector_b_select, range_b, offset_b`. They describe what each field is observed to DO in NOOP's
+ * detector_b_select, range_b, offset_b`. They describe what each field is observed to DO in HOOP's
  * own capture and assert nothing about registers, units, or emitted wavelength.
  *
  * Widths are unsigned on the wire; Kotlin has no convenient unsigned types here, so `driveA`/`driveB`
@@ -102,7 +102,7 @@ data class Whoop5OpticalFrame(
  * Both detector groups are 7 bytes with the identical internal shape `select:1, range:4, offset:2`,
  * which is what makes the 7-byte stride visible in a raw hex dump of block 0.
  *
- * PROVENANCE. Every offset, width, endianness and value set was measured from NOOP's own BLE captures:
+ * PROVENANCE. Every offset, width, endianness and value set was measured from HOOP's own BLE captures:
  * 29,203 records of this type recorded by the #454 deep-buffer recorder from a WHOOP 5.0/MG on fw
  * 50.40.1.0, with 54 structural assertions passing on all 29,203 and 2140/2140 bytes accounted for.
  * The derivation, negative controls and refuted alternatives are published at issue #423.

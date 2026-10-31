@@ -6,7 +6,7 @@ import Foundation
 /// The negative cases are kept apart because they are different facts with different remedies, and the
 /// single line that used to cover both stated one of them wrongly. See `historicalLayoutSupport`.
 public enum HistoricalLayoutSupport: Equatable, Sendable {
-    /// The layout decodes and the record carries a named signal NOOP scores from.
+    /// The layout decodes and the record carries a named signal HOOP scores from.
     case supported
     /// The layout decodes, but this record carries no per-second heart rate and no motion, so a night made
     /// only of these cannot be staged. What is missing is the meaning of the channels, not the layout: the
@@ -18,8 +18,8 @@ public enum HistoricalLayoutSupport: Equatable, Sendable {
     /// its own, so there is nothing missing and nothing for the user to report (#2847).
     ///
     /// This exists because the line for `decodesWithoutNamedSignal` asks the user to report the layout on
-    /// #1992, and for a layout NOOP decodes, stores and deliberately scores nothing from, that request is
-    /// for a report about working software. The MG ECG record is the case: it reaches NOOP only because
+    /// #1992, and for a layout HOOP decodes, stores and deliberately scores nothing from, that request is
+    /// for a report about working software. The MG ECG record is the case: it reaches HOOP only because
     /// the user took a reading, it is banked whole in `ecgWaveformSample`, and #752 is what keeps anything
     /// from being derived off it.
     ///
@@ -44,8 +44,8 @@ private let whoop5HistoricalVersionsWithOwnStream: Set<Int> = [16]
 /// Classify a historical record's layout version.
 ///
 /// #1992. This used to be one question — "did the record decode any of `heart_rate`, `gravity_x` or
-/// `ppg_waveform`?" — and one message, which said NOOP could not decode the layout. That is a list which
-/// has to be extended by hand every time NOOP learns a layout, and twice it silently was not: #156 was v25
+/// `ppg_waveform`?" — and one message, which said HOOP could not decode the layout. That is a list which
+/// has to be extended by hand every time HOOP learns a layout, and twice it silently was not: #156 was v25
 /// and v26 being reported as undecodable after they had been decoding for releases, and v20 has been
 /// reported the same way ever since it was mapped, because the 5/MG optical record decodes to block counts
 /// and per-block headers rather than to any of the three names.
@@ -54,7 +54,7 @@ private let whoop5HistoricalVersionsWithOwnStream: Set<Int> = [16]
 /// what it said is true: those records really do carry no heart rate or motion, and a night made only of
 /// them really cannot be staged. So the question splits. On WHOOP 5.0/MG, whether the layout decodes is
 /// asked of `mappedWhoop5HistoricalVersions`, the set `decodeWhoop5Historical` itself dispatches on, which
-/// cannot drift from what NOOP decodes. Whether the record carries anything scoreable stays the field test,
+/// cannot drift from what HOOP decodes. Whether the record carries anything scoreable stays the field test,
 /// which is what it was always actually measuring.
 ///
 /// WHOOP 4.0 has no equivalent dispatch set, and every layout it maps emits one of the three names, so a

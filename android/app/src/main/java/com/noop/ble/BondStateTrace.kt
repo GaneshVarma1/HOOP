@@ -51,7 +51,7 @@ internal fun bondFailureReasonLabel(reason: Int): String = when (reason) {
 /**
  * One line per OS bond-state transition, with how long after the CLIENT_HELLO write it happened.
  *
- * NOOP has never observed `ACTION_BOND_STATE_CHANGED`, so the OS pairing flow has been invisible. That
+ * HOOP has never observed `ACTION_BOND_STATE_CHANGED`, so the OS pairing flow has been invisible. That
  * is the gap that leaves #1635 undecided: a WHOOP 5/MG shows every CLIENT_HELLO going unacknowledged and
  * the link torn down locally on a clockwork timer (mean 3158 ms, 10 ms spread over nine attempts), and
  * two explanations fit equally well —
@@ -113,7 +113,7 @@ internal fun bondStateTraceLine(
  *
  * The receiver hears EVERY pairing on the phone - headphones, a car kit, a colleague's keyboard - and
  * the strap log is a file people attach to public issues. Recording unrelated pairings there is both
- * noise in a fixed-size rolling buffer and information about devices that have nothing to do with NOOP,
+ * noise in a fixed-size rolling buffer and information about devices that have nothing to do with HOOP,
  * so the trace is scoped to the strap this app is talking to.
  *
  * Matched case-insensitively for the same reason [SourceCoordinator] matches addresses that way: the
@@ -163,7 +163,7 @@ internal fun bondStateAtConnectLine(bondState: Int, address: String?): String {
  * which the log could not tell apart:
  *
  *  - Android genuinely did nothing, or
- *  - it did something and NOOP failed to hear it, because the broadcast receiver or its device filter is
+ *  - it did something and HOOP failed to hear it, because the broadcast receiver or its device filter is
  *    wrong. That receiver is ours and was added in the same week; it is a live suspect, not a given.
  *
  * Polling the device directly removes the broadcast from the chain, so the answer no longer depends on

@@ -7,7 +7,7 @@ package com.noop.protocol
  *
  * Before this file the 5/MG send path admitted opcode 120 on an opcode-only clause (the deep-data opt-in
  * alone), which admits ANY feature-flag key with ANY value for as long as that opt-in happens to be on.
- * The sixteen R22 keys are the only ones NOOP has business writing, and the disable path doubles the
+ * The sixteen R22 keys are the only ones HOOP has business writing, and the disable path doubles the
  * number of values travelling through that opcode, so the clause is tightened rather than widened. Same
  * discipline as `DeviceConfigReadProbe.isReadOnlyOpcode`: one pure predicate the send path itself
  * consults, so a unit test proving the predicate rejects something proves it about the real wire path.
@@ -159,7 +159,7 @@ class R22DisableReport(
          * confirmed by a GET_FF_VALUE(128) read before and after (#423, #103). If a '0' write to THIS key
          * does not move the stored value, the failure is attributable to the VALUE rather than to the key
          * or the verb — every other key would leave that ambiguity open. It is also the flag with the
-         * least to lose: its effect is undocumented and it gates no stream NOOP reads.
+         * least to lose: its effect is undocumented and it gates no stream HOOP reads.
          */
         const val PROBE_KEY = "enable_sig12"
 

@@ -210,7 +210,7 @@ object OuraFraming {
      * Parse one TLV inner record LENIENTLY, per open_oura's `Packet::parse` (protocol.rs): the payload
      * is whatever bytes are present up to `min(2 + len, bytes.size)`. The `len` field is NOT required
      * to equal the notification length; open_oura tolerates that disagreement, and honoring it is what
-     * keeps NOOP from (a) minting phantom records out of a "too-small" len's leftover bytes or (b)
+     * keeps HOOP from (a) minting phantom records out of a "too-small" len's leftover bytes or (b)
      * swallowing the next notification on a "too-big" len. Returns null only when the 4 timestamp
      * bytes are not even present (`size < 6`) or `len < 4` — a genuinely unusable frame, never a guess
      * (honest-data invariant). Byte-identical twin of Swift's lenient parseRecord. Per s2.3.
@@ -286,7 +286,7 @@ class OuraReassembler {
      */
     fun feed(fragment: IntArray): List<OuraRecord> {
         val rec = OuraFraming.parseRecord(fragment) ?: return emptyList()
-        // A PACKED notification carries several complete packets back to back. Every NOOP drain
+        // A PACKED notification carries several complete packets back to back. Every HOOP drain
         // captured to date arrives one packet per <= 20-byte notification, but the same ring serving
         // the official app on the same link (same MTU, same get_events bytes) packs ~10 packets into
         // each 196-200-byte notification (2026-09-15: 38,136 packets in 3,613 notifications, every

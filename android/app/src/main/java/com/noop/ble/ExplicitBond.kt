@@ -1,15 +1,15 @@
 package com.noop.ble
 
 /**
- * Should NOOP ask Android to pair with this strap, rather than hoping a write provokes it?
+ * Should HOOP ask Android to pair with this strap, rather than hoping a write provokes it?
  *
- * NOOP has never called `BluetoothDevice.createBond()` on either platform. The entire 5/MG pairing
+ * HOOP has never called `BluetoothDevice.createBond()` on either platform. The entire 5/MG pairing
  * strategy has been IMPLICIT: write the CLIENT_HELLO to the encrypted `fd4b0002` and rely on the stack
  * noticing that the characteristic needs encryption and starting pairing by itself.
  *
  * The bond-state trace (#1639) showed that mechanism has never once fired. Across two field captures the
  * device never enters `BOND_BONDING` at all — no pairing is attempted, the write never completes, and the
- * local stack drops the ACL ~3.15s later. So the only route NOOP had to an encrypted bond on a 5/MG was
+ * local stack drops the ACL ~3.15s later. So the only route HOOP had to an encrypted bond on a 5/MG was
  * one that does not work, with no fallback, because the explicit route was never built.
  *
  * This is that route, as an experiment. Asking directly is the obvious thing nobody has tried, and #1639
@@ -21,7 +21,7 @@ package com.noop.ble
  * follows: this one asks the OS to form a persistent pairing and can surface a system pairing dialog, so
  * it must not ride in on consent given for something else.
  *
- * [alreadyBondedAtOsLevel] is the REAL `BluetoothDevice.bondState`, not NOOP's `encryptedBond` flag. The
+ * [alreadyBondedAtOsLevel] is the REAL `BluetoothDevice.bondState`, not HOOP's `encryptedBond` flag. The
  * two are unrelated: `encryptedBond` only ever meant "a handshake write was acked", which is why a strap
  * can read Bonded in the UI while the OS holds no pairing at all.
  *

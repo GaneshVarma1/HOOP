@@ -57,7 +57,7 @@ import kotlinx.coroutines.delay
 /**
  * True when the user has disabled system animations (Settings → Accessibility → "Remove
  * animations", or Developer options → Animator duration scale = Off). The closest Android
- * analogue to iOS `accessibilityReduceMotion`: when on, every NOOP motion helper degrades to
+ * analogue to iOS `accessibilityReduceMotion`: when on, every HOOP motion helper degrades to
  * its final frame instantly.
  *
  * Read once per composition from `Settings.Global.ANIMATOR_DURATION_SCALE`; previews
@@ -133,7 +133,7 @@ fun rememberPowerSaveMode(): Boolean {
 }
 
 /**
- * Process-wide live mirror of the in-app "Reduce motion in NOOP" preference. SharedPreferences keeps
+ * Process-wide live mirror of the in-app "Reduce motion in HOOP" preference. SharedPreferences keeps
  * listeners weakly, so this object retains both the preferences and listener for the process lifetime.
  * One observer feeds Compose snapshot state to every looping surface, avoiding a listener per composable.
  */

@@ -13,7 +13,7 @@ private struct WorkoutRecoveryTrendPoint: Identifiable, Equatable {
 
 // MARK: - Workouts
 //
-// The activity log, instrument-grade and uniform. Built ONLY from the locked Noop
+// The activity log, instrument-grade and uniform. Built ONLY from the locked HOOP
 // component system (NoopMetrics / NoopCard / StatTile / SectionHeader /
 // SegmentedPillControl / SourceBadge) so every card, tile and row lines up:
 //
@@ -645,7 +645,7 @@ struct WorkoutsView: View {
     ///
     /// A VIEW split, never a delete. Archived rows stay in the database untouched and are one tap away,
     /// which is the whole reason the request for "keep the last 10 and auto-delete the rest" is answered
-    /// this way instead: NOOP has no server and no cloud copy, so pruning real training history would be
+    /// this way instead: HOOP has no server and no cloud copy, so pruning real training history would be
     /// irreversible, and hiding it costs nothing.
     enum Scope: String, CaseIterable, Identifiable {
         case current, archived
@@ -865,7 +865,7 @@ struct WorkoutsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// A hero stat whose number ticks up to its value on appear/change — the NOOP signature for a big
+    /// A hero stat whose number ticks up to its value on appear/change — the HOOP signature for a big
     /// count. Same layout as `heroStat`; used for the plain session count.
     private func heroCountStat(_ title: String, value: Double,
                                format: @escaping (Double) -> String, tint: Color) -> some View {

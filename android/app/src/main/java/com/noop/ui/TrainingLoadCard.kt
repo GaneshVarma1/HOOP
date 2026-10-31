@@ -33,7 +33,7 @@ import kotlin.math.max
  * 7-day fatigue proxy) on ONE shared y-scale, so the vertical gap between the lines reads as the TSB /
  * "form" (CTL − ATL), surfaced as the headline number + a footer stat.
  *
- * Descriptive only: CTL/ATL/TSB never feed the Charge/Readiness score, and the load is NOOP's daily
+ * Descriptive only: CTL/ATL/TSB never feed the Charge/Readiness score, and the load is HOOP's daily
  * Effort/strain — not TRIMP. Long-horizon by nature, so it models the full history (not the range
  * window) and shows an honest "needs N more days" state until 14+ contiguous days exist.
  */

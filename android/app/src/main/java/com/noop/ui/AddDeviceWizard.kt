@@ -373,7 +373,7 @@ fun AddDeviceWizard(
      *   - Standard destructive adopt: false. We arm the one-shot adopt-intent, register active (the live
      *     source then runs the dangerous key install), and STAY on the Adopting step so the observed
      *     adoptPhase / needs-pairing can drive it to success (close) or a REACHABLE honest Failed. Without
-     *     this the user was trapped on a fake "Installing NOOP's key" spinner that never resolved.
+     *     this the user was trapped on a fake "Installing HOOP's key" spinner that never resolved.
      */
     fun finishAddOura(closeAfter: Boolean) {
         stopAllScans()
@@ -494,7 +494,7 @@ fun AddDeviceWizard(
                     },
                     onRescan = { ouraScanner.scan() },
                     onAdopt = {
-                        // The standard adopt is destructive (it installs NOOP's key on the ring), so it
+                        // The standard adopt is destructive (it installs HOOP's key on the ring), so it
                         // gates behind the final "Take over this ring?" alert. The Advanced key path is
                         // non-destructive (it authenticates with the user's own key, never resets the ring),
                         // so it connects straight through without the destructive confirm and closes (no
@@ -800,7 +800,7 @@ private fun WhoopFirstNote() {
 
 /**
  * The one-phone pairing warning shown before pairing a WHOOP strap. A WHOOP band bonds to a single
- * device/app at a time, so connecting it to NOOP means it won't stream to the official WHOOP app at the
+ * device/app at a time, so connecting it to HOOP means it won't stream to the official WHOOP app at the
  * same time (and vice versa). Honest + reversible: re-pairing in the other app hands the strap back. No
  * em-dashes. Mirrors the iOS one-phone warning card so all platforms say the same thing.
  */

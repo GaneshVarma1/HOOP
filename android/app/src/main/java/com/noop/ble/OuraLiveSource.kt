@@ -87,7 +87,7 @@ internal fun ouraAdvertisedLabel(advertisedName: String, fallback: String): Stri
  * probe: where that probe only proved "there's no OPEN stream", this transport speaks the
  * ring's OWN documented protocol (clean-room, see docs/OURA_PROTOCOL.md) to authenticate with the
  * 16-byte application key, enable the daytime-HR feature, and decode the ring's RAW signals
- * (HR / IBI / RMSSD / SpO2 / skin-temp / sleep-phase tags). NOOP computes its OWN Charge/Rest from
+ * (HR / IBI / RMSSD / SpO2 / skin-temp / sleep-phase tags). HOOP computes its OWN Charge/Rest from
  * those raw signals; the ring's encrypted readiness/sleep SCORES are never read or surfaced
  * (honest-data invariant).
  *
@@ -131,7 +131,7 @@ class OuraLiveSource(
     private val persist: (StreamBatch, String) -> Unit = { _, _ -> },
     /** Upsert the ring-PROVIDED reconstructed hypnogram as a night under [deviceId] (the imported/measured
      *  side, NOT the "-noop" computed sibling) so `mergeSleepRichness`'s imported-over-computed rule makes
-     *  Oura's SleepNet staging win over NOOP's sparse-motion computed night. Wired to
+     *  Oura's SleepNet staging win over HOOP's sparse-motion computed night. Wired to
      *  `repository.upsertSleepSessions`; default no-op so the discovery-only scanner + tests stay inert. */
     private val persistSleepSession: (OuraSleepSession, String) -> Unit = { _, _ -> },
     /** #1284 residual 3 (default OFF): read live at persist — when true, an Oura hypnogram night is keyed on
@@ -958,7 +958,7 @@ class OuraLiveSource(
             " deep/light/rem/awake=${mins[0].toInt()}/${mins[1].toInt()}/${mins[2].toInt()}/${mins[3].toInt()} min")
         // Bank the SAME anchored codes as a ring-PROVIDED night (a SleepSession with the [{start,end,stage}]
         // breakdown) under the ring's own deviceId, so mergeSleepRichness surfaces Oura's SleepNet staging
-        // over NOOP's computed night (#325 persist). Uses the anchored+0x49-refined `end` via `laid`. The
+        // over HOOP's computed night (#325 persist). Uses the anchored+0x49-refined `end` via `laid`. The
         // confirmation line makes the persist self-evident in the strap log for on-device validation.
         OuraSleepSessionMapping.session(laid.map { m -> m.ts to m.phase.stage })?.let { mapped ->
             // #1284 residual 3: when onset keying is on and a 0x49 onset was applied, key the session's
@@ -1956,7 +1956,7 @@ class OuraLiveSource(
 
     /**
      * Log a feature-status read reply once per feature (read-only diagnostic). Confirms, from the ring
-     * itself, whether a server-flag feature (SpO2 0x04 / real_steps 0x0b) is subscribed/emitting — NOOP
+     * itself, whether a server-flag feature (SpO2 0x04 / real_steps 0x0b) is subscribed/emitting — HOOP
      * cannot enable these offline (server ClientConfiguration gate), so a `subscription == 0` here is the
      * honest "not a bug, it's a gate" reading. Never scored, never stored.
      */
@@ -2482,7 +2482,7 @@ class OuraLiveSource(
     // MARK: - Honest fallback
 
     /**
-     * Record the honest "this ring needs a pairing handshake NOOP can't complete" outcome (the message is
+     * Record the honest "this ring needs a pairing handshake HOOP can't complete" outcome (the message is
      * already RECOVERY-HONEST: a factory-reset ring is NOT bricked, re-pairing in the Oura app brings it
      * back, and adopt is Beta). Also marks [AdoptPhase.Failed] so an in-flight adopt's Adopting step lands
      * on a REACHABLE honest Failed state, and clears any in-flight install key WITHOUT persisting it (a
@@ -2628,7 +2628,7 @@ class OuraLiveSource(
 
         /**
          * Honest fallback copy: live data is not available, AND the ring is RECOVERABLE. A factory-reset
-         * ring is not bricked: re-pairing it in the Oura app sets it up again. NOOP adopt is Beta and may
+         * ring is not bricked: re-pairing it in the Oura app sets it up again. HOOP adopt is Beta and may
          * not succeed on every ring or firmware yet. No "installing key" wording (no install ran here).
          */
         private const val KEY_INSTALL_MESSAGE =

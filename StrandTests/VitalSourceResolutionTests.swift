@@ -134,7 +134,7 @@ final class VitalSourceResolutionTests: XCTestCase {
         XCTAssertEqual(skin?.value, 0.2)
         XCTAssertEqual(skin?.source, .noopComputed)
         // #622/#1224: computed skin temp is a ±°C deviation from the personal baseline, so its caption
-        // reads "vs baseline" rather than the generic "NOOP computed" other computed vitals get.
+        // reads "vs baseline" rather than the generic "HOOP computed" other computed vitals get.
         XCTAssertTrue(skin?.stateCaption.contains("vs baseline") == true)
     }
 

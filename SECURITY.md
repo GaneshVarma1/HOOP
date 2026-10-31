@@ -24,10 +24,11 @@ otherwise breaks the offline-by-default or one-way-export guarantees the app mak
 
 ## Reporting a vulnerability
 
-HOOP is maintained anonymously and has no security contact email. **Report
-security issues through GitHub's Private Vulnerability Reporting** — Security →
-Report a vulnerability. That keeps proof-of-concept details out of public view
-until a fix ships, and needs no email address on either side.
+HOOP is maintained by [Sri Ganesh Shiramshetty](https://github.com/GaneshVarma1).
+Private Vulnerability Reporting is not currently enabled for this repository. To
+report a security issue, [open an issue](https://github.com/GaneshVarma1/HOOP/issues/new)
+with a brief description and request a private way to share details. Do not post
+proof-of-concept code, private data, or exploit steps in a public issue.
 
 One advisory per finding is easiest to triage; group them only if they share a
 root cause.
@@ -50,8 +51,9 @@ the next release.
 
 ## Supported versions
 
-Only the latest release receives fixes. HOOP ships from source; if you build your
-own copy, rebuild from the latest tag to pick up security fixes.
+There is no published HOOP release yet. Source builds should use the latest commit
+on `main` for fixes. Once releases are published, only the latest release will be
+supported.
 
 ## Out of scope
 

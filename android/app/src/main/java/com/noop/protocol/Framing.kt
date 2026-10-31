@@ -279,7 +279,7 @@ enum class FrameRejectReason {
  * metadata frames at this bound are valid and intentional; the minimum preserves the old `length >= 7` rule.
  * WHOOP 5.0/MG: `[SOF][fmt][declLen u16][hdr u16][crc16 u16] + >=1 payload byte + [crc32 u32]` = 13.
  * Unlike the 4.0 bound, 13 is an empirical acceptance policy, not an envelope necessity: Goose's
- * `v5Payload` accepts a 12-byte, zero-payload frame (`declaredLength == 4`). NOOP deliberately
+ * `v5Payload` accepts a 12-byte, zero-payload frame (`declaredLength == 4`). HOOP deliberately
  * requires the inner type byte. Real fixtures include 20-byte command responses plus 24- and
  * 32-byte frames, but no captured 12-byte zero-payload frame; those observations do not prove the
  * boundary. Twin of the Swift `FrameLimits`.
@@ -398,7 +398,7 @@ object Framing {
         if (frame.isEmpty() || frame[0] != 0xAA.toByte()) {
             return FrameCheck(ok = false, reason = FrameRejectReason.NO_START_OF_FRAME)
         }
-        // NOOP's empirical 5/MG floor: envelope + at least the inner type byte + CRC32. The Goose
+        // HOOP's empirical 5/MG floor: envelope + at least the inner type byte + CRC32. The Goose
         // reference parser permits a 12-byte empty payload, but no such hardware frame is known here.
         if (frame.size < FrameLimits.WHOOP5_MINIMUM_FRAME_BYTES) {
             return FrameCheck(ok = false, reason = FrameRejectReason.BELOW_MINIMUM_LENGTH)

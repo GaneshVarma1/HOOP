@@ -6,8 +6,8 @@ import StrandDesign
 /// Live Activity for an active live-HR session — shown on the Lock Screen and in the Dynamic Island.
 struct NOOPLiveActivity: Widget {
     /// The heart rate to draw: none once iOS has marked the banner stale. Each push is fresh for 30 s
-    /// (`LiveActivityController.staleAfter`) and NOOP re-pushes a steady number well inside that, so a stale banner
-    /// means the readings stopped — the strap off the wrist, or out of reach — even while NOOP itself is asleep and
+    /// (`LiveActivityController.staleAfter`) and HOOP re-pushes a steady number well inside that, so a stale banner
+    /// means the readings stopped — the strap off the wrist, or out of reach — even while HOOP itself is asleep and
     /// cannot say so: iOS redraws the banner at the stale date on its own.
     static func shownBpm(_ context: ActivityViewContext<NOOPActivityAttributes>) -> Int? {
         context.isStale ? nil : context.state.bpm

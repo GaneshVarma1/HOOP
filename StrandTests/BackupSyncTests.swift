@@ -134,7 +134,7 @@ final class BackupSyncTests: XCTestCase {
     // MARK: - Folder identity (#52): "Saving to:" has to say WHICH folder
 
     func testTrailSlicesAfterTheICloudSyncRoot() {
-        // macOS shape: merely filtering out the tilde component would leave "Mobile Documents › NOOP".
+        // macOS shape: merely filtering out the tilde component would leave "Mobile Documents › HOOP".
         XCTAssertEqual(
             FolderBackup.folderTrail(path: "/Users/x/Library/Mobile Documents/com~apple~CloudDocs/HOOP"),
             "HOOP")

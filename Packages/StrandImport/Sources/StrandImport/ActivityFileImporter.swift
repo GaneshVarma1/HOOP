@@ -49,7 +49,7 @@ public struct ActivityFile: Sendable, Equatable {
     public var start: Date
     /// Activity end (UTC) — the latest trackpoint/record time. Falls back to `start`.
     public var end: Date
-    /// Brand/sport label as the file named it (e.g. "running", "Biking"). Normalized to a NOOP sport
+    /// Brand/sport label as the file named it (e.g. "running", "Biking"). Normalized to a HOOP sport
     /// string by the app layer; `nil` → a neutral "Activity".
     public var sport: String?
     /// Total distance in metres, when present (a file summary value, else summed from the track).

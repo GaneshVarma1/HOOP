@@ -1,7 +1,7 @@
 package com.noop.ble
 
 /**
- * Should NOOP try the historical offload on a WHOOP 5/MG that has NOT bonded?
+ * Should HOOP try the historical offload on a WHOOP 5/MG that has NOT bonded?
  *
  * The offload has always been gated on the CLIENT_HELLO ack — `beginBackfill` refuses while
  * `connectHandshakeDone` is false, and for a 5/MG that flag is set in exactly one place, behind `didBond`.
@@ -631,7 +631,7 @@ internal fun unbondedProbeAnsweredLine(): String =
  *
  * An un-clocked 5/MG is hardware-known not to persist sensor data to flash at all ("RTC timestamp … is
  * invalid; not saving data to flash", #78 fork). A strap that has never completed a handshake has never
- * been clocked by NOOP, so the honest expectation is that an offload which finally runs may find little or
+ * been clocked by HOOP, so the honest expectation is that an offload which finally runs may find little or
  * nothing banked — and that this buys FUTURE syncing rather than recovering the backlog. GET_DATA_RANGE
  * answers it directly, which is why it is the stage before the transfer rather than after it.
  */

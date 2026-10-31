@@ -167,7 +167,7 @@ class SourceCoordinator(
      *  paired. Exactly one non-WHOOP source is ever live at a time, and the coordinator only ever connects /
      *  scans / stops it. Built by [makeSource]; each source owns its OWN scanner/GATT and never touches the
      *  WHOOP BLE client, so the WHOOP path cannot regress. (An Oura ring additionally surfaces only its OWN
-     *  raw signals + open event tags — NOOP computes its own Charge/Rest — never Oura's encrypted scores.) */
+     *  raw signals + open event tags — HOOP computes its own Charge/Rest — never Oura's encrypted scores.) */
     private var activeSource: LiveHrSource? = null
     /** The deviceId the active non-WHOOP source ([activeSource]) runs for. */
     private var activeStrapId: String? = null
@@ -526,7 +526,7 @@ class SourceCoordinator(
             persistSleepSession = { s: com.noop.oura.OuraSleepSession, deviceId: String ->
                 // The ring-PROVIDED hypnogram night, upserted under the ring's OWN id (imported/measured
                 // side, NOT the "-noop" computed sibling) so mergeSleepRichness surfaces Oura's SleepNet
-                // staging over NOOP's sparse-motion computed night (#325).
+                // staging over HOOP's sparse-motion computed night (#325).
                 scope.launch {
                     runCatching {
                         val session = com.noop.data.SleepSession(

@@ -1,6 +1,6 @@
 # HOOP — Terms of Use & Acknowledgment
 
-**Version 1.1**
+**Version 2.0**
 
 > **This is not legal advice.** This document was drafted with the help of an AI tool, not a lawyer.
 > It is offered honestly and in good faith, but the HOOP maintainers are not lawyers and nothing here
@@ -21,9 +21,8 @@ with a WHOOP® strap you own over Bluetooth and stores your data **only on your 
 no HOOP server, no HOOP account, and no telemetry — the maintainers cannot see your data and never
 receive it.
 
-HOOP is published anonymously by an unpaid hobbyist maintainer and contributors, referred to
-throughout as **"the maintainers."** No personal identity is asserted or implied. "You" means the
-individual or entity using HOOP.
+HOOP is maintained by Sri Ganesh Shiramshetty and contributors, referred to throughout
+as **"the maintainers."** "You" means the individual or entity using HOOP.
 
 ## 2. Independent — not affiliated with WHOOP
 

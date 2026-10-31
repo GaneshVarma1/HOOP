@@ -50,7 +50,7 @@ import kotlin.math.roundToInt
 
 // MARK: - StepsCalibrationScreen (ported from Strand/Screens/SettingsView.swift StepsCalibrationSheet)
 //
-// WHOOP 4.0 steps-ESTIMATE calibration. A 4.0 sends no step count over BLE, so NOOP estimates steps
+// WHOOP 4.0 steps-ESTIMATE calibration. A 4.0 sends no step count over BLE, so HOOP estimates steps
 // from the strap's daily MOTION VOLUME, calibrated per-user against the phone's real step count. This
 // screen is read-only over the engine's fit (it never recomputes the headline): an honest explainer,
 // the current calibration, a recent estimated-vs-phone accuracy table, and a manual coefficient

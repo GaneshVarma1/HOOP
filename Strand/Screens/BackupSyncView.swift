@@ -92,7 +92,7 @@ struct BackupSyncView: View {
                     .disabled(busy)
                 #if os(iOS)
                 // #52: some iOS 26 users can't select a folder in the system picker (its "Open" button
-                // never fires). This backs up inside NOOP's own Files-visible folder instead — no picker.
+                // never fires). This backs up inside HOOP's own Files-visible folder instead — no picker.
                 if !FolderBackup.useInternalFolder {
                     NoopButton("Use HOOP's own folder (browse in Files)",
                                systemImage: "iphone", kind: .tertiary) { useNoopFolder() }
@@ -140,7 +140,7 @@ struct BackupSyncView: View {
                 Text(lastMs > 0 ? "Last backup: \(relativeTime(lastMs))" : "No backup yet.")
                     .font(StrandFont.caption).foregroundStyle(StrandPalette.textTertiary)
                 // Auto is ON but the last SUCCESSFUL backup is stale — the on-launch catch-up isn't landing
-                // (a moved/disconnected cloud folder stops backups silently, or NOOP hasn't been opened).
+                // (a moved/disconnected cloud folder stops backups silently, or HOOP hasn't been opened).
                 // Surface it so a silently-failing auto-backup is visible, not discovered only at restore.
                 // `lastMs > 0` excludes the never-backed-up state (the "No backup yet." line above owns that,
                 // and it would otherwise false-fire the moment auto is switched on, before the first backup).
@@ -217,7 +217,7 @@ struct BackupSyncView: View {
     }
 
     #if os(iOS)
-    // #52: picker-free fallback. Back up inside NOOP's own Files-visible folder (On My iPhone → NOOP →
+    // #52: picker-free fallback. Back up inside HOOP's own Files-visible folder (On My iPhone → HOOP →
     // Backups). No folder picker, no security-scoped bookmark — works even where the picker won't select.
     private func useNoopFolder() {
         FolderBackup.useNoopFolder()

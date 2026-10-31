@@ -508,7 +508,7 @@ struct RootView: View {
     }
 }
 
-/// The NOOP logo mark — an **open recovery ring** (~80% arc, round caps, starting at 12 o'clock)
+/// The HOOP logo mark — an **open recovery ring** (~80% arc, round caps, starting at 12 o'clock)
 /// with a **solid centre core dot** ("on-device core"), per the README logo system. Rendered in the
 /// gold gradient and kept deliberately flat / low-glow for the v3 Titanium & Gold restraint. Drawn
 /// purely from design tokens so it tracks the palette. Sized to optically x-height-match the wordmark.

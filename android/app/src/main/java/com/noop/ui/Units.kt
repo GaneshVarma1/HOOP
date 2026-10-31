@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 
 // MARK: - Unit system preference
 //
-// NOOP stores EVERYTHING in SI (km, kg, cm, °C) — the importers normalise on the way in, so this is a
+// HOOP stores EVERYTHING in SI (km, kg, cm, °C) — the importers normalise on the way in, so this is a
 // purely cosmetic, display-only layer. There is no data migration and nothing in Room changes when the
 // user flips this. Body measurements and exercise distance each have their own Metric/Imperial choice,
 // with a SEPARATE temperature override, because regional conventions commonly mix pounds with kilometres
@@ -41,20 +41,20 @@ enum class TemperatureUnit(val raw: String) {
 }
 
 /**
- * How the Effort score is displayed (#268). NOOP stores Effort 0–100 (StrainScorer.maxStrain = 100);
+ * How the Effort score is displayed (#268). HOOP stores Effort 0–100 (StrainScorer.maxStrain = 100);
  * people coming from WHOOP often think in its 0–21 Day Strain axis, so this purely cosmetic toggle lets
- * the SAME stored value be shown on either scale. Default is NOOP's own 0–100 — the data never changes.
+ * the SAME stored value be shown on either scale. Default is HOOP's own 0–100 — the data never changes.
  * Mirrors the macOS [EffortScale].
  */
 enum class EffortScale(val raw: String) {
-    /** NOOP's native 0–100 axis (the stored value, one decimal). */
+    /** HOOP's native 0–100 axis (the stored value, one decimal). */
     HUNDRED("hundred"),
 
     /** WHOOP's 0–21 Day Strain axis — the stored 0–100 value rescaled down for display only. */
     WHOOP("whoop");
 
     companion object {
-        /** An unset/unknown value resolves to NOOP's native 0–100 axis. */
+        /** An unset/unknown value resolves to HOOP's native 0–100 axis. */
         fun fromRaw(raw: String?): EffortScale = entries.firstOrNull { it.raw == raw } ?: HUNDRED
     }
 }
@@ -79,20 +79,20 @@ enum class TrendChartStyle(val raw: String) {
 }
 
 /**
- * Which sleep window the nightly HRV is measured over (#141). NOOP historically averages RMSSD across the
+ * Which sleep window the nightly HRV is measured over (#141). HOOP historically averages RMSSD across the
  * WHOLE night (every stage); WHOOP/Polar/etc. sample the last slow-wave-sleep window, which reads lower.
  * This lets a user match that. It CHANGES the computed avgHrv (not display-only), so a switch re-scores +
  * re-baselines. Default is the historical whole-night value. Mirrors the macOS [HrvWindow].
  */
 enum class HrvWindow(val raw: String) {
-    /** RMSSD averaged over every 5-min window of the night (NOOP's long-standing value). */
+    /** RMSSD averaged over every 5-min window of the night (HOOP's long-standing value). */
     WHOLE_NIGHT("whole"),
 
     /**
      * RMSSD over DEEP (slow-wave) sleep windows only — the window WHOOP samples.
      *
      * "Comparable to WHOOP" describes the METHOD, not the accuracy of the resulting number: the deep
-     * windows come from NOOP's own stager, not the strap. `Tools/SleepPSG` scores that stager against
+     * windows come from HOOP's own stager, not the strap. `Tools/SleepPSG` scores that stager against
      * PSG truth over 31 subjects / 26 773 epochs and measures deep at 18.94 % predicted vs 13.76 %
      * truth — a +5.18 pp bias, roughly 38 % more deep epochs than exist, at four-class kappa 0.356.
      * An over-inclusive deep window pulls this value back toward the whole-night mean, which is the
@@ -118,7 +118,7 @@ enum class SleepChartStyle(val raw: String) {
     /** The long-standing per-stage-rows timeline (Awake/Light/Deep/REM each on their own track). */
     CLASSIC("classic"),
 
-    /** A single stepped hypnogram FILLED to the baseline, in NOOP's sleep colours. Needs the night's real
+    /** A single stepped hypnogram FILLED to the baseline, in HOOP's sleep colours. Needs the night's real
      *  timestamped segments, else falls back to CLASSIC. */
     FILLED("filled"),
 
@@ -384,7 +384,7 @@ object UnitFormatter {
     // MARK: Effort scale (stored 0–100 — #268)
 
     /**
-     * NOOP stores Effort 0–100 (StrainScorer.maxStrain = 100). WHOOP's Day Strain axis is 0–21, and the
+     * HOOP stores Effort 0–100 (StrainScorer.maxStrain = 100). WHOOP's Day Strain axis is 0–21, and the
      * import boundary rescales by 100/21 (WhoopCsvImporter / WhoopExportImporter.dayStrainToEffortScale),
      * so the exact inverse for a display-only 0–100 → 0–21 conversion is ×21/100. Kept byte-identical to
      * that factor and to the macOS `UnitFormatter.effortScaleFactor`.

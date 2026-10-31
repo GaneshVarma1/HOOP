@@ -1,10 +1,10 @@
 import XCTest
 @testable import Strand
 
-/// The temp sweep removes only what NOOP wrote, never a sibling it found (#2446).
+/// The temp sweep removes only what HOOP wrote, never a sibling it found (#2446).
 ///
 /// The sweep used to take every item in the temporary directory whose name began `noop-`, on the
-/// premise that "the temp dir is NOOP's private sandbox". That is true on iOS and false on the shipped
+/// premise that "the temp dir is HOOP's private sandbox". That is true on iOS and false on the shipped
 /// Mac build, which is ad-hoc signed with no entitlements and so is not sandboxed: its temporary
 /// directory is the shared per-user one. The reporter lost a live `xcodebuild`'s derived data to it.
 ///
@@ -60,7 +60,7 @@ final class NoopScratchTests: XCTestCase {
         XCTAssertTrue(exists("canary-b-noop"))
     }
 
-    /// Everything inside the owned folder is NOOP's, so it goes without being matched by name.
+    /// Everything inside the owned folder is HOOP's, so it goes without being matched by name.
     func testEverythingInsideTheOwnedFolderIsReclaimed() throws {
         let mine = NoopScratch.directory(in: root)
         for name in ["health-1.xml", "import-2", "anything-at-all.bin"] {
@@ -139,7 +139,7 @@ final class NoopScratchTests: XCTestCase {
                        (Bundle.main.bundleIdentifier ?? "com.noopapp.noop") + ".scratch")
     }
 
-    /// The Storage screen must not attribute another program's disk to NOOP.
+    /// The Storage screen must not attribute another program's disk to HOOP.
     func testSizeCountsOnlyWhatTheSweepWouldReclaim() throws {
         let mine = NoopScratch.directory(in: root)
         try Data(repeating: 0, count: 100).write(to: mine.appendingPathComponent("a.bin"))

@@ -160,10 +160,10 @@ enum class DeviceFamily {
 /**
  * WHOOP custom GATT service families visible in advertisements.
  *
- * Only `WHOOP4` and `MAVERICK_GOOSE_FD4B` are connectable in NOOP today. The other services are
+ * Only `WHOOP4` and `MAVERICK_GOOSE_FD4B` are connectable in HOOP today. The other services are
  * protocol facts from reverse engineering and are diagnostic-only until their connection framing is
  * mapped and hardware-tested. In particular, [PUFFIN_1150] is intentionally named with its UUID
- * prefix because NOOP already uses "puffin" for the fd4b/Maverick-Goose packet framing.
+ * prefix because HOOP already uses "puffin" for the fd4b/Maverick-Goose packet framing.
  */
 private fun unsupportedWhoopCharacteristicUuidStrings(prefix: String, suffix: String): List<String> =
     listOf("0002", "0003", "0004", "0005", "0007").map { "$prefix$it-$suffix" }

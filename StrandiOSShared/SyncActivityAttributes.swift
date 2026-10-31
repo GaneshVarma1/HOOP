@@ -3,7 +3,7 @@ import Foundation
 import ActivityKit
 
 /// Live Activity attributes for a strap history sync — the Lock Screen banner and the Dynamic Island
-/// while NOOP pulls stored history off the strap.
+/// while HOOP pulls stored history off the strap.
 ///
 /// A SEPARATE activity type from `NOOPActivityAttributes` (live HR) and `LiftActivityAttributes`, for the
 /// same reason those two are separate: a different question with a different lifetime. It lives from the

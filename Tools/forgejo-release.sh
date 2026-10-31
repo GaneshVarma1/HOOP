@@ -8,7 +8,7 @@
 #          dist/HOOP-v4.7.0-macos.zip dist/HOOP-v4.7.0-ios.ipa dist/HOOP-v4.7.0-android.apk
 #
 # Creates tag v<version> (server-side, from the current default branch) + the release,
-# then uploads every asset. Token from ~/.config/noop/forge_token. Idempotent on assets.
+# then uploads every asset. Configure FORGE_TOKEN_FILE explicitly. Idempotent on assets.
 # FORGE_DOMAIN/FORGE_ORG/FORGE_REPO come from deploy.env (or env). No secret on any cmdline.
 # ─────────────────────────────────────────────────────────────────────────────
 set -uo pipefail
@@ -16,8 +16,10 @@ set -uo pipefail
 # load config: prefer a sibling deploy.env, else expect FORGE_* in the environment
 HERE="$(cd "$(dirname "$0")" && pwd)"
 [ -f "$HERE/../deploy.env" ] && source "$HERE/../deploy.env"
-DOMAIN="${FORGE_DOMAIN:-${NOOP_DOMAIN:-noop.fans}}"
-ORG="${FORGE_ORG:-NoopApp}"; REPO="${FORGE_REPO:-noop}"
+: "${FORGE_DOMAIN:?Set FORGE_DOMAIN to an owned Forgejo host before mirroring}"
+: "${FORGE_ORG:?Set FORGE_ORG to an owned Forgejo organization}"
+: "${FORGE_REPO:?Set FORGE_REPO to an owned Forgejo repository}"
+DOMAIN="$FORGE_DOMAIN"; ORG="$FORGE_ORG"; REPO="$FORGE_REPO"
 
 VER="${1:?usage: forgejo-release.sh <version> <asset...> [-- notes]}"; shift
 TAG="v$VER"; NOTES="HOOP $TAG — see CHANGELOG.md."
@@ -27,7 +29,7 @@ while [ $# -gt 0 ]; do
   ASSETS+=("$1"); shift
 done
 
-TOKEN_FILE="$HOME/.config/noop/forge_token"
+TOKEN_FILE="${FORGE_TOKEN_FILE:?Set FORGE_TOKEN_FILE for the configured Forgejo host}"
 [ -f "$TOKEN_FILE" ] || { echo "missing $TOKEN_FILE" >&2; exit 1; }
 TOKEN="$(cat "$TOKEN_FILE")"
 API="https://$DOMAIN/api/v1"

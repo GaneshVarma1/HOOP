@@ -3,18 +3,18 @@ package com.noop.polar
 // MARK: - Polar Measurement Data (PMD) decode — clean-room, pure, no android.bluetooth
 //
 // Faithful Kotlin twin of Packages/PolarProtocol/Sources/PolarProtocol/PmdDecoder.swift. Polar's PMD
-// service is proprietary but PUBLICLY DOCUMENTED (Polar's official BLE SDK); this is NOOP's own clean
+// service is proprietary but PUBLICLY DOCUMENTED (Polar's official BLE SDK); this is HOOP's own clean
 // parser of the documented byte layout — no Polar code, no firmware, nothing fabricated.
 //
 // PMD data notifications share a 10-byte header: byte 0 = measurement type, bytes 1..8 = timestamp
 // (uint64 LE ns since 2000-01-01 UTC — the PMD epoch, NOT Unix — of the last sample), byte 9 = frame type
 // (bit 7 = compressed flag; bits 0..6 = format).
-// This decodes the PPI stream (0x03): heart rate + peak-to-peak (inter-beat) interval per beat — NOOP's
+// This decodes the PPI stream (0x03): heart rate + peak-to-peak (inter-beat) interval per beat — HOOP's
 // HRV input, the same signal WHOOP R-R gives — so a Polar H10 / OH1 / Verity Sense needs no ECG peak
 // detection. PPI is never compressed: each sample is a fixed 6-byte record (hr u8, ppi u16 LE, error u16
 // LE, flags u8 [bit0 blocker, bit1 skinContact, bit2 skinContactSupported]).
 
-/** A PMD measurement type (the subset NOOP recognises); an unrecognised type decodes to null (no guess). */
+/** A PMD measurement type (the subset HOOP recognises); an unrecognised type decodes to null (no guess). */
 enum class PolarPmdMeasurement(val raw: Int) {
     ECG(0x00),
     PPG(0x01),
@@ -67,14 +67,14 @@ data class PolarPmdFrameHeader(
 data class PolarPpiSample(
     /** Heart rate in bpm as reported; 0 = "no valid beat right now", surfaced as-is (never faked). */
     val heartRate: Int,
-    /** The peak-to-peak / inter-beat interval in ms — NOOP's HRV input (≈ an R-R interval). */
+    /** The peak-to-peak / inter-beat interval in ms — HOOP's HRV input (≈ an R-R interval). */
     val ppiMs: Int,
     /** The sensor's own error estimate for this interval, in ms. */
     val errorEstimateMs: Int,
     /** Blocker bit (flags bit0): the sensor flagged this interval unreliable (movement / poor contact) —
      *  drop from HRV. Unambiguous across sources. */
     val blocker: Boolean,
-    /** Raw flags bit1. Named per the Polar SDK's `skinContactStatus` (set = contact). NOTE: NOOP's
+    /** Raw flags bit1. Named per the Polar SDK's `skinContactStatus` (set = contact). NOTE: HOOP's
      *  DEVICE_SUPPORT_ROADMAP.md §PMD phrases bit1 as "poor/no skin contact" (opposite polarity), so the
      *  real-world meaning is UNCONFIRMED on hardware — do not gate on it until verified. */
     val skinContact: Boolean,

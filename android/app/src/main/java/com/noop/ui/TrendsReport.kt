@@ -480,7 +480,7 @@ object TrendsReportRenderer {
 
     private fun drawFooter(canvas: Canvas, generatedOn: String) {
         val y = PAGE_H - MARGIN - 12f
-        // Provenance legend (#457): make clear which numbers are measured vs. NOOP's own derived scores,
+        // Provenance legend (#457): make clear which numbers are measured vs. HOOP's own derived scores,
         // so a clinician reading the PDF isn't misled into treating Recovery/Strain as clinical measures.
         // Sits above the hairline; wraps to the page width (~4 lines at this size).
         val legend = "How to read this: HRV, Resting HR, Sleep duration, Respiratory rate and Skin " +

@@ -4,11 +4,11 @@ import StrandDesign
 import StrandAnalytics
 import WhoopStore
 
-/// NOOP — Health Monitor.
+/// HOOP — Health Monitor.
 /// Live heart rate hero (ChartCard with a streaming sparkline + HR-zone footer),
 /// then a uniform LazyVGrid of the body's vital signs (respiratory rate, blood
 /// oxygen, resting HR, HRV, skin temp) as fixed-height StatTiles, each tinted and
-/// captioned with its in-range state. Re-skinned to the locked NOOP component
+/// captioned with its in-range state. Re-skinned to the locked HOOP component
 /// system: every surface is a NoopCard, every metric is a StatTile, every chart is
 /// a ChartCard — no ad-hoc card heights or paddings.
 struct HealthView: View {
@@ -149,7 +149,7 @@ private struct SyncStatusSection: View {
                 VStack(alignment: .leading, spacing: NoopMetrics.cardInnerSpacing) {
                     statusRow
 
-                    // Route the manual offload kick through the unified NOOP button system so the
+                    // Route the manual offload kick through the unified HOOP button system so the
                     // label sits centred at controlHeight like every other primary control. Reaches
                     // the BLE engine's gated entry point directly (same idiom as SettingsView's
                     // `model.ble.enableWhoop5DeepData()`); BLEManager.syncNow() is the honest gate —
@@ -1072,7 +1072,7 @@ private struct ReadinessChecklistCard: View {
                 HStack(spacing: NoopMetrics.rowSpacing) {
                     confidencePill
                     Spacer(minLength: 0)
-                    // Force-recompute affordance: NOOP scores Fitness Age weekly, so this applies it NOW
+                    // Force-recompute affordance: HOOP scores Fitness Age weekly, so this applies it NOW
                     // from stored data. Spinner while it runs.
                     if let onRefresh {
                         if refreshing {

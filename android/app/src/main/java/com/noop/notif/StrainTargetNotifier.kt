@@ -18,8 +18,8 @@ import com.noop.ui.appLaunchIntent
 // LOW end of today's recovery-derived OPTIMAL strain band (the #43 coupled read), post a "reached your
 // optimal strain" notification.
 //
-// CLEAN-ROOM: this reimplements the BEHAVIOUR only. The copy is NOOP's own — NOT WHOOP's decompiled
-// strings — and the target is NOOP's own recovery→strain band (#43), not a value read off another app.
+// CLEAN-ROOM: this reimplements the BEHAVIOUR only. The copy is HOOP's own — NOT WHOOP's decompiled
+// strings — and the target is HOOP's own recovery→strain band (#43), not a value read off another app.
 //
 // The gate runs on the 0-21 coupled axis: the day's stored Effort (0-100) is converted with the shipped
 // UnitFormatter.effortValue(_, WHOOP) at the call site, and the target is the optimal band's `low` (already
@@ -46,7 +46,7 @@ object StrainTargetPolicy {
         dayStrain >= target &&
         lastNotifiedDay != today
 
-    /** Title + body for the nudge. [target] is the optimal-band low on the 0-21 coupled axis. NOOP's OWN
+    /** Title + body for the nudge. [target] is the optimal-band low on the 0-21 coupled axis. HOOP's OWN
      *  wording — the feature is reimplemented behaviour, not copied copy. */
     fun copy(target: Int): Pair<String, String> {
         val title = "Optimal strain reached"

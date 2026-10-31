@@ -5,7 +5,7 @@ package com.noop.ble
  *
  * A bonded fast-path connect that drops before it ever reaches a session means the OS is holding a bond
  * the strap no longer honours — a firmware update, or the official WHOOP app re-bonding, leaves Android
- * with a pairing the band has forgotten. NOOP has always detected this ([WhoopBleClient] logs "stale OS
+ * with a pairing the band has forgotten. HOOP has always detected this ([WhoopBleClient] logs "stale OS
  * bond") and, from the second failure, shown the forget-and-re-pair guide. Asking is the right first
  * move, and it stays: this is what happens when asking did not work.
  *

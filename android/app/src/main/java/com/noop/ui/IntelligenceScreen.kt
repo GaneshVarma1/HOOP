@@ -39,7 +39,7 @@ import java.util.Calendar
 import kotlin.math.roundToInt
 
 /**
- * Intelligence — NOOP's own Charge / Effort / Rest scores, presented with the
+ * Intelligence — HOOP's own Charge / Effort / Rest scores, presented with the
  * WHOOP-model explanation so the read-out is legible rather than a black box.
  *
  * Ports macOS Strand/Screens/IntelligenceView.swift. The macOS build runs an
@@ -460,7 +460,7 @@ private fun sleepValue(totalMin: Double?): String {
 
 /**
  * The By-Day source badge (label + tint) for a merged [DailyMetric], from the WINNING row's [deviceId].
- * The By-Day numbers are always NOOP's on-device scores, but when an import covers the day it wins the
+ * The By-Day numbers are always HOOP's on-device scores, but when an import covers the day it wins the
  * dashboard merge (mergeDaily), so the badge says so instead of the old hard-coded "NOOP-computed".
  * A computed row's id ends in "-noop"; imports keep their source id ("my-whoop" export, "apple-health" /
  * "health-connect"). Brand wording matches the rest of the app (macOS DaySource: "On-device"/"Whoop"/

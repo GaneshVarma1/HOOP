@@ -28,11 +28,11 @@ import java.util.concurrent.TimeUnit
  *
  * A user-armed, LOCAL notification carrying today's coaching brief (readiness + training plan),
  * generated on-device via the user's already-configured Coach provider, once a day at a chosen
- * time. Tap opens the app (same convention every other NOOP notification uses — see
+ * time. Tap opens the app (same convention every other HOOP notification uses — see
  * [BatteryAlertNotifier]); the full brief is stored for [CoachViewModel]/[CoachScreen] to surface.
  * No push server, no cloud — the network call is the SAME bring-your-own-key request Coach already
  * makes on every send, just user-armed on a daily WorkManager job instead of triggered by a tap.
- * Default OFF, like every NOOP automation.
+ * Default OFF, like every HOOP automation.
  *
  * SCHEDULING — WorkManager (mirrors [DebugExportScheduler]), not AlarmManager: a brief sliding a few
  * minutes into a maintenance window is fine, and it must survive reboot/app-kill without the

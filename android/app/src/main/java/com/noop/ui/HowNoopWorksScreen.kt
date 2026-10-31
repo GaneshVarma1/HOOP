@@ -38,7 +38,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
-// MARK: - HowNoopWorksScreen ("How NOOP works" primer)
+// MARK: - HowNoopWorksScreen ("How HOOP works" primer)
 //
 // COMPONENT 5 of the sleep-guidance / explainability layer
 // (docs/superpowers/specs/2026-06-20-sleep-guidance-explainability.md): a short,
@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.dp
 // "Got it" footer. The four section bodies are the single approved source of truth,
 // shared VERBATIM across macOS / iOS / Android — do not paraphrase or re-wrap the
 // wording; keep it identical to the Swift HowNoopWorks primer. Honest per the
-// explainability spec: nothing here promises a number NOOP won't show. No em-dashes.
+// explainability spec: nothing here promises a number HOOP won't show. No em-dashes.
 
 /**
  * The four primer sections, in render order. Each carries its own glyph + accent so a
@@ -119,7 +119,7 @@ private enum class PrimerSection(
 }
 
 /**
- * The "How NOOP works" primer sheet. [onClose] dismisses. Pure presentation — it reads
+ * The "How HOOP works" primer sheet. [onClose] dismisses. Pure presentation — it reads
  * nothing and writes nothing; every line is static approved copy.
  */
 @Composable
@@ -161,7 +161,7 @@ fun HowNoopWorksScreen(onClose: () -> Unit) {
     }
 }
 
-// MARK: - Header ("How NOOP works" + tagline + close X)
+// MARK: - Header ("How HOOP works" + tagline + close X)
 
 @Composable
 private fun Header(onClose: () -> Unit) {

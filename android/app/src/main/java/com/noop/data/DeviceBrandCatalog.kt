@@ -24,7 +24,7 @@ data class DeviceBrandSpec(
     val sourceKind: SourceKind,
     /** The registry id prefix for a device of this brand ("huami", "oura", "garmin", "strap"). */
     val idPrefix: String,
-    /** Whether this brand can stream LIVE heart rate at all in NOOP. false for Oura (no open live stream) —
+    /** Whether this brand can stream LIVE heart rate at all in HOOP. false for Oura (no open live stream) —
      *  the wizard routes those to import instead of pretending to connect. */
     val canStreamLiveHR: Boolean,
     /** True for the opt-in EXPERIMENTAL tier (Amazfit / Mi Band / Garmin / Oura); false for the shipped

@@ -82,8 +82,8 @@ struct BuzzStrapIntent: AppIntent {
     }
 }
 
-/// Pull the strap's stored history now: the Shortcuts twin of the "Sync now" button, run WITHOUT opening NOOP.
-/// iOS runs an in-app intent inside NOOP's own process (launching or resuming it in the background), where the
+/// Pull the strap's stored history now: the Shortcuts twin of the "Sync now" button, run WITHOUT opening HOOP.
+/// iOS runs an in-app intent inside HOOP's own process (launching or resuming it in the background), where the
 /// strap link lives under the bluetooth-central background mode, so the offload carries on after this returns.
 /// The spoken/shown reply reports only what this path observed about the sync starting.
 ///
@@ -125,7 +125,7 @@ struct AskCoachIntent: AppIntent {
     }
 }
 
-/// Surfaces NOOP's intents to Siri, Spotlight, and the Shortcuts gallery without any user setup.
+/// Surfaces HOOP's intents to Siri, Spotlight, and the Shortcuts gallery without any user setup.
 struct NOOPShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(intent: SyncStrapIntent(),

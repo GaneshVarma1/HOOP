@@ -673,7 +673,7 @@ object AndroidDiagnostics {
                 if (at > 0L) line += " · sent ${relTime(System.currentTimeMillis() - at)}"
                 if (!p.getBoolean("alarm.lastArmConnected", false)) line += " · strap NOT connected (queued)"
                 // #34: live HR at arm, logged only to test whether the strap's own sleep/rest detection
-                // (not anything NOOP sends) gates the physical haptic — see recordAlarmArm's doc comment.
+                // (not anything HOOP sends) gates the physical haptic — see recordAlarmArm's doc comment.
                 if (p.contains("alarm.lastArmHeartRate")) line += " · HR ${p.getInt("alarm.lastArmHeartRate", 0)} bpm at arm"
                 add(line)
                 val reported = p.getLong("alarm.lastReportedEpoch", 0L)
@@ -966,7 +966,7 @@ object AndroidDiagnostics {
      *  internal so it unit-tests without a Context (the suite stays Robolectric-free). */
     internal fun oemKillHeuristic(manufacturer: String): String =
         // Single source of truth for the aggressive-vendor set (#386): the same list the Settings
-        // "Keep NOOP alive overnight" row gates on, so the diagnostic and the fix never disagree.
+        // "Keep HOOP alive overnight" row gates on, so the diagnostic and the fix never disagree.
         if (com.noop.ble.BackgroundHealth.isAggressiveVendor(manufacturer))
             "aggressive vendor (${manufacturer.lowercase()}), whitelist HOOP to keep it alive"
         else "standard"

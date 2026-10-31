@@ -1,10 +1,10 @@
 import Foundation
 
-/// The language NOOP uses for app-owned copy. Region-specific measurement and clock preferences remain
+/// The language HOOP uses for app-owned copy. Region-specific measurement and clock preferences remain
 /// separate: this changes words, not the user's unit-system choice or time zone.
 ///
 /// Apple chooses a bundle's localization once, when the process launches. `apply(_:)` therefore writes
-/// the standard `AppleLanguages` override and Settings tells the user to reopen NOOP. Applying only a
+/// the standard `AppleLanguages` override and Settings tells the user to reopen HOOP. Applying only a
 /// SwiftUI `locale` live would be incorrect: `Text` would switch immediately while `String(localized:)`
 /// messages, notifications, and strings owned by `StrandDesign.module` stayed in the old language.
 enum AppLanguage: String, CaseIterable, Identifiable {

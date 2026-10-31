@@ -392,7 +392,7 @@ struct TodayView: View {
     @State private var hostedStressHours: [DaytimeStress.HourPoint] = []
     @State private var hostedStressActivityMaskedHours = 0
 
-    // TODAY's in-progress Effort (NOOP 0–100 axis), recomputed over the day's HR (local-midnight→now)
+    // TODAY's in-progress Effort (HOOP 0–100 axis), recomputed over the day's HR (local-midnight→now)
     // each load so the gauge tracks today as it accumulates rather than waiting on the heavy daily pass
     // to persist, which early in the day would otherwise surface yesterday's completed Effort or a stale
     // 0.0 (#402). nil below StrainScorer.minReadings (we then fall back to the stored daily row) and on
@@ -994,7 +994,7 @@ struct TodayView: View {
         return provenanceDisplayLabel(rawSource: rawSource, deviceId: deviceId)
     }
 
-    /// Today hero wording names the provider that supplied the score inputs, not where NOOP ran the math.
+    /// Today hero wording names the provider that supplied the score inputs, not where HOOP ran the math.
     /// Registered device brands cover every live source; stable import ids cover providers without a paired
     /// registry row. Unknown ids remain visible rather than being falsely labelled as Whoop.
     static func todayScoreProviderLabel(sourceId: String, brand: String?) -> String {
@@ -3136,7 +3136,7 @@ struct TodayView: View {
     /// rounded to a whole percent. nil until there are enough banked HRV nights to form a stable
     /// baseline (mirrors the recovery seed gate), the insight then falls back to the state word.
     ///
-    /// STOPGAP (#696): NOOP mixes HRV measurement methods on the shared `avgHrv` field,     /// strap/WHOOP-CSV HRV is RMSSD (~20-100 ms) while Apple-Health-imported HRV is SDNN
+    /// STOPGAP (#696): HOOP mixes HRV measurement methods on the shared `avgHrv` field,     /// strap/WHOOP-CSV HRV is RMSSD (~20-100 ms) while Apple-Health-imported HRV is SDNN
     /// (~100-200 ms). With no method awareness, an SDNN reading (e.g. an Oura ring's 176 ms)
     /// compared against an RMSSD baseline (~57 ms) yields a physiologically-impossible delta
     /// (+209%) and renders the alarming "210% over baseline" headline. Genuine night-to-night
@@ -3490,7 +3490,7 @@ struct TodayView: View {
         .frame(width: diameter, height: diameter)
     }
 
-    /// The effective Effort strain (NOOP 0–100 axis) the gauge shows. For TODAY this prefers the live
+    /// The effective Effort strain (HOOP 0–100 axis) the gauge shows. For TODAY this prefers the live
     /// in-progress value computed over the day's HR (midnight→now) in `loadAll`, so the gauge reflects
     /// the accumulating day rather than the last persisted daily row, which only refreshes when the
     /// heavy daily pass runs, so early in the day the stored row is yesterday's Effort or a stale 0.0
@@ -3498,7 +3498,7 @@ struct TodayView: View {
     /// (StrainScorer.minReadings). Navigated past days always use the stored row.
     private func effortStrain(_ d: DailyMetric?) -> Double? {
         #if DEBUG
-        // DEBUG promo harness: pin Effort (NOOP 0–100 axis) to the active frame's value. This single
+        // DEBUG promo harness: pin Effort (HOOP 0–100 axis) to the active frame's value. This single
         // point feeds the hero ring AND every Effort read-out, so they stay consistent. No-op when no
         // `--demo-hour` frame is active. Charge/Rest are intentionally left at their seeded values.
         if let f = DemoDayHarness.active { return f.effort }
@@ -3523,14 +3523,14 @@ struct TodayView: View {
     }
 
     /// Strain value to feed the Effort gauge, on the SELECTED display scale (#313). The effective
-    /// `strain` is on NOOP's 0–100 Effort axis; `UnitFormatter.effortValue` converts it to the
+    /// `strain` is on HOOP's 0–100 Effort axis; `UnitFormatter.effortValue` converts it to the
     /// user's chosen scale (0–100 native, or ×21/100 down to WHOOP's 0–21) so the arc + number
     /// match the rest of the app's Effort read-outs. Pairs with `effortGaugeMax` for the "of N".
     private func effortGaugeValue(_ d: DailyMetric?) -> Double? {
         effortStrain(d).map { UnitFormatter.effortValue($0, scale: effortScale) }
     }
 
-    /// The Effort gauge's scale maximum, 100 on NOOP's native axis, 21 on the WHOOP axis. Drives
+    /// The Effort gauge's scale maximum, 100 on HOOP's native axis, 21 on the WHOOP axis. Drives
     /// the arc fraction and the gauge's "of N" caption so both follow the toggle (#313).
     private var effortGaugeMax: Double { effortScale == .whoop ? 21 : 100 }
 
@@ -3779,7 +3779,7 @@ struct TodayView: View {
         }
     }
 
-    /// "Charge" marker (NOOP's name for recovery) at wake time (sleep end), else at the window start.
+    /// "Charge" marker (HOOP's name for recovery) at wake time (sleep end), else at the window start.
     /// Hidden while calibrating.
     private var recoveryMarker: OverviewHRChart.EdgeMarker? {
         guard let rec = displayDay?.recovery else { return nil }
@@ -4371,7 +4371,7 @@ struct TodayView: View {
     }
 
     /// H6, the small ⚙︎ on an ESTIMATED Steps tile that opens the steps-calibration sheet. A WHOOP 4.0
-    /// strap doesn't transmit steps, so NOOP estimates them from motion calibrated to the phone's count;
+    /// strap doesn't transmit steps, so HOOP estimates them from motion calibrated to the phone's count;
     /// this puts the "tune that estimate" entry right where the user reads the "est." caption.
     private var stepsCalibrationButton: some View {
         Button {
@@ -4957,7 +4957,7 @@ struct TodayView: View {
         restScore = restScoreLocal
 
         // Resolve the displayed score row, then map computed rows through durable input provenance so the
-        // badge names the sensor/import provider rather than the device that ran NOOP's math.
+        // badge names the sensor/import provider rather than the device that ran HOOP's math.
         var provenance: [String: String] = [:]
         var providers: [String: ScoreInputProvider] = [:]
         let recoveryResolved = await recoveryResolvedA

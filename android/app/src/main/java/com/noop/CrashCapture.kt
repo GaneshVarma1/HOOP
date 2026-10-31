@@ -68,7 +68,7 @@ object CrashCapture {
         val crash = lastCrash(context) ?: return@runCatching null
         // A crash from a build the user has already replaced is not news. The capture handler has written
         // this file since June while the screen that surfaces it landed in August, so on the first launch
-        // after upgrading, every install carrying an old crash would open on "NOOP stopped unexpectedly"
+        // after upgrading, every install carrying an old crash would open on "HOOP stopped unexpectedly"
         // for something survived weeks earlier — which is how this was found: a 53-day-old crash greeted a
         // staging build that had not crashed at all.
         val lastUpdate = runCatching {

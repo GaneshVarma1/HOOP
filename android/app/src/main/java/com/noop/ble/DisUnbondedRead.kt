@@ -1,7 +1,7 @@
 package com.noop.ble
 
 /**
- * Should NOOP try reading the Device Information Service on a 5/MG that has NOT bonded?
+ * Should HOOP try reading the Device Information Service on a 5/MG that has NOT bonded?
  *
  * Today `readDisIdentity` is issued only inside the post-bond handshake, so a strap that never bonds never
  * reads DIS at all — which is why a field capture of the reconnect loop contains zero `DIS:` lines and the
@@ -58,10 +58,10 @@ internal fun disReadFailureLine(uuid: String, status: String): String =
 /**
  * Should the standard Device Information Service firmware string be published for this strap?
  *
- * A 5/MG that never completes the puffin handshake has no firmware to show, because the only source NOOP
+ * A 5/MG that never completes the puffin handshake has no firmware to show, because the only source HOOP
  * reads it from is a framed command that needs the bond. The Devices screen therefore shows a WHOOP 4.0
  * with its firmware beside a 5/MG with none — which reads as a missing feature and is really a missing
- * READ: DIS `0x2A26` sits in the same service NOOP already reads the serial and hardware revision from,
+ * READ: DIS `0x2A26` sits in the same service HOOP already reads the serial and hardware revision from,
  * unbonded, on every 5/MG connect (#520). It was simply never asked for.
  *
  * DIS is a FALLBACK, never an override. The puffin value is the strap's own report of the firmware it is

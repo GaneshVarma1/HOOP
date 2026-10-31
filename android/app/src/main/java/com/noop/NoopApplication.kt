@@ -20,7 +20,7 @@ import kotlinx.coroutines.runBlocking
 /**
  * Application entry point.
  *
- * NOOP is a fully on-device WHOOP companion: it connects to the strap over BLE and persists
+ * HOOP is a fully on-device WHOOP companion: it connects to the strap over BLE and persists
  * everything locally via Room. Network access is opt-in: the AI Coach and the experimental,
  * one-way self-hosted push are both disabled by default.
  *

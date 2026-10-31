@@ -161,7 +161,7 @@ private fun SleepFreshnessNote(status: SleepFreshnessStatus, chunks: Int) {
 }
 
 /**
- * Sleep — Whoop-sleep clarity on the locked Noop component system. Mirrors the macOS
+ * Sleep — Whoop-sleep clarity on the locked HOOP component system. Mirrors the macOS
  * SleepView (Strand/Screens/SleepView.swift) section-for-section:
  *
  *   1. HERO — the stage breakdown for the navigated night. ◀/▶ chevrons flank the
@@ -1082,7 +1082,7 @@ private data class SleepUndoState(val sessions: List<SleepSession>, val fromEdit
 
 /**
  * #65: the transient UNDO strip after a suppressing sleep delete. A Rest-tinted card stating the window
- * NOOP won't re-detect + a real Undo button. The banner auto-clears after ~7s (the caller's keyed
+ * HOOP won't re-detect + a real Undo button. The banner auto-clears after ~7s (the caller's keyed
  * LaunchedEffect); Undo restores the deleted row into its ORIGINAL namespace and lifts the tombstone.
  * Mirrors the macOS SleepView.sleepUndoBanner (role-alert-ish, explicit Undo label).
  */
@@ -1235,7 +1235,7 @@ private val LIQUID_HERO_RADIUS: Dp = 26.dp
 // the screen-level liquid sky (the scaffold's topBackground), carrying — when the night has a 0–100
 // sleep-performance score — a [LiquidVessel] filled to score/100 in the Rest colour with the number counting
 // up over it (the Today HeroScoreVessel idiom). No score → the big count-up hours-slept headline. A
-// [SourceBadge] states whether the score is WHOOP's imported figure or NOOP's on-device estimate. The
+// [SourceBadge] states whether the score is WHOOP's imported figure or HOOP's on-device estimate. The
 // figures, fraction math and Rest tint are UNCHANGED from the BevelGauge this replaced — presentation-only.
 
 @Composable
@@ -1409,8 +1409,8 @@ private fun Hero(
                 ?: session?.let { (it.endTs - it.effectiveStartTs) / 60.0 }
                 ?: s.total
             // An Oura night's stages are the ring's RAW on-device SleepNet classification (decoded off the
-            // 0x49 phase stream), NOT a NOOP approximation — so it gets its own honest caption instead of the
-            // "approx. stages (on-device)" one that describes NOOP's own sparse-motion staging.
+            // 0x49 phase stream), NOT a HOOP approximation — so it gets its own honest caption instead of the
+            // "approx. stages (on-device)" one that describes HOOP's own sparse-motion staging.
             val stageCaption = if (activeIsOura) " · raw on-device stages" else " · approx. stages (on-device)"
             val subtitle = "${durationText(inBedMin)} in bed · ${display.efficiencyText} efficiency" +
                 (if (display.realSegments != null) stageCaption else "")

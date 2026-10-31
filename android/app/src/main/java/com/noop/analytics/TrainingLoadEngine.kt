@@ -7,7 +7,7 @@ import kotlin.math.exp
  *
  * Complements ReadinessEngine's existing rolling-mean ACWR and Foster monotony without replacing either
  * and without feeding the Readiness level. CTL, ATL, and TSB stay in the SAME units as the supplied daily
- * load; NOOP supplies daily Effort/strain, so these are not TRIMP. Missing calendar days are never
+ * load; HOOP supplies daily Effort/strain, so these are not TRIMP. Missing calendar days are never
  * silently filled with zero — a real rest day must be present with load=0, and a missing row or a null
  * load breaks the contiguous suffix. Byte-parity twin of Swift `TrainingLoadEngine`.
  *

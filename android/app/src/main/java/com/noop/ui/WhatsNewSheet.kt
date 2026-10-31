@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 // MARK: - WhatsNewSheet (ported from Strand/Screens/WhatsNewView.swift)
 //
 // A proper in-app changelog, shown automatically after an update and reachable any time
-// from Settings. It also restates, up top, what NOOP is and what to expect, so people who
+// from Settings. It also restates, up top, what HOOP is and what to expect, so people who
 // never open GitHub still understand the experimental footing and the WHOOP 5/MG status.
 //
 // macOS parity notes:
@@ -104,7 +104,7 @@ fun WhatsNewSheet(onClose: () -> Unit) {
     }
 }
 
-// MARK: - Header ("What's new" + "NOOP <version>" + close X)
+// MARK: - Header ("What's new" + "HOOP <version>" + close X)
 
 @Composable
 private fun Header(onClose: () -> Unit) {

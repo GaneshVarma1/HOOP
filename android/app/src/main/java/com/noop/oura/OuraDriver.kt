@@ -555,7 +555,7 @@ class OuraDriver(
                 // cited third-party unpack formula (OuraDecoders.decodeRealStepsFields, [oura-rs]). Still
                 // Tier B - only reached behind allowTierB (gated above), and OuraStreamMapping never folds
                 // RealStepsFields into a durable stream. Applies the SAME 14-field unpack to both 0x7E and
-                // 0x7F bodies (the formula is generic over any 14-byte body; NOOP's own investigation
+                // 0x7F bodies (the formula is generic over any 14-byte body; HOOP's own investigation
                 // found the movement-correlated fields present in both).
                 val fields = OuraDecoders.decodeRealStepsFields(record) ?: return emptyList()
                 listOf(OuraEvent.RealStepsFields(fields))
@@ -567,7 +567,7 @@ class OuraDriver(
                 // allowTierB (gated above). ONE field of it is durable: OuraStreamMapping maps
                 // `breathsPerMin` to a respSample row under the ring's OWN deviceId, and on a ring night
                 // AnalyticsEngine takes the night's median of those rows as dailyMetric.respRateBpm (the
-                // ring measures it; NOOP does not derive it). It is still refused at the STAGING read by
+                // ring measures it; HOOP does not derive it). It is still refused at the STAGING read by
                 // provenance (OuraRespScale.forScoring) - that path reads the stream as a ~1 Hz raw ADC
                 // waveform and a per-window rate is the wrong shape for a peak detector. `averageHrBpm`
                 // and every other field stay diagnostic-only - in particular the HR must not join the

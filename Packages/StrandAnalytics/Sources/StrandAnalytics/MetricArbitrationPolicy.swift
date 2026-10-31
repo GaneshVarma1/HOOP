@@ -11,7 +11,7 @@ import Foundation
 // Trust tiers (lower = more trusted), grounded in what a device MEASURES vs ESTIMATES (spec §1):
 //   0 — Direct dedicated sensor for this metric (WHOOP R-R for HRV; a wrist band's pedometer for
 //       steps; chest/PPG strap for avg/max/resting HR; ring/strap temp for skin temp).
-//   1 — Derived on-device from raw by NOOP (computed recovery/strain/sleep from strap streams).
+//   1 — Derived on-device from raw by HOOP (computed recovery/strain/sleep from strap streams).
 //   2 — Phone aggregate (Apple Health / Health Connect) of a declared-compatible quantity.
 //   3 — Estimate / proxy (a strap's STEP estimate; a calories estimate).
 //
@@ -100,7 +100,7 @@ public enum MetricArbitrationPolicy {
             case .appleHealth:   return 0   // phone pedometer — counts directly
             case .healthConnect: return 0
             case .whoopImport:   return 3   // strap step estimate is a last resort
-            case .noopComputed:  return 3   // NOOP step estimate from motion
+            case .noopComputed:  return 3   // HOOP step estimate from motion
             case .nutritionCsv:  return 3
             case .localCache:    return 3
             }

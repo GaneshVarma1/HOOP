@@ -20,7 +20,7 @@ import kotlin.math.floor
 import kotlin.math.round
 
 /**
- * Serializes NOOP's own cached rows back into WHOOP's 4-CSV export shape so NOOP's OWN importer
+ * Serializes HOOP's own cached rows back into WHOOP's 4-CSV export shape so HOOP's OWN importer
  * (WhoopCsvImporter here, WhoopExportImporter on macOS) re-imports them losslessly. The round-trip
  * is the point and is pinned by the test suite (Android exporter test + the macOS suite, which
  * re-parses this output with the REAL importer) so header/format drift fails a test rather than
@@ -28,7 +28,7 @@ import kotlin.math.round
  *
  * Header strings are byte-identical to a real WHOOP export — the importer normalises them down to
  * keys like `recovery_score_pct`, so they must match exactly. Everything is emitted in UTC with a
- * literal "UTC+00:00" timezone column: NOOP stores epoch seconds and tz-less day strings, so UTC is
+ * literal "UTC+00:00" timezone column: HOOP stores epoch seconds and tz-less day strings, so UTC is
  * the only encoding that round-trips a timestamp back to the same instant. A trailing "Source"
  * column (which both parsers provably ignore — they key off named columns, never position) marks
  * on-device computed rows as "noop (APPROXIMATE)" per the house rules. A noop_metric_series.json
@@ -82,7 +82,7 @@ object WhoopCsvExporter {
     }
 
     /**
-     * Stage minutes recovered from any persisted stagesJSON shape NOOP has ever written:
+     * Stage minutes recovered from any persisted stagesJSON shape HOOP has ever written:
      *   {"light":min,…}            — macOS WHOOP import
      *   [{"stage","min"}]          — Android import / demo seeds
      *   [{"start","end","stage"}]  — the on-device sleep stager ("wake" == awake)
@@ -176,7 +176,7 @@ object WhoopCsvExporter {
                     d.day + " 00:00:00", "", "UTC+00:00",
                     num(d.recovery), num(d.restingHr), num(d.avgHrv), num(d.skinTempDevC),
                     // Day Strain column is WHOOP's 0–21 scale → down-convert our 0–100 Effort so the CSV
-                    // is WHOOP-format and a NOOP→NOOP round-trip is lossless (import scales back ×100/21).
+                    // is WHOOP-format and a HOOP→HOOP round-trip is lossless (import scales back ×100/21).
                     // Divide by the SAME 100.0/21.0 constant the importer multiplies by (and that Swift's
                     // whoopDayStrainFromEffort uses) so the byte output matches macOS/iOS exactly.
                     num(d.spo2Pct), num(d.strain?.let { it / (100.0 / 21.0) }),
@@ -210,7 +210,7 @@ object WhoopCsvExporter {
      * end-day key analyze/mergeSleep use). It MUST match the corresponding physiological_cycles row's
      * "Cycle start time" so the two CSVs reconcile by cycle; the previous `utc(startTs)` put a non-UTC user's
      * night on a different date than its cycle (#715). Onset/Wake stay the real UTC session times, so the
-     * NOOP→NOOP round-trip is unchanged (the importer keys on sleep_onset, not Cycle start time).
+     * HOOP→HOOP round-trip is unchanged (the importer keys on sleep_onset, not Cycle start time).
      */
     internal fun sleepsCsv(
         sessions: List<SleepSession>,
@@ -229,7 +229,7 @@ object WhoopCsvExporter {
             sb.append(
                 listOf(
                     cycleStart(s), utc(s.startTs), utc(s.endTs), "UTC+00:00",
-                    // NOOP never stores a nap flag — everything exports as a main sleep so the
+                    // HOOP never stores a nap flag — everything exports as a main sleep so the
                     // importer keeps it (it drops nap rows).
                     "false", "", "",
                     num(stages.asleep), num(inBedMin),
@@ -385,7 +385,7 @@ object WhoopCsvExporter {
                 }
             }
         }
-        // Sidecar: every metricSeries row under every NOOP source id, full fidelity (rows carry their
+        // Sidecar: every metricSeries row under every HOOP source id, full fidelity (rows carry their
         // own deviceId, so union duplicates stay distinguishable on re-import).
         val sidecarRows = buildList {
             for (id in importedIds + computedIds) {

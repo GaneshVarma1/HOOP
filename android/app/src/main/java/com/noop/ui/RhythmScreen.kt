@@ -335,7 +335,7 @@ private fun SummaryCard(
 /**
  * OpenStrap-style status chip: a compact pill with an icon + the neutral regularity label. Modelled on
  * [SourceBadge], but in the calm Rest-blue palette — NEVER a warn/alarm colour (§11 forbids alarm styling;
- * OpenStrap tints its chip amber, NOOP does not). States differ by icon + wording only; the label reuses
+ * OpenStrap tints its chip amber, HOOP does not). States differ by icon + wording only; the label reuses
  * the short [chipLabel]; the sentence [headlineDetail] reads below. Non-diagnostic. Twin of Swift `statusChip`.
  */
 @Composable

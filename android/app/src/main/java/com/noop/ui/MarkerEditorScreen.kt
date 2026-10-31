@@ -63,7 +63,7 @@ import java.util.UUID
 // SELF-CONTAINED: no AppViewModel/Settings edits; the sheet owns all its state.
 //
 // NON-CLINICAL: captures only what the user types. The reference field is theirs, shown
-// back verbatim — NOOP defines no ranges and asserts no normality.
+// back verbatim — HOOP defines no ranges and asserts no normality.
 
 private const val EDITOR_STRAP_DEVICE_ID = "my-whoop"
 

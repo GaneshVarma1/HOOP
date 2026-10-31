@@ -18,7 +18,7 @@ enum class TrustTier {
 
 /**
  * The Oura inner-event-record tag. `raw` == the `type` byte (>= 0x41 per OURA_PROTOCOL.md s2.3).
- * Only the tags NOOP actually decodes are enumerated; an unknown byte decodes to null (honest).
+ * Only the tags HOOP actually decodes are enumerated; an unknown byte decodes to null (honest).
  */
 enum class OuraEventTag(val raw: Int) {
     // --- Lifecycle / state (Tier A) ---
@@ -98,7 +98,7 @@ enum class OuraEventTag(val raw: Int) {
             SLEEP_SUMMARY_F, ACTIVITY_INFO, ACTIVITY_SUMMARY_1, ACTIVITY_SUMMARY_2,
             REAL_STEPS_1, REAL_STEPS_2, SPO2_SMOOTHED,
             // 0x6A sleep_period_info: the field NAMES come from a single decompiled-binary source
-            // ([open_ring]); NOOP's own captures confirm the layout's declared invariants and the
+            // ([open_ring]); HOOP's own captures confirm the layout's declared invariants and the
             // fixed-point scales. Tier B on DECODE PROVENANCE - third-party names, not Oura
             // documentation - not on doubt that the ring measures respiration: `breath` is the ring's
             // own value read off the wire, and it feeds respRateBpm (see OuraSleepPeriodInfo).

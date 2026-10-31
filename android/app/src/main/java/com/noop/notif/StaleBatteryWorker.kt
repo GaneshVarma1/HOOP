@@ -63,7 +63,7 @@ class StaleBatteryWorker(
 
         /**
          * KEEP, not REPLACE, for the reason [com.noop.widget.StressWidgetRefresh] documents: replacing on
-         * every launch restarts the period, so someone who opens NOOP often would never reach a run.
+         * every launch restarts the period, so someone who opens HOOP often would never reach a run.
          */
         fun ensureScheduled(context: Context) {
             val request = PeriodicWorkRequestBuilder<StaleBatteryWorker>(

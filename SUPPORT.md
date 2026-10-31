@@ -1,9 +1,7 @@
 # Getting help with HOOP
 
-- **🐞 Bugs → open a [GitHub issue](https://github.com/ryanbr/noop/issues/new/choose).** There's a template, and bugs are tracked, deduped and linked to fixes here. Include your **HOOP version**, **platform** and **strap model**, plus a **strap log** — HOOP runs entirely on your device, so without one we usually can't tell a real fault from a setup detail. (Android: **Settings → Strap → "Share strap log (for bug reports)"**; macOS: the **Live** screen → **Strap log** card → **Copy**/**Save…**.)
-- **💬 Questions, ideas & how-you-can-help → [GitHub Discussions](https://github.com/ryanbr/noop/discussions).** Ask, share results, and see [exactly what data would move HOOP forward](https://github.com/ryanbr/noop/discussions/147).
-- **📣 Setup help, tips & release news → [r/NOOPApp](https://www.reddit.com/r/NOOPApp/).** Every release is announced there too.
-- **📖 Docs → the [README](README.md)** covers install (macOS Gatekeeper / Android Play Protect), pairing a WHOOP 5.0/MG, privacy, and importing your history.
-- **📧 Other → thenoopapp@gmail.com**
+- **Bugs and setup problems:** [open an issue](https://github.com/GaneshVarma1/HOOP/issues/new/choose). Include the HOOP version, your platform, strap model, what you expected, and what happened. A strap log can help with connection problems; review it before sharing and remove personal details.
+- **Build help:** see the [README](README.md), [iPhone build guide](docs/IOS.md), [Mac build guide](docs/BUILD.md), and [Android guide](docs/ANDROID.md).
+- **Security concerns:** follow the [security policy](SECURITY.md). Keep exploit details out of public issues.
 
-HOOP is an independent, unofficial project — **not affiliated with WHOOP, Inc.** — and **not a medical device**.
+HOOP is an independent, unofficial project. It is not affiliated with WHOOP, Inc. and is not a medical device.

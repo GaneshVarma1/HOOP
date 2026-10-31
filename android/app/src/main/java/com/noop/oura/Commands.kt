@@ -29,9 +29,9 @@ object OuraCommands {
     const val featureSpO2 = 0x04
     // The real-steps feature id (`activity/real_steps`). Nominally server-flag-gated per
     // OURA_PROTOCOL.md s7.1/s7.3 [open_oura-feat], but on-device 2026-08-25 real-steps status reads
-    // came back enabled (status=1) from BOTH an authenticated Oura-app session and NOOP's own fully
+    // came back enabled (status=1) from BOTH an authenticated Oura-app session and HOOP's own fully
     // offline, unauthenticated read of the same ring - the gate is ring-side state, not tied to which
-    // client asks or whether that client is cloud-authenticated. Do not assume "off for NOOP" without
+    // client asks or whether that client is cloud-authenticated. Do not assume "off for HOOP" without
     // checking a live read.
     const val featureRealSteps = 0x0b
 
@@ -57,7 +57,7 @@ object OuraCommands {
 
     // MARK: - Notifications / state
 
-    /** The SetNotification mask NOOP has always sent: `3f`. `3f`/`bf`=all per OURA_PROTOCOL.md s4.1. */
+    /** The SetNotification mask HOOP has always sent: `3f`. `3f`/`bf`=all per OURA_PROTOCOL.md s4.1. */
     const val NOTIFICATION_MASK_DEFAULT = 0x3F
     /** The SetNotification mask the official app sends (`ff`, 08-25 HCI capture). Its only known
      *  difference from `3f` is the two high bits, and whether those are what makes the ring pack ~10
@@ -86,7 +86,7 @@ object OuraCommands {
      * anchored history). Byte-identical twin of Swift's syncTime.
      *
      * SUPERSEDED (open_ring): the previous `token + unix_s/256 + 0xF6` layout never anchored on real
-     * hardware. `tzHalfHours` defaults to 0 (UTC), exactly as the reference client sends; NOOP does its
+     * hardware. `tzHalfHours` defaults to 0 (UTC), exactly as the reference client sends; HOOP does its
      * own LOCAL-day bucketing downstream regardless of what the ring is told here.
      */
     fun syncTime(unixSeconds: Long, tzHalfHours: Int = 0): OuraCommand {
@@ -186,7 +186,7 @@ object OuraCommands {
     /**
      * Read the real-steps feature status, `2f 02 20 0b` (READ verb, not enable). The `0x21` reply reports
      * the ring's own real_steps gate state - NOT reliably "off" for an offline ring: on-device
-     * 2026-08-25 this read back status=1 (enabled) from NOOP's own unauthenticated connection, matching
+     * 2026-08-25 this read back status=1 (enabled) from HOOP's own unauthenticated connection, matching
      * the real Oura app's read of the same ring byte-for-byte. Read-only diagnostic either way - never
      * enables anything, never writes a mode. [open_oura-feat]
      */

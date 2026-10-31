@@ -33,19 +33,19 @@ final class LiveActivityController {
     private static let startedKey = "liveActivity.hr.startedAt"
     /// An end is in flight, so the ticks that arrive meanwhile neither end it again nor log it twice.
     private var isEnding = false
-    /// iOS refused a start, and it was logged: once, not on every tick while NOOP is on screen.
+    /// iOS refused a start, and it was logged: once, not on every tick while HOOP is on screen.
     private var refusalLogged = false
-    /// Banners NOOP has asked iOS to remove (`removeLeftovers`), so a tick that arrives before iOS has dropped one from
+    /// Banners HOOP has asked iOS to remove (`removeLeftovers`), so a tick that arrives before iOS has dropped one from
     /// its list neither asks again nor logs it twice.
     private var removing: Set<String> = []
     /// How long after the last push iOS treats the banner as fresh; after that the banner draws the dash
     /// (`NOOPLiveActivity.shownBpm`). A WHOOP 5.0 taken off the wrist goes quiet, and with nothing arriving iOS
-    /// suspends NOOP, so no timer of NOOP's can clear the number: iOS's own stale date is what does it, in at most
+    /// suspends HOOP, so no timer of HOOP's can clear the number: iOS's own stale date is what does it, in at most
     /// this long (a tester's log, 23 Sep 2026). A steady number is re-pushed once half of this has passed
     /// (`LiveHRBannerPushPolicy`), so a banner fed by a worn strap never goes stale.
     static let staleAfter: TimeInterval = 30
 
-    /// Follow the strap from process start, not from a screen. iOS starts NOOP in the background — the strap
+    /// Follow the strap from process start, not from a screen. iOS starts HOOP in the background — the strap
     /// reconnecting, a sync, the Sync Strap shortcut — and a process started that way need not build any screen (the
     /// shortcut's never does), while a banner the previous run left on the Lock Screen is there to be picked up and
     /// fed from the first reading. Called once, from the app's `init`, like the Lift Log's own resume.
@@ -72,7 +72,7 @@ final class LiveActivityController {
             .store(in: &cancellables)
     }
 
-    /// NOOP came on screen, the only time iOS lets it start the banner: offered now rather than at the next heart-rate
+    /// HOOP came on screen, the only time iOS lets it start the banner: offered now rather than at the next heart-rate
     /// change, which a strap off the wrist may not bring for a long while. Said by the caller, from the scene phase,
     /// because `applicationState` can still read inactive while the scene turns active.
     func appBecameActive() {
@@ -103,7 +103,7 @@ final class LiveActivityController {
         guard authInfo.areActivitiesEnabled else { return }
 
         // A banner iOS ended (after about eight hours) or the user swiped away is gone: forget it, so the next time
-        // NOOP is on screen it starts one again rather than pushing to nothing. (One NOOP is ending is not gone yet.)
+        // HOOP is on screen it starts one again rather than pushing to nothing. (One HOOP is ending is not gone yet.)
         if !isEnding, let activity, !Self.isShowing(activity) {
             self.activity = nil
             shownState = nil
@@ -179,7 +179,7 @@ final class LiveActivityController {
     }
 
     /// Removes at once each banner in `listed` that `LiveHRBannerLifecycle.removes` says goes: one iOS has ended, which
-    /// stays on the Lock Screen frozen on its last number and takes no update, and — once NOOP has started `fresh` —
+    /// stays on the Lock Screen frozen on its last number and takes no update, and — once HOOP has started `fresh` —
     /// any other one still showing. Each removal of an ended one leaves a line: it is what a second banner beside the
     /// live one would have been.
     private func removeLeftovers(_ listed: [Activity<NOOPActivityAttributes>],
@@ -193,7 +193,7 @@ final class LiveActivityController {
         }
     }
 
-    /// Ask iOS for a new banner, which it grants only while NOOP is on screen. Returns whether it did.
+    /// Ask iOS for a new banner, which it grants only while HOOP is on screen. Returns whether it did.
     @discardableResult
     private func start(_ state: NOOPActivityAttributes.ContentState, at now: Date) -> Bool {
         // Set the start gate SYNCHRONOUSLY before any await so a second `update` arriving on the
@@ -233,20 +233,20 @@ final class LiveActivityController {
         }
     }
 
-    /// One line in NOOP's strap log for each thing that happens to the banner: started, picked up, renewed, ended,
+    /// One line in HOOP's strap log for each thing that happens to the banner: started, picked up, renewed, ended,
     /// gone, and each turn to the dash and back. Rare, so always on. A tester's banner once showed the dash for a
     /// strap he was wearing, and a log without a word about the banner could not say why (24 Sep 2026).
     private func log(_ line: String) {
         model?.live.append(log: AppModel.stamped("Live HR banner: " + line))
     }
 
-    /// Still on the Lock Screen and able to take an update: not ended by iOS, the user or NOOP.
+    /// Still on the Lock Screen and able to take an update: not ended by iOS, the user or HOOP.
     private static func isShowing(_ activity: Activity<NOOPActivityAttributes>) -> Bool {
         listed(activity) == .showing
     }
 
     /// The banner's state in `LiveHRBannerLifecycle`'s terms. `pending` (a start iOS 26 schedules) never comes from
-    /// NOOP, which only starts banners at once, so it counts as gone: not NOOP's to feed or remove.
+    /// HOOP, which only starts banners at once, so it counts as gone: not HOOP's to feed or remove.
     private static func listed(_ activity: Activity<NOOPActivityAttributes>) -> LiveHRBannerLifecycle.Listed {
         switch activity.activityState {
         case .active, .stale: return .showing
@@ -256,7 +256,7 @@ final class LiveActivityController {
     }
 
     private func end() async {
-        // End every NOOP Live Activity, not just our cached handle — covers a straggler from a prior
+        // End every HOOP Live Activity, not just our cached handle — covers a straggler from a prior
         // session we never re-adopted (#341) and any rare duplicate. Iterating the live list is the
         // only way to reach activities this controller instance never started.
         for act in Activity<NOOPActivityAttributes>.activities {

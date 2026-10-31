@@ -45,7 +45,7 @@ import kotlin.math.roundToInt
 /**
  * The four WHOOP-style stage rows that replace the old "label · value" footer grid, read like WHOOP's
  * sleep detail: a colour swatch, the UPPERCASE stage name, the share-of-night % in the stage colour, a
- * segmented [PipBar] (the NOOP signature) tinted in the stage colour, and the right-aligned duration.
+ * segmented [PipBar] (the HOOP signature) tinted in the stage colour, and the right-aligned duration.
  * Ordered by chart depth (awake / REM / light / deep); the values and colours stay attached to their
  * stage. Mirrors macOS SleepView.stageBreakdownRows. (PipBar)
  */
@@ -217,7 +217,7 @@ internal fun FilledHypnogram(
     // true → each stage FILLS its column to the baseline (the stepped-area look). false → a slim uniform
     // RIBBON at each stage level (the WHOOP-style stepped line), which reads cleaner on a fragmented night.
     filled: Boolean = true,
-    // The stage-colour ramp: NOOP tokens (Fill), Garmin's (Garmin Fill), or Oura's (Ribbon).
+    // The stage-colour ramp: HOOP tokens (Fill), Garmin's (Garmin Fill), or Oura's (Ribbon).
     palette: SleepStagePalette = SleepStagePalette.NOOP,
 ) {
     if (segments.isEmpty()) return
@@ -563,7 +563,7 @@ private fun stageColorFor(name: String): Color = when (canonicalStage(name)) {
 // Brand sleep ramps for the stepped [FilledHypnogram]: Garmin's for Filled (blue light/deep + magenta REM),
 // Oura's for Ribbon (cream awake + blues, sampled from the ring's app), so the chart reads like the app it's
 // modelled on. Byte-identical hexes to the Swift `StrandPalette.BrandSleepRamp`. The classic hero strip
-// ([HypnogramWithAxis]) keeps the NOOP tokens via [stageColorFor]. (#sleep-chart-style)
+// ([HypnogramWithAxis]) keeps the HOOP tokens via [stageColorFor]. (#sleep-chart-style)
 //
 // PER-SCHEME since the light-mode pass. The ramps shipped flat — one hex for both schemes — because both
 // source apps are dark-tuned; measured on the light card (near-white) the Oura ramp collapses, with `awake`

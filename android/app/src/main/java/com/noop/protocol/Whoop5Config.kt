@@ -96,7 +96,7 @@ object Whoop5Config {
      *
      * **Confirmed for the sibling opcode, inferred here by shared convention.**
      *
-     * Confirmed on real hardware: 0x30 is how this firmware spells "off" for a config key. NOOP has
+     * Confirmed on real hardware: 0x30 is how this firmware spells "off" for a config key. HOOP has
      * shipped that write since #181 — Broadcast-HR off writes 0x30 to `whoop_live_hr_in_adv_ind_pkt`
      * through SET_DEVICE_CONFIG_VALUE (119 / 0x77) and a Garmin Edge 840 stops seeing the broadcast.
      * `enable_raw_data_w_ecg` independently READS '0' on an MG whose ECG is not running. Both are the
@@ -109,7 +109,7 @@ object Whoop5Config {
      * to '1', confirmed by a GET_FF_VALUE(128) read before and after.
      *
      * Inferred, stated plainly: '0' has NEVER been observed in the feature-flag namespace — every 128
-     * read ever taken returned '1' or '2', and those are a round-trip of NOOP's own writes. The two
+     * read ever taken returned '1' or '2', and those are a round-trip of HOOP's own writes. The two
      * namespaces are proven separate at the verb level (a key asked through the wrong verb answers
      * FAILURE). And `disable_pip_r26_packets` is written '2' despite being named `disable_*`, while
      * `enable_sig12` was corrected '2'→'1' from a real capture — so the official app picks BETWEEN '1'
@@ -134,8 +134,8 @@ object Whoop5Config {
      * select, and that key is the evidence we do not. Writing '0' to it is expected to stop PIP R26
      * packets being suppressed — i.e. let them flow again, which is the pre-R22 behaviour.
      *
-     * This does NOT restore a snapshot: NOOP never read these values before first writing them, so the
-     * pre-NOOP state is unknown. The honest claim is "clears the sixteen flags NOOP set".
+     * This does NOT restore a snapshot: HOOP never read these values before first writing them, so the
+     * pre-NOOP state is unknown. The honest claim is "clears the sixteen flags HOOP set".
      * Keep in lockstep with the Swift `Whoop5Config.disableR22Sequence`.
      */
     val disableR22Sequence: List<Flag> = enableR22Sequence.map { Flag(it.name, FEATURE_FLAG_OFF_VALUE) }

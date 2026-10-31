@@ -105,7 +105,7 @@ internal enum class NotifCategory(
     Calendar("Calendar & Reminders", Icons.Filled.CalendarMonth, BuzzPattern.Double),
 }
 
-/** A notification-capable app NOOP can mirror to the wrist. `id` is the persistence key. */
+/** A notification-capable app HOOP can mirror to the wrist. `id` is the persistence key. */
 internal data class NotifApp(
     val id: String,
     val name: String,
@@ -508,7 +508,7 @@ fun NotificationsSettingsScreen(vm: AppViewModel) {
                 },
             )
             RowDivider()
-            // #593: NOOP's own optimal-strain-reached nudge (not WHOOP's copy).
+            // #593: HOOP's own optimal-strain-reached nudge (not WHOOP's copy).
             FormToggleRow(
                 label = uiString(R.string.l10n_notifications_settings_screen_optimal_strain_reached_2862ec2b),
                 help = "Once a day, a notification when your Effort reaches the low end of today's optimal " +

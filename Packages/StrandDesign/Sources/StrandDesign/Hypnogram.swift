@@ -60,7 +60,7 @@ public struct Hypnogram: View {
     /// look) instead of the slim ribbon band. The stage → lane mapping, risers and axis are identical;
     /// only the band height changes. Mirrors the Android `FilledHypnogram(filled:)`.
     public var filled: Bool
-    /// The stage-colour ramp: NOOP tokens (default, and every non-sleep caller), Oura's (Ribbon), or
+    /// The stage-colour ramp: HOOP tokens (default, and every non-sleep caller), Oura's (Ribbon), or
     /// Garmin's (Garmin Fill). Only the Sleep-tab stepped chart passes a non-default ramp.
     public var stagePalette: SleepStagePalette
 
@@ -220,7 +220,7 @@ public struct Hypnogram: View {
     private let rowCount = 4
 
     /// The band/lane colour for a stage: the brand ramp (Garmin filled / Oura ribbon) when opted in, else
-    /// the NOOP sleep tokens.
+    /// the HOOP sleep tokens.
     private func stageColor(_ stage: SleepStage) -> Color {
         StrandPalette.sleepStageColor(stage, palette: stagePalette)
     }

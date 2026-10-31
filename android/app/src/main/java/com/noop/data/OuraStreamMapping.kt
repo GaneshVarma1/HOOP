@@ -17,13 +17,13 @@ import com.noop.protocol.WhoopEvent
  * `OuraStreamMapping` (WhoopStore), built from the architecture plan's section-4 table.
  *
  * HONEST-DATA INVARIANT (hard): we surface ONLY the ring's decoded raw signals and its OWN open
- * event tags. We never read or display Oura's encrypted readiness/sleep scores. NOOP computes its
+ * event tags. We never read or display Oura's encrypted readiness/sleep scores. HOOP computes its
  * own Charge/Rest downstream:
- *   - the IBI stream becomes [Streams.rr], from which RecoveryScorer reconstructs NOOP's OWN RMSSD;
+ *   - the IBI stream becomes [Streams.rr], from which RecoveryScorer reconstructs HOOP's OWN RMSSD;
  *   - the HR stream feeds resting-HR + strain;
  *   - the ring's open 0x5D HRV tag is recorded as `OURA_HRV` events carrying its honestly-labelled
  *     decoded fields (pair_index/hr_bpm/rmssd_ms) — the body is a run of (u8 avg HR bpm, u8 avg RMSSD
- *     ms) pairs, one per 5-min bucket; NOOP's own scoring RMSSD still comes from `rr`, not this tag;
+ *     ms) pairs, one per 5-min bucket; HOOP's own scoring RMSSD still comes from `rr`, not this tag;
  *   - the open sleep-phase tags become `OURA_SLEEP_PHASE` events folded into a sleep session.
  *
  * Each event carries a ring-clock `ringTimestamp` (not wall-clock). To stay pure and avoid baking a
@@ -77,7 +77,7 @@ object OuraStreamMapping {
                 is OuraEvent.Hrv -> {
                     // The ring's OWN 0x5D 5-min bucket: avg HR (bpm) + avg RMSSD (ms), both u8, no scaling
                     // (layout pinned to open_oura's (u8 hr, u8 rmssd) pairs — honestly labelled now). NOT
-                    // Oura's readiness score, and NOT used as NOOP's RMSSD (that comes from `rr`). Keys/values
+                    // Oura's readiness score, and NOT used as HOOP's RMSSD (that comes from `rr`). Keys/values
                     // IDENTICAL to the Swift twin so both platforms emit the same OURA_HRV payload.
                     //
                     // Each bucket gets its OWN timestamp so it lands on a distinct event row. The event PK is
@@ -231,12 +231,12 @@ object OuraStreamMapping {
                     // waveform.
                     //
                     // Why this one field is stored: `breath` is the RING's own measurement, read off the
-                    // wire - not a signal NOOP derives from raw sensor data. The #194 rule governs the
-                    // latter (PPG->HR, RSA-from-R-R: methods where NOOP invents the number), so the
+                    // wire - not a signal HOOP derives from raw sensor data. The #194 rule governs the
+                    // latter (PPG->HR, RSA-from-R-R: methods where HOOP invents the number), so the
                     // question here is whether the DECODE is right, and that is settled structurally:
                     // 3,493 records over four nights, every value an exact multiple of 0.125, both of the
                     // source's declared invariants upheld. It has the same standing as the ring's own
-                    // hypnogram, which NOOP already persists and scores from (#773/#877). Cross-checks, in
+                    // hypnogram, which HOOP already persists and scores from (#773/#877). Cross-checks, in
                     // order of weight: these records median 14.75/min against the SAME wearer's 851-night
                     // Oura APP export at 15.250 (IQR 14.875-15.625) - same quantity, same band
                     // (distribution, not paired: the corpora do not overlap in date); against a WHOOP worn

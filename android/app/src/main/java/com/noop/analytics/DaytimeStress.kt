@@ -235,7 +235,7 @@ object DaytimeStress {
          * ADDITIVE — total minutes across SCORED waking hours at/above [highBandFloor], the
          * Oura-comparable "time in high stress" figure. Each scored hour is one [bucketSeconds]
          * bucket, so this is `(# high-band scored hours) * bucketSeconds / 60`. Compare against
-         * Oura's `stress_high_s / 60` — NOOP's timeline is hourly-grain vs Oura's ~5-minute grain,
+         * Oura's `stress_high_s / 60` — HOOP's timeline is hourly-grain vs Oura's ~5-minute grain,
          * so treat this as a coarse approximation, not a precise match. 0 for [EMPTY] and for any
          * day with no scored hours.
          */

@@ -268,7 +268,7 @@ object ConnectionReadout {
      *  at 100% round a loop they had already run.
      *
      *  The charged branch deliberately states only what holds for EVERY strap - that charging again
-     *  will not change it - and asks for a log. It must NOT claim NOOP re-sends the clock on every
+     *  will not change it - and asks for a log. It must NOT claim HOOP re-sends the clock on every
      *  connect: that is true on WHOOP4 (runConnectHandshake calls SET_CLOCK unconditionally, both
      *  payload forms, #120) but FALSE on a 5/MG, where the clock write is gated behind didBond, and an
      *  unbondable 5/MG (#1635) is never clocked at all - precisely the strap most likely to be showing
@@ -296,7 +296,7 @@ object ConnectionReadout {
      *
      *  A strap log could not previously answer "did the strap send anything?". Inbound notifications only
      *  stamped a liveness timestamp that was then discarded, so a reporter chasing a silent strap had to
-     *  infer silence from the fact that every LOGGED line happened to be outgoing - which measures NOOP's
+     *  infer silence from the fact that every LOGGED line happened to be outgoing - which measures HOOP's
      *  logging, not the strap. This measures the strap.
      *
      *  [realtimeArmed] matters because the #80 marginal-radio fallback only counts a drop when the R10/R11
@@ -304,7 +304,7 @@ object ConnectionReadout {
      *  however many times the loop repeats.
      *
      *  [rssiDbm] answers the question the END STATUS raises and could not previously settle. The dominant
-     *  disconnect in a field log is the supervision timeout, which NOOP itself renders as "the strap went
+     *  disconnect in a field log is the supervision timeout, which HOOP itself renders as "the strap went
      *  out of range or stopped responding" - so the log names range as the leading suspect and then records
      *  nothing about range. Signal was read once per link, seconds after connect, and never again: a 27
      *  minute link carried a single reading from its third second, and ten of twenty-one links in the

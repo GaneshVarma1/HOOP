@@ -155,7 +155,7 @@ import com.noop.analytics.ClockFormatPreference
 // Profile (the numbers that power HR zones / calories / recovery baselines), a
 // Backup & restore section wiring DataBackup export/import through the Storage
 // Access Framework, and an About section with version + attribution + a Support
-// link. Re-skinned to the locked NOOP component system: every surface is a
+// link. Re-skinned to the locked HOOP component system: every surface is a
 // NoopCard, every status uses StatePill, the two-column form feel is preserved.
 //
 // macOS parity notes:
@@ -617,13 +617,13 @@ fun SettingsScreen(
     // "How your scores work" explainer sheet, reachable any time from About (macOS/iOS parity).
     var showScoringGuide by remember { mutableStateOf(false) }
 
-    // "How NOOP works" primer sheet (COMPONENT 5 of the explainability layer), reachable any time
+    // "How HOOP works" primer sheet (COMPONENT 5 of the explainability layer), reachable any time
     // from About — the plain-English tour of sleep sorting, scores, recording and provenance.
     var showHowNoopWorks by remember { mutableStateOf(false) }
 
     // "WHOOP 4.0 vs 5.0/MG: what each can read and why" explainer (FI-2 / #490), reachable from the
     // Strap section by BOTH model owners. Clears up which features each strap supports — e.g. why the
-    // strap-firmware broadcast-out is 5/MG-only while NOOP's own re-broadcast works on any strap.
+    // strap-firmware broadcast-out is 5/MG-only while HOOP's own re-broadcast works on any strap.
     var showModelComparison by remember { mutableStateOf(false) }
 
     // "Recalibrate Charge baseline" confirm dialog (Charge advanced). Writes now-seconds to BOTH the
@@ -751,7 +751,7 @@ fun SettingsScreen(
     // #1846: which skin-temp number the cards lead with. Display-only, like the row above — the stored
     // value never changes, so flipping it just re-reads the same night on the other scale.
     var skinTempKind by remember { mutableStateOf(UnitPrefs.skinTempPreferred(context)) }
-    // Effort display scale (#268) — show NOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
+    // Effort display scale (#268) — show HOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
     // Display-only; the stored value never changes. Mirrors into local state like the toggles above.
     var effortScale by remember { mutableStateOf(UnitPrefs.effortScale(context)) }
 
@@ -827,7 +827,7 @@ fun SettingsScreen(
         }
     }
 
-    // CSV export — the 4-CSV WHOOP-format zip NOOP's own importers re-import (Android + Mac).
+    // CSV export — the 4-CSV WHOOP-format zip HOOP's own importers re-import (Android + Mac).
     val csvExportLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("application/zip"),
     ) { uri ->
@@ -1243,7 +1243,7 @@ fun SettingsScreen(
                 )
                 SettingsRowDivider()
                 // Tap-through to the WHOOP 4.0 steps-ESTIMATE calibration (a SEPARATE thing from the 5/MG
-                // @57 counter divisor above): a 4.0 sends no step count, so NOOP estimates steps from
+                // @57 counter divisor above): a 4.0 sends no step count, so HOOP estimates steps from
                 // motion and calibrates that to the phone. Opens the explainer + fit + comparison + manual
                 // override screen. Mirrors the macOS Profile "Steps estimate" row.
                 val stepsSummary = when {
@@ -1403,7 +1403,7 @@ fun SettingsScreen(
                     )
                 }
                 SettingsRowDivider()
-                // Effort scale (#268) — NOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
+                // Effort scale (#268) — HOOP's native 0–100 Effort or WHOOP's 0–21 Day Strain axis.
                 // Display-only; the stored value never changes, so a flip just re-labels every read-out.
                 SettingsFormRow(label = uiString(R.string.l10n_settings_screen_effort_scale_81afa9ef)) {
                     SegmentedPillControl(
@@ -1678,7 +1678,7 @@ fun SettingsScreen(
                     adaptsToAvailableWidth = true,
                 )
             }
-            // In-app "Reduce motion in NOOP" (#941) — parity with the Apple quiet-motion toggle. Poses every
+            // In-app "Reduce motion in HOOP" (#941) — parity with the Apple quiet-motion toggle. Poses every
             // looping surface still via the third rememberPoseStill() signal. (SettingsRowDivider, not the
             // file-private RowDivider used elsewhere, which isn't visible here.)
             SettingsRowDivider()
@@ -1979,7 +1979,7 @@ fun SettingsScreen(
         // --- Background image (#custom-background) ---
         // An optional custom photo drawn full-bleed behind EVERY tab (including More), in place of the
         // day-cycle sky (precedence: image > sky > flat canvas). Pick from Photos or Browse the files; the
-        // image is downscaled + kept on this phone only (NOOP is offline, so it's never uploaded), and left
+        // image is downscaled + kept on this phone only (HOOP is offline, so it's never uploaded), and left
         // out of the .noopbak backup like the avatar. Reads BackgroundImageStore snapshot state, so the
         // controls + the live backdrop update the instant an image is set, removed, or re-scaled.
         SettingsCard(
@@ -2256,7 +2256,7 @@ fun SettingsScreen(
                     }
                 }
 
-                // Keep streaming when the app is closed (Android foreground service). On Mac, NOOP
+                // Keep streaming when the app is closed (Android foreground service). On Mac, HOOP
                 // already keeps your strap connected from the menu bar — just close the window.
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -2367,12 +2367,12 @@ fun SettingsScreen(
                     )
                 }
 
-                // "Keep NOOP alive overnight" (#386): the battery-optimisation whitelist, as a one-way
+                // "Keep HOOP alive overnight" (#386): the battery-optimisation whitelist, as a one-way
                 // PROMPT rather than a setting.
                 //
                 // Shown only where it can actually change the outcome — background connection on, a ROM
                 // known to kill background work, and the exemption not yet granted. The whitelist helps a
-                // little on any phone (it also exempts from Doze deferral), but NOOP already survives the
+                // little on any phone (it also exempts from Doze deferral), but HOOP already survives the
                 // night wherever the AOSP foreground-service contract is honoured, so on those phones the
                 // row was noise about a permission the user did not need. A Pixel or Samsung never sees it.
                 //
@@ -2564,7 +2564,7 @@ fun SettingsScreen(
                 }
 
                 // HRV window (#141) — grouped with the other HRV settings (#155). Measure nightly HRV over
-                // the whole night (NOOP's long-standing value) or DEEP sleep only (WHOOP-style, reads lower
+                // the whole night (HOOP's long-standing value) or DEEP sleep only (WHOOP-style, reads lower
                 // and more comparable to WHOOP/Polar). Unlike the Effort scale this CHANGES the number, so a
                 // switch forces a re-score + re-baseline.
                 SettingsFormRow(label = uiString(R.string.l10n_settings_screen_hrv_window_e74320b8)) {
@@ -3771,7 +3771,7 @@ fun SettingsScreen(
                     StatePill("v${BuildConfig.VERSION_NAME}", tone = StrandTone.Neutral, showsDot = false)
                 }
 
-                // Project home — NOOP's code, releases, issues and wiki live on GitHub.
+                // Project home — HOOP's code, releases, issues and wiki live on GitHub.
                 val projectHomeInteraction = remember { MutableInteractionSource() }
                 Box(
                     modifier = Modifier
@@ -3784,11 +3784,11 @@ fun SettingsScreen(
                             interactionSource = projectHomeInteraction,
                             indication = null,
                         ) {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ryanbr/noop"))
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/GaneshVarma1/HOOP"))
                             try {
                                 context.startActivity(intent)
                             } catch (_: ActivityNotFoundException) {
-                                Toast.makeText(context, "github.com/ryanbr/noop", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "github.com/GaneshVarma1/HOOP", Toast.LENGTH_LONG).show()
                             }
                         }
                         .padding(horizontal = 14.dp, vertical = 12.dp)
@@ -4025,7 +4025,7 @@ fun SettingsScreen(
                     }
                 }
 
-                // How NOOP works — the plain-English primer (COMPONENT 5 of the explainability layer):
+                // How HOOP works — the plain-English primer (COMPONENT 5 of the explainability layer):
                 // how sleep is sorted, how scores + calibration work, what recording means, and where
                 // each number comes from. The one "?" entry point into the primer (macOS/iOS parity).
                 val howNoopWorksInteraction = remember { MutableInteractionSource() }
@@ -4106,7 +4106,7 @@ fun SettingsScreen(
                 SettingsRowDivider()
 
                 // Support link — opens the project's contact email (same address the
-                // Support screen lists). NOOP is anonymous, so email is the support channel.
+                // Support screen lists). HOOP is anonymous, so email is the support channel.
                 val supportInteraction = remember { MutableInteractionSource() }
                 Box(
                     modifier = Modifier
@@ -4175,7 +4175,7 @@ fun SettingsScreen(
             }
         }
 
-        // "How NOOP works" primer sheet, opened from the About row above. Same full-screen Dialog idiom.
+        // "How HOOP works" primer sheet, opened from the About row above. Same full-screen Dialog idiom.
         if (showHowNoopWorks) {
             Dialog(
                 onDismissRequest = { showHowNoopWorks = false },

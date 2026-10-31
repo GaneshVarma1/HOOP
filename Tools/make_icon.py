@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""NOOP app icon — Titanium & Gold v3.1 "gold on navy".
+"""HOOP app icon — Titanium & Gold v3.1 "gold on navy".
 
 A deep-navy tile + a THICK open gold recovery ring (round-capped, gold gradient
 along the sweep) + a solid gold core dot. Matches the in-app BrandMark geometry

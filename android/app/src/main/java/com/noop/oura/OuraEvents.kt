@@ -305,7 +305,7 @@ data class OuraState(val ringTimestamp: Long, val stateCode: Int, val text: Stri
  * feature's mode / status / state / subscription. Kotlin twin of the Swift `OuraFeatureStatus`. Read-only
  * diagnostic — used to confirm the server-flag gate on SpO2 (`0x04`) / real_steps (`0x0b`): a
  * `subscription == 0` with no emitted records is the ring saying "the cloud has not enabled this", which
- * NOOP cannot override offline. Never scored, never stored.
+ * HOOP cannot override offline. Never scored, never stored.
  */
 data class OuraFeatureStatus(
     val feature: Int,
@@ -371,7 +371,7 @@ data class OuraActivityInfo(val ringTimestamp: Long, val state: Int, val met: Li
  * `"_status": "unvalidated"`): two of the 14 fields (index 0 and 8) are genuine 9-bit values built as
  * `byte*2 + carry_bit`, where the carry bit is stolen from the MSB of a neighboring byte (index 3 for
  * field 0, index 11 for field 8); the rest are either plain bytes or a bare `byte<<1` with no carry.
- * NOOP's OWN investigation (2026-07-30, a 2661-pair real Gen 3 capture cross-correlated against the
+ * HOOP's OWN investigation (2026-07-30, a 2661-pair real Gen 3 capture cross-correlated against the
  * already-anchored 0x50 MET corpus) found `fields[0]` and `fields[8]` - the two carry-completed 9-bit
  * values - are also the ONLY fields with a consistent movement correlation (r~+0.3 vs mean MET, effect
  * size +1.5/+1.25 resting-vs-moving), a real convergence between the bit-layout hint and the empirical
@@ -411,11 +411,11 @@ data class OuraRealStepsFields(val tag: Int, val ringTimestamp: Long, val fields
  * +56 ... +62 bpm above every other HR channel we hold.
  *
  * WHOSE measurement this is decides which bar applies. `breath` is computed BY THE RING and read off
- * the wire - it is not a signal NOOP derives from raw sensor data. The #194 rule is written for the
- * opposite case (PPG->HR autocorrelation, RSA-from-R-R: methods where NOOP invents the number and can
+ * the wire - it is not a signal HOOP derives from raw sensor data. The #194 rule is written for the
+ * opposite case (PPG->HR autocorrelation, RSA-from-R-R: methods where HOOP invents the number and can
  * manufacture a peak that looks physiological), so what has to be right here is the DECODE, which is
  * what the structural verification above establishes. Same standing as the ring's own SleepNet
- * hypnogram, which NOOP already persists and scores from (#773 / #877).
+ * hypnogram, which HOOP already persists and scores from (#773 / #877).
  *
  * Independent support that byte 4 is the quantity Oura's own app calls respiratory rate: these records
  * median 14.75/min against the SAME wearer's 851-night Oura app export at 15.250 (IQR 14.875-15.625) -

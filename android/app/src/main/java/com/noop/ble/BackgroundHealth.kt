@@ -8,10 +8,10 @@ import android.os.PowerManager
 import android.provider.Settings
 
 /**
- * Android background-survival helpers (#386). NOOP already runs a foreground service + exact alarms,
+ * Android background-survival helpers (#386). HOOP already runs a foreground service + exact alarms,
  * but aggressive OEM battery managers kill even those, so the reliable lever is a USER action:
- * whitelist NOOP from battery optimisation (and, on the worst vendors, enable auto-start). This
- * centralises the detection and the intents that fix it, so the Settings "Keep NOOP alive overnight"
+ * whitelist HOOP from battery optimisation (and, on the worst vendors, enable auto-start). This
+ * centralises the detection and the intents that fix it, so the Settings "Keep HOOP alive overnight"
  * row and the Test Centre diagnostics share ONE source of truth for the vendor set + exempt check.
  *
  * POPUP DISCIPLINE: nothing here ever fires a system dialog on its own. [batteryExemptionIntent] and
@@ -50,21 +50,21 @@ object BackgroundHealth {
         return AGGRESSIVE_VENDORS.any { m.contains(it) }
     }
 
-    /** True when NOOP is exempt from Doze / battery optimisation — the #1 predictor of overnight survival. */
+    /** True when HOOP is exempt from Doze / battery optimisation — the #1 predictor of overnight survival. */
     fun isBatteryExempt(context: Context): Boolean =
         (context.getSystemService(Context.POWER_SERVICE) as? PowerManager)
             ?.isIgnoringBatteryOptimizations(context.packageName) == true
 
     /**
-     * The one-tap system dialog to whitelist NOOP from battery optimisation. Sideload-only intent
-     * (Play restricts it; NOOP doesn't ship there). Build-only — the caller starts it on a user tap and
+     * The one-tap system dialog to whitelist HOOP from battery optimisation. Sideload-only intent
+     * (Play restricts it; HOOP doesn't ship there). Build-only — the caller starts it on a user tap and
      * falls back to [appBatterySettingsIntent] if a ROM hides this action.
      */
     fun batteryExemptionIntent(context: Context): Intent =
         Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
             .setData(Uri.parse("package:${context.packageName}"))
 
-    /** Always-resolvable fallback: NOOP's per-app system settings page (Battery lives under it). */
+    /** Always-resolvable fallback: HOOP's per-app system settings page (Battery lives under it). */
     fun appBatterySettingsIntent(context: Context): Intent =
         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             .setData(Uri.parse("package:${context.packageName}"))

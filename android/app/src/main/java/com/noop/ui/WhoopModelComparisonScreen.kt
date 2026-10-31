@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 //
 // A plain-English comparison of the WHOOP 4.0 and the WHOOP 5.0/MG, reached from Settings → Strap by
 // EITHER model owner. The point (issue #490): a 4.0 user wrongly believed broadcast-out was 5.0-only.
-// In truth NOOP's OWN heart-rate re-broadcast (Data Sources → "Broadcast heart rate") works on ANY
-// strap — it re-advertises whatever live HR NOOP is reading. What's genuinely 5/MG-only is the strap
+// In truth HOOP's OWN heart-rate re-broadcast (Data Sources → "Broadcast heart rate") works on ANY
+// strap — it re-advertises whatever live HR HOOP is reading. What's genuinely 5/MG-only is the strap
 // WHOOP 4 uses its dedicated broadcast command while 5/MG uses the whoop_live_hr_in_adv_ind_pkt
 // firmware config. This screen draws that distinction and reassures either owner they're supported.
 

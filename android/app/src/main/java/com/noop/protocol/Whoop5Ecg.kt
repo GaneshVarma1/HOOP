@@ -17,12 +17,12 @@ package com.noop.protocol
 // credited in ATTRIBUTION.md: 123 (0x7B) SELECT_WRIST, 124 (0x7C) TOGGLE_LABRADOR_DATA_GENERATION,
 // 125 (0x7D) TOGGLE_LABRADOR_RAW_SAVE, 139 (0x8B) TOGGLE_LABRADOR_FILTERED. The packet field layouts and
 // command payload shapes are protocol facts sourced from static analysis of the official iOS client and
-// reimplemented here in NOOP's own code — facts with attribution, never copied expression.
+// reimplemented here in HOOP's own code — facts with attribution, never copied expression.
 //
 // Deliberately NOT asserted: the packet TYPE byte these records arrive under (no capture exists, and the
 // PacketType table has no Labrador entry), the WristSelection raw values (right-first is an inference),
 // the heartKeyProgress "timed out" sentinel, and any clinical meaning at all. The arrhythmia result is
-// computed on-strap by an embedded third-party classifier; NOOP decodes the byte. NOOP is not a medical
+// computed on-strap by an embedded third-party classifier; HOOP decodes the byte. HOOP is not a medical
 // device and this value is not a diagnosis — see DISCLAIMER.md.
 
 /** Per-packet signal-quality grade. Declaration order is the raw value. */
@@ -39,7 +39,7 @@ enum class EcgSignalQuality(val raw: Int) {
 /**
  * The on-strap classifier's verdict, as carried in every Labrador packet.
  *
- * DECODE ONLY. NOOP does not compute it, cannot validate it, and must never present it as a finding.
+ * DECODE ONLY. HOOP does not compute it, cannot validate it, and must never present it as a finding.
  */
 enum class EcgArrhythmiaCheckResult(val raw: Int, val token: String) {
     NOT_COMPLETE(0, "notComplete"),

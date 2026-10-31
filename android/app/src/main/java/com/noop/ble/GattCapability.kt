@@ -59,7 +59,7 @@ internal fun characteristicPropertyNames(properties: Int): String {
 /**
  * The strap's whole GATT tree, one line per characteristic.
  *
- * NOOP has never asked a strap what it offers. Every characteristic in this file is looked up by a UUID
+ * HOOP has never asked a strap what it offers. Every characteristic in this file is looked up by a UUID
  * someone hardcoded, so anything the 5/MG exposes that nobody guessed is invisible — and the 5/MG protocol
  * is exactly the thing still being reverse-engineered.
  *

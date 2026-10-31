@@ -151,7 +151,7 @@ object EcgResearchStats {
      * periodic at the record period, and at 100 Hz that period is 1.00 s == 60.0 bpm: inside this search band
      * and inside resting heart-rate range. An autocorrelation fed a concatenated record stream will therefore
      * report a confident ~60 bpm out of pure framing, with no cardiac content at all. That is the exact
-     * failure mode behind NOOP's withdrawn PPG->HR estimate, so when [excludeLag] is supplied:
+     * failure mode behind HOOP's withdrawn PPG->HR estimate, so when [excludeLag] is supplied:
      *
      *  1. lags within [excludeLagTolerance] of it cannot win, and
      *  2. the winner must also beat the strength AT the artefact lag ([artefactDominance]). Step 1 alone is

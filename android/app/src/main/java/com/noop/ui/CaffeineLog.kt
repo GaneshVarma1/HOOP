@@ -49,7 +49,7 @@ import com.noop.analytics.ClockFormat
 // MARK: - Caffeine window (#526) — pure persistence helpers + the Insights logging card.
 //
 // Faithful Kotlin twin of Strand/Screens/CaffeineLogCard.swift + the CaffeineLogStore persistence.
-// OPT-IN, manual-first: the user logs a caffeine intake (time + OPTIONAL mg) and NOOP shows a rough,
+// OPT-IN, manual-first: the user logs a caffeine intake (time + OPTIONAL mg) and HOOP shows a rough,
 // on-device "still active" hint from a ~5–6 h half-life decay. Nothing leaves the device. The decay math
 // + honesty rules live in com.noop.analytics.CaffeineDecay (cross-platform parity). Reuses the journal's
 // SharedPreferences + showToast (Toast) patterns.

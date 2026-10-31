@@ -855,7 +855,7 @@ class FeatureAbsentClassificationTests(unittest.TestCase):
         self.assertIn("duty_mode", blob)
 
 
-# --- NOOP app store (#845/#103) --------------------------------------------------------------------
+# --- HOOP app store (#845/#103) --------------------------------------------------------------------
 
 def _pack_v18_aux(values: dict) -> bytes:
     """Build a `v18AuxSample.fields` blob the way the Swift/Kotlin codecs do."""
@@ -871,7 +871,7 @@ def _pack_v18_aux(values: dict) -> bytes:
 
 
 def _write_app_db(folder: str, rows, *, device: str = "strap-a", name: str = "noop.sqlite") -> str:
-    """A minimal NOOP app store: just the two tables this reader touches, same columns as the
+    """A minimal HOOP app store: just the two tables this reader touches, same columns as the
     GRDB migration (`Database.swift` v23)."""
     path = os.path.join(folder, name)
     con = sqlite3.connect(path)
@@ -978,7 +978,7 @@ class AppDbReaderTests(unittest.TestCase):
             self.assertIsNone(vs.byte_at_offset(rec, off))
 
     def test_end_to_end_validate_device_against_an_app_store(self):
-        """The point of the whole path: a NOOP user with only their synced app DB can run the gate."""
+        """The point of the whole path: a HOOP user with only their synced app DB can run the gate."""
         nights, rows = [], []
         base = _utc(2026, 3, 1, 23, 0, 0)
         for night in range(6):

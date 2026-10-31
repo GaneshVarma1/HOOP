@@ -10,7 +10,7 @@ class StressWidgetReceiver : GlanceAppWidgetReceiver() {
 
     /**
      * First widget placed: start the periodic rescore (#2185). This is the hook rather than app start
-     * because a widget can be added from the launcher without opening NOOP at all, which is precisely
+     * because a widget can be added from the launcher without opening HOOP at all, which is precisely
      * the user this fixes.
      */
     override fun onEnabled(context: Context) {
@@ -22,7 +22,7 @@ class StressWidgetReceiver : GlanceAppWidgetReceiver() {
      * Also on every APPWIDGET_UPDATE, which is what closes the gap this feature would otherwise leave
      * in its own purpose. `onEnabled` fires once, when the FIRST widget is placed, so a widget that was
      * already there when this shipped never sees it; the app-start call catches those, but only once
-     * NOOP has been opened, and "you should not have to open the app" is the whole point. Android
+     * HOOP has been opened, and "you should not have to open the app" is the whole point. Android
      * broadcasts APPWIDGET_UPDATE to providers after a package replace, so an update activates the
      * schedule without the app being launched at all.
      *

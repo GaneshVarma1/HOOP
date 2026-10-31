@@ -71,7 +71,7 @@ internal data class Vital(
         // judgment. Show a plain "uncalibrated" note when a value decoded. (#93)
         key == "spo2raw" && banding.band != VitalBands.Band.NO_DATA -> "Uncalibrated"
         // Nothing resolved: say WHY this tile is empty rather than a bare "No data", which reads as a
-        // bug for metrics NOOP cannot derive from a strap at all (the calibrated SpO₂ % is import-only:
+        // bug for metrics HOOP cannot derive from a strap at all (the calibrated SpO₂ % is import-only:
         // AnalyticsEngine writes spo2Pct = null on purpose, see Spo2ReTrace). Ports the Apple behaviour
         // (`guard let day else { return missingCaption }`) — Android showed "No data" for every case.
         banding.band == VitalBands.Band.NO_DATA -> missingCaption
@@ -178,7 +178,7 @@ internal fun skinTempSecondaryNote(devC: Double?, fahrenheit: Boolean): String? 
  * The #1118 caveat beside the HRV value can only decorate a value that IS shown, and the over-count
  * verdict is precisely what makes `SleepStager.sessionAvgHRV` return null. The two are therefore near
  * mutually exclusive: on the night the caveat was written for, the tile is blank and the caveat has
- * nothing to attach to, so the wearer was told nothing about the one failure NOOP can name exactly.
+ * nothing to attach to, so the wearer was told nothing about the one failure HOOP can name exactly.
  * This answers the blank case instead.
  *
  * Keyed off the MAP, not off a resolved row, because a refused night leaves no row to key on.
@@ -215,7 +215,7 @@ internal fun hrvBlankedByOverCount(
  *
  * Two different empty states, and conflating them is what sends people to the forums. When the night HAS
  * raw counts the strap's Blood-O₂ sensor plainly worked — only the CALIBRATED % is missing, because WHOOP
- * derives that in their cloud from the raw ADCs and NOOP will not fabricate one (`spo2Pct` is import-only;
+ * derives that in their cloud from the raw ADCs and HOOP will not fabricate one (`spo2Pct` is import-only;
  * see `Spo2ReTrace`, and the #194 PPG→HR withdrawal for why). Showing "No SpO₂ import or Health value"
  * there reads as "your sensor recorded nothing" — directly beside a Raw SpO₂ tile displaying a live
  * number, which is exactly the contradiction that gets reported as a broken strap.
@@ -422,7 +422,7 @@ internal fun vitalsFor(
         ),
         Vital(
             key = "hrv", label = "HRV", unit = "ms",
-            // #2335: say WHY the tile is blank when NOOP knows. The #1118 caveat below cannot answer
+            // #2335: say WHY the tile is blank when HOOP knows. The #1118 caveat below cannot answer
             // this: it decorates a value that IS shown, and the over-count verdict is the very thing
             // that blanks the value, so on the reported night there is no row for it to attach to.
             missingCaption = if (hrvBlankedByOverCount(hrvOverCountByDay))
@@ -437,8 +437,8 @@ internal fun vitalsFor(
             metricColor = Palette.metricPurple,
             sparkline = trail(d?.avgHrv) { it.avgHrv },
             // #1118: mark HRV "unverified" on an over-counted night — the WHOOP 4.0 two-optical-channel
-            // artifact inflates R-R and contaminates RMSSD, so NOOP's HRV won't match WHOOP until the
-            // de-dup fix lands. The flag is written only for NOOP's own measured capture, so an imported
+            // artifact inflates R-R and contaminates RMSSD, so HOOP's HRV won't match WHOOP until the
+            // de-dup fix lands. The flag is written only for HOOP's own measured capture, so an imported
             // night never sets it. Gated on the flag alone (no source check) — twin of the Swift caveat.
             caveat = if ((d?.day?.let { hrvOverCountByDay[it] } ?: 0.0) >= 0.5) "unverified · over-reports R-R" else null,
         ),

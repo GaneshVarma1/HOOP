@@ -7,13 +7,13 @@ import com.noop.protocol.Whoop5RawImu
 /**
  * Pure predicates + inline-IMU summary for the durable WHOOP 5.0/MG **high-rate deep-buffer** research
  * log (#423) — the large type-0x2F (R22) packets that carry tens-of-Hz sensor data (motion + optical)
- * rather than the 1 Hz historical rollup NOOP already decodes. Kotlin twin of the Swift
+ * rather than the 1 Hz historical rollup HOOP already decodes. Kotlin twin of the Swift
  * `PuffinDeepBufferLog` (its pure, unit-testable core); the file I/O + capture-toggle gating live in
  * [WhoopBleClient.writeWhoop5DeepBufferIfBig], mirroring the existing `whoop5-events.jsonl` writer.
  *
  * On-strap probing (#423) established that the 5/MG banks high-rate motion and can stream it live
  * during an explicitly armed raw-data session; history also ships it in big type-0x2F offload buffers —
- * 124 B (~1 Hz record), 1244 B and 2140 B (~32 and ~59 sub-records per timestamped second). NOOP's
+ * 124 B (~1 Hz record), 1244 B and 2140 B (~32 and ~59 sub-records per timestamped second). HOOP's
  * historical decoder pulls the 1 Hz gravity vector out and DISCARDS the high-rate remainder. Keeping the
  * big (>= [minBufferBytes]) type-0x2F buffers raw, in their own file, lets a byte-perfect decoder be
  * reversed offline from many (raw buffer, wall-clock) pairs across days of ordinary wear.

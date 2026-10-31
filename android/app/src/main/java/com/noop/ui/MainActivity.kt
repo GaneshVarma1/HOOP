@@ -272,7 +272,7 @@ object NoopPrefs {
         of(context).edit().putString(KEY_DAY_CYCLE_MODE, mode.persistedValue).apply()
     }
 
-    /** "Continuous HRV capture", when on (AND background connection is on), NOOP holds the dense
+    /** "Continuous HRV capture", when on (AND background connection is on), HOOP holds the dense
      *  realtime HR stream armed even with no Live screen open, so the strap banks beat-to-beat R-R 24/7
      *  for far better overnight HRV/recovery/sleep. Uses more battery (continuous HR streaming). Default
      *  OFF. Drives [com.noop.ble.WhoopBleClient.setKeepStreamForData] via [AppViewModel]. */
@@ -342,7 +342,7 @@ object NoopPrefs {
      *  "Share strap log" export) work regardless. See [com.noop.ble.WhoopBleClient.debugLogcat]. */
     const val KEY_DEBUG_LOGGING = "noop.debugLogging"
 
-    /** "Broadcast heart rate", when on, NOOP acts as a standard BLE Heart Rate peripheral (0x180D /
+    /** "Broadcast heart rate", when on, HOOP acts as a standard BLE Heart Rate peripheral (0x180D /
      *  0x2A37) and re-broadcasts the live strap HR so a gym treadmill / Zwift / Peloton can read it.
      *  LOCAL Bluetooth only, nothing leaves the device. Default OFF. Drives [com.noop.ble.HrBroadcaster]
      *  via [AppViewModel]. Distinct from the WHOOP strap's own "broadcast HR" firmware config. */
@@ -351,7 +351,7 @@ object NoopPrefs {
     const val KEY_ANALYZE_WATERMARK = "noop.analyzeWatermark"
     const val KEY_STEPS_MOTION_CACHE = "noop.stepsMotionCache.v1"
 
-    /** "Power saving" (#477): when on, NOOP stretches its periodic strap-sync cadence (15 → 45 min) while
+    /** "Power saving" (#477): when on, HOOP stretches its periodic strap-sync cadence (15 → 45 min) while
      *  the STRAP is discharging at/below [KEY_POWER_SAVING_BATTERY_PCT].
      *
      *  This doc used to say "the phone is discharging … OR the OS Battery Saver is on". Both were wrong:
@@ -367,7 +367,7 @@ object NoopPrefs {
     const val KEY_LOW_REFRESH = "low_refresh"
     /** Battery-% threshold for [KEY_POWER_SAVING] (10/15/20/25/30). Default 20. */
     const val KEY_POWER_SAVING_BATTERY_PCT = "noop.powerSavingBatteryPct"
-    /** "Pause HRV capture when the strap is low" (#477): when on, NOOP releases the held-open background
+    /** "Pause HRV capture when the strap is low" (#477): when on, HOOP releases the held-open background
      *  continuous-HRV stream while the STRAP is discharging at/below [KEY_POWER_SAVING_BATTERY_PCT]
      *  (a Live screen still arms it on demand).
      *
@@ -470,7 +470,7 @@ object NoopPrefs {
 
     /** EXPERIMENTAL (#533): prefer the LE 2M PHY around the historical offload. LE 2M doubles the symbol
      *  rate, so the same bytes spend half the air-time — it should cost LESS radio energy per byte, not
-     *  more (unlike [KEY_FAST_HISTORY_SYNC]'s connection-interval lever). NOOP has never called
+     *  more (unlike [KEY_FAST_HISTORY_SYNC]'s connection-interval lever). HOOP has never called
      *  setPreferredPhy, so every offload to date has run on 1M. Orthogonal to that lever; they stack, and
      *  they are separate toggles so a field report can attribute which one did what.
      *
@@ -507,7 +507,7 @@ object NoopPrefs {
         of(context).edit().putString(KEY_STEPS_MOTION_CACHE, payload).apply()
     }
 
-    /** Whether NOOP should hold the strap connection open via a foreground service. Default true. */
+    /** Whether HOOP should hold the strap connection open via a foreground service. Default true. */
     fun backgroundConnection(context: Context): Boolean =
         of(context).getBoolean(KEY_BACKGROUND_CONNECTION, true)
 
@@ -515,7 +515,7 @@ object NoopPrefs {
         of(context).edit().putBoolean(KEY_BACKGROUND_CONNECTION, enabled).apply()
     }
 
-    /** Whether NOOP keeps the dense realtime HR stream armed 24/7 for continuous HRV capture. Default
+    /** Whether HOOP keeps the dense realtime HR stream armed 24/7 for continuous HRV capture. Default
      *  false. Only takes effect while [backgroundConnection] is also on. */
     fun continuousHrv(context: Context): Boolean =
         of(context).getBoolean(KEY_CONTINUOUS_HRV, false)
@@ -663,7 +663,7 @@ object NoopPrefs {
         of(context).edit().putBoolean(KEY_DEBUG_LOGGING, enabled).apply()
     }
 
-    /** Whether a connecting Polar strap logs the model NOOP identifies it as (+ its PMD/HRV capability
+    /** Whether a connecting Polar strap logs the model HOOP identifies it as (+ its PMD/HRV capability
      *  summary) to the strap log. Default off; the Test Centre only exposes it when a Polar strap is
      *  paired. Diagnostic-only — nothing gates behaviour on it. Twin of iOS AppModel.polarDebugLoggingKey. */
     const val KEY_POLAR_DEBUG_LOGGING = "noop.polarDebugLogging"
@@ -689,8 +689,8 @@ object NoopPrefs {
     }
 
     /** Oura packed-notification A/B (EXPERIMENTAL, default OFF): send the official app's SetNotification mask
-     *  `1c 01 ff` at the next connect instead of NOOP's `3f`. The ring packs ~10 packets per notification for
-     *  the official app (9x the drain throughput) and NOOP's session never gets that shape; the mask is the
+     *  `1c 01 ff` at the next connect instead of HOOP's `3f`. The ring packs ~10 packets per notification for
+     *  the official app (9x the drain throughput) and HOOP's session never gets that shape; the mask is the
      *  first candidate switch (OURA_PROTOCOL.md s2.3). Read once per connect, so turning it off restores `3f`
      *  on the next session — nothing persists on the ring. Twin of iOS AppModel.ouraNotifyMaskFullKey. */
     const val KEY_OURA_NOTIFY_MASK_FULL = "noop.ouraNotifyMaskFull"
@@ -712,7 +712,7 @@ object NoopPrefs {
         of(context).edit().putBoolean(KEY_DETAILED_CAPTURE, enabled).apply()
     }
 
-    /** Whether NOOP re-broadcasts its live HR as a standard BLE Heart Rate peripheral. Default OFF. */
+    /** Whether HOOP re-broadcasts its live HR as a standard BLE Heart Rate peripheral. Default OFF. */
     fun hrBroadcast(context: Context): Boolean =
         of(context).getBoolean(KEY_HR_BROADCAST, false)
 
@@ -796,7 +796,7 @@ object NoopPrefs {
         }.apply()
     }
 
-    /** Health Connect periodic auto-sync (Samsung Health → Health Connect → NOOP). Default OFF.
+    /** Health Connect periodic auto-sync (Samsung Health → Health Connect → HOOP). Default OFF.
      *  Interval in hours (default 12). Last successful sync as epoch millis (0 = never). */
     const val KEY_HC_AUTO_SYNC = "noop.hcAutoSync"
     const val KEY_HC_SYNC_HOURS = "noop.hcSyncHours"
@@ -823,13 +823,13 @@ object NoopPrefs {
         of(context).edit().putLong(KEY_HC_LAST_SYNC, epochMs).apply()
     }
 
-    /** Health Connect writeback (NOOP's computed metrics → HC, for other apps). Default OFF. */
+    /** Health Connect writeback (HOOP's computed metrics → HC, for other apps). Default OFF. */
     const val KEY_HC_WRITEBACK = "noop.hcWriteback"
     const val KEY_HC_VO2MAX_ASKED = "noop.hcVo2MaxAsked"
 
     /**
      * #1525: have we already asked this install for the VO2 max write permission? Health Connect grants
-     * are per-permission, so a user who set NOOP up before VO2 max existed passes the writeback's own
+     * are per-permission, so a user who set HOOP up before VO2 max existed passes the writeback's own
      * gate and is never prompted for it. We ask ONCE on the next writeback and remember that we did --
      * a decline must not turn every subsequent sync into another dialog.
      */
@@ -1094,7 +1094,7 @@ object NoopPrefs {
         of(context).edit().putString(KEY_BACKGROUND_RECENTS, value).apply()
     }
 
-    /** "Reduce motion in NOOP" (opt-in, default OFF). The literal key matches Apple so the setting has
+    /** "Reduce motion in HOOP" (opt-in, default OFF). The literal key matches Apple so the setting has
      *  one cross-platform identity. [rememberQuietMotion] observes it live for every looping surface. */
     const val KEY_QUIET_MOTION = "noop.quietMotion"
 
@@ -1202,7 +1202,7 @@ object NoopPrefs {
         else of(context).edit().putString(KEY_COACH_SYSTEM_PROMPT, prompt).apply()
     }
 
-    /** "Auto-detect workouts" (MVP, opt-in, on-device, NON-DESTRUCTIVE). When ON, NOOP scans the last
+    /** "Auto-detect workouts" (MVP, opt-in, on-device, NON-DESTRUCTIVE). When ON, HOOP scans the last
      *  day or two of strap HR for a sustained-elevated bout and surfaces ONE dismissible Today card
      *  suggesting you save it, it NEVER creates a workout on its own (the user taps Save). Default OFF;
      *  when off no detection runs and no card shows, while existing workout history is retained. Mirrors
@@ -1476,7 +1476,7 @@ object NoopPrefs {
         of(context).edit().putBoolean(KEY_TS_HEAL_PENDING, pending).apply()
     }
 
-    /** The last strap we bonded to (address + model), persisted so NOOP can reconnect to it directly on
+    /** The last strap we bonded to (address + model), persisted so HOOP can reconnect to it directly on
      *  the next launch, e.g. after an APK update restarts the process (#67). On-device only; never sent. */
     const val KEY_LAST_DEVICE_ADDR = "noop.lastDeviceAddress"
     const val KEY_LAST_DEVICE_MODEL = "noop.lastDeviceModel"
@@ -1609,7 +1609,7 @@ fun NoopRoot() {
     // bell in the Today header surfaces it; the inbox row deep-links to the full changelog read.
     LaunchedEffect(onboarded) {
         if (onboarded) UpdateStore.from(context).seedWhatsNewIfNeeded()
-        // #1659: a sideloaded build has no store to update it, so the most NOOP can do is NOTICE a
+        // #1659: a sideloaded build has no store to update it, so the most HOOP can do is NOTICE a
         // release and say so in the same inbox. On by default and switchable off in Settings — see
         // UpdateAvailability.DEFAULT_ENABLED.
         //

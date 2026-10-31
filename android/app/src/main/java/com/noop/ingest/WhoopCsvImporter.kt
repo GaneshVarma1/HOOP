@@ -61,7 +61,7 @@ object WhoopCsvImporter {
 
     /**
      * Charge/Effort/Rest redesign (2026-06-12): WHOOP "Day Strain" is on WHOOP's 0–21 scale, but
-     * NOOP's "Effort" score lives on 0–100 (StrainScorer.maxStrain = 100). Rescale an imported Day
+     * HOOP's "Effort" score lives on 0–100 (StrainScorer.maxStrain = 100). Rescale an imported Day
      * Strain by 100/21 when writing the `strain` metric so imported history sits on the same axis as
      * live-computed Effort. Keep byte-identical to Swift
      * (WhoopExportImporter.dayStrainToEffortScale).
@@ -69,7 +69,7 @@ object WhoopCsvImporter {
     private const val DAY_STRAIN_TO_EFFORT_SCALE = 100.0 / 21.0
 
     /**
-     * WHOOP CSVs carry "Sleep efficiency %" on a 0–100 scale, but NOOP's `efficiency` columns store
+     * WHOOP CSVs carry "Sleep efficiency %" on a 0–100 scale, but HOOP's `efficiency` columns store
      * the 0–1 fraction the native pipeline writes (AnalyticsEngine: actual-sleep ÷ in-bed). Divide at
      * the WRITE boundary — the verbatim parsed value stays untouched, same shape as the Day Strain
      * rescale above. Keep byte-identical to Swift (WhoopExportImporter.fractionFromImportedEfficiencyPct).
@@ -379,7 +379,7 @@ object WhoopCsvImporter {
                     restingHr = restingHr?.roundToInt(),
                     avgHrv = avgHrv,
                     recovery = recovery,
-                    // Rescale WHOOP's 0–21 Day Strain onto NOOP's 0–100 Effort axis (see
+                    // Rescale WHOOP's 0–21 Day Strain onto HOOP's 0–100 Effort axis (see
                     // DAY_STRAIN_TO_EFFORT_SCALE). nil passes through.
                     strain = strain?.let { it * DAY_STRAIN_TO_EFFORT_SCALE },
                     exerciseCount = null, // not present in physiological_cycles.csv
@@ -520,7 +520,7 @@ object WhoopCsvImporter {
             val startTs = workoutStart ?: cycleStart ?: workoutEnd!!
             val sport = row.cell("activity_name") ?: "Workout" // PK component; never blank.
 
-            // Workout strain is also WHOOP's 0–21 scale → rescale onto NOOP's 0–100 Effort axis so
+            // Workout strain is also WHOOP's 0–21 scale → rescale onto HOOP's 0–100 Effort axis so
             // imported workouts match detected/manual ones (StrainScorer now scores 0–100).
             val strain = row.double("activity_strain")?.let { it * DAY_STRAIN_TO_EFFORT_SCALE }
             val energyKcal = row.double("energy_burned_cal") // CSV "(cal)" == kcal
@@ -593,7 +593,7 @@ object WhoopCsvImporter {
             val cycleStart = WhoopTime.parseEpochSeconds(row.cell("cycle_start_time"), tz)
             val question = row.cell("question_text", "question")
             // #631: the REAL WHOOP export header is "Answered yes" (-> answered_yes), not the
-            // "Answered yes/no" NOOP's own exporter writes (-> answered_yes_no). Every real WHOOP
+            // "Answered yes/no" HOOP's own exporter writes (-> answered_yes_no). Every real WHOOP
             // journal import silently zeroed out to "without" because neither of the old keys ever
             // matched, regardless of the account's actual answers.
             val answer = row.cell("answered_yes", "answered_yes_no", "answer", "answer_text")

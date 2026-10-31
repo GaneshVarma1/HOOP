@@ -105,7 +105,7 @@ fun AutomationsScreen(viewModel: AppViewModel) {
     // enabling the reminder while master is off isn't silently inert.
     val notifMasterOn = NotifPrefs.getBool(ctx, NotifPrefs.MASTER, false)
 
-    // #haptics (#1115): per-event toggles for NOOP's IN-SESSION strap buzzes. Default ON (opt-out) — these
+    // #haptics (#1115): per-event toggles for HOOP's IN-SESSION strap buzzes. Default ON (opt-out) — these
     // are feedback to a feature you started, so a fresh install buzzes as before and a user turns off any
     // cue they find noisy. Ambient cues (inactivity / calls / notifications) keep their own opt-in sections;
     // double-tap is gated by its action picker, not here. SharedPreferences isn't reactive → read into state.

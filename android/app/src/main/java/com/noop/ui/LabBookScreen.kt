@@ -78,7 +78,7 @@ import kotlin.math.sqrt
 //
 // "Your own logbook." A private place to KEEP the numbers you already get from your
 // doctor or pharmacy — bloods, BP, body measurements — and SEE them next to your
-// wearable signals, entirely on this phone. NOOP never tests you, never reads a result,
+// wearable signals, entirely on this phone. HOOP never tests you, never reads a result,
 // and never tells you what a number means medically.
 // (Spec: docs/superpowers/specs/2026-06-19-v5-health-records-design.md.)
 //

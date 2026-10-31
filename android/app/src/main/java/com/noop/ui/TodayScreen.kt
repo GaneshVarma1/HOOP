@@ -683,7 +683,7 @@ fun TodayScreen(
 
     // #616: ONE calorie definition across the card, the Key-Metrics tile and the detail — resolve per day,
     // IMPORTED-FIRST (the phone's Apple/Health-Connect activeKcal, the figure these surfaces already showed),
-    // falling back to NOOP's on-device HR estimate (activeKcalEst) only for days the phone didn't cover.
+    // falling back to HOOP's on-device HR estimate (activeKcalEst) only for days the phone didn't cover.
     // Keyed by day; `caloriesByDay` feeds the SELECTED-day value the dashboard card + Key-Metrics tile both
     // read — day-scoped like every other card, and like steps.
     var caloriesByDay by remember { mutableStateOf<Map<String, Double>>(emptyMap()) }
@@ -881,7 +881,7 @@ fun TodayScreen(
 
     // Steps for the selected day from imported Apple Health / Health Connect data, the Today Steps
     // tile's fallback when the strap itself didn't bank an on-device count. A WHOOP 4.0 DOES count
-    // steps (in the official WHOOP app), but NOOP can't yet read them off the strap over Bluetooth, so
+    // steps (in the official WHOOP app), but HOOP can't yet read them off the strap over Bluetooth, so
     // on a 4.0 the tile shows your imported steps instead of "No Data". Reloads as the day selector
     // moves. On-device WHOOP 5/MG steps still take precedence. (#150)
     var importedStepsForDay by remember { mutableStateOf<Int?>(null) }
@@ -993,7 +993,7 @@ fun TodayScreen(
     // returned (e.g. "my-whoop", "my-whoop-noop", "apple-health"). resolvedSeries applies the SAME
     // imported-WHOOP > NOOP-computed > Apple-Health precedence the dashboard merge uses field-by-field
     // (WhoopRepository.mergeDaily), then computed rows resolve through durable input provenance so the
-    // card-level badge names the sensor/import providers rather than where NOOP ran the math.
+    // card-level badge names the sensor/import providers rather than where HOOP ran the math.
     var providerByMetric by remember { mutableStateOf<Map<String, ScoreInputProvider>>(emptyMap()) }
     LaunchedEffect(days, selectedDayKey, viewModel.activeStrapId) {
         val resolved = mutableMapOf<String, ScoreInputProvider>()
@@ -1406,7 +1406,7 @@ fun TodayScreen(
         // #486: header + wordmark + Arrange fold into ONE compact top cluster. Previously the decorative
         // "N O O P" wordmark and the pinned "Arrange" affordance were each their own full-width list item,
         // so the scaffold's 12dp rowSpacing left two near-empty sky bands stacked under the header ("empty
-        // space below NOOP"). Grouping them here removes those section gaps: the wordmark hangs 2dp under
+        // space below HOOP"). Grouping them here removes those section gaps: the wordmark hangs 2dp under
         // the title, and Arrange rides the SAME row as the wordmark (wordmark dead-centre, Arrange trailing)
         // instead of claiming its own band.
         Column(
@@ -2680,7 +2680,7 @@ private fun LiquidTodayHeader(
                 pagesBehind = pagesBehindAtConnect,
                 scanning = scanning, onRescan = onRescan,
             )
-            // (a) Profile avatar (the photo set in Settings, or the NOOP loop mark) → Settings. Mirrors iOS.
+            // (a) Profile avatar (the photo set in Settings, or the HOOP loop mark) → Settings. Mirrors iOS.
             Box(
                 modifier = Modifier
                     .size(HeaderClusterControl)
@@ -2916,7 +2916,7 @@ private fun LiquidBatteryRing(batteryPct: Double?, isRing: Boolean, onClick: () 
     }
 }
 
-// MARK: - NOOP wordmark (iOS LiquidWordmark parity — centred, with a tap easter egg)
+// MARK: - HOOP wordmark (iOS LiquidWordmark parity — centred, with a tap easter egg)
 //
 // The subtle "N O O P" wordmark that sits on the sky between the header and the hero. Built as a row of
 // letters (not one tracked string, which adds a trailing gap after the last glyph and pushes the word
@@ -3029,7 +3029,7 @@ private fun ScoreHeroRow(
     // exists. Mirrors the iOS live-Effort gauge. (#402)
     // #1001: the shared rule, so this ring and the Key Metrics tile / chart badge cannot disagree.
     val strain = StrainScorer.effectiveEffort(live = liveTodayStrain, stored = day?.strain)
-    // Effort honours the 0–100 / WHOOP-0–21 toggle (#313). The stored strain is on NOOP's 0–100 Effort
+    // Effort honours the 0–100 / WHOOP-0–21 toggle (#313). The stored strain is on HOOP's 0–100 Effort
     // axis; render it on the user's selected scale so the arc and centre number match the app's Effort.
     val effortOutOf = if (effortScale == EffortScale.WHOOP) 21.0 else 100.0
     val effortVal = strain?.let { UnitFormatter.effortValue(it, effortScale) } ?: 0.0
@@ -4660,7 +4660,7 @@ private fun DashboardCardRow(
 }
 
 /** #1491: the blank-Steps-tile line for a strap that ESTIMATES steps, or null when the prompt does not
- *  apply. A WHOOP 4.0 sends no step count, so NOOP fits an estimate from motion against a phone-counted
+ *  apply. A WHOOP 4.0 sends no step count, so HOOP fits an estimate from motion against a phone-counted
  *  reference and withholds it until it has one — and until #1491 the tile just went blank, with no
  *  explanation and no route to the sheet where a coefficient can be set by hand.
  *
@@ -5949,7 +5949,7 @@ private fun MetricGrid(
     importedStepsForDay: Int? = null,
     estimatedStepsForDay: Int? = null,
     // #616: the selected day's calorie value resolved imported-first (imported Apple/Health-Connect
-    // activeKcal ?: NOOP's on-device estimate), so the Calories tile matches the card + detail instead of
+    // activeKcal ?: HOOP's on-device estimate), so the Calories tile matches the card + detail instead of
     // reading the on-device estimate alone (which left it NO_DATA / inconsistent). Mirrors the steps params.
     caloriesForDay: Double? = null,
     // #616: the Calories tile's imported-first 14-day trend (see caloriesSpark above) — threaded like
@@ -6024,7 +6024,7 @@ private fun MetricGrid(
             // #1001: the resolved Effort, falling back to the stored column only when the caller passes
             // none (previews/tests). Reading `d.strain` here is what left this tile behind the hero ring.
             value = (effortForDay ?: d?.strain)?.let { UnitFormatter.effortDisplay(it, effortScale) } ?: NO_DATA,
-            // #492: Strain/Effort is a load index (0–21 WHOOP / 0–100 NOOP), NOT a percentage — the "%"
+            // #492: Strain/Effort is a load index (0–21 WHOOP / 0–100 HOOP), NOT a percentage — the "%"
             // was wrong (esp. on the 0–21 scale). Recovery/Rest ARE 0–100 % and keep it. iOS shows the
             // strain axis as an "of 21"/"of 100" caption with no % (TodayView effort tile); match that.
             unit = "",
@@ -6139,7 +6139,7 @@ private fun MetricGrid(
         },
         KeyMetric.CALORIES to run {
             // #616: the per-day resolved calorie value (caloriesForDay = imported Apple/Health-Connect
-            // first, else NOOP's on-device estimate) — one number across tile, card and detail.
+            // first, else HOOP's on-device estimate) — one number across tile, card and detail.
             val kcal = caloriesForDay
             KeyTileData(
                 label = uiString(R.string.l10n_today_screen_calories_3e62ecfe),
@@ -6982,7 +6982,7 @@ private suspend fun PointerInputScope.hrChartTransformGestures(
 // LineChart plots points by LIST INDEX (evenly spaced, no time axis), so each marker's wall-clock
 // time is mapped to a fractional list index by interpolating against the buckets' own timestamps, // markers then sit exactly on the rendered curve even when the strap history has gaps. Every layer
 // self-hides when its data is absent (no sleep, calibrating Charge, no workouts). Mirrors the macOS
-// OverviewHRChart (Packages/StrandDesign) in NOOP's own colour language. (PR #285)
+// OverviewHRChart (Packages/StrandDesign) in HOOP's own colour language. (PR #285)
 
 @Composable
 private fun OverviewHRChart(
@@ -8115,7 +8115,7 @@ private fun KeyMetricsEditorDialog(
                     modifier = Modifier.fillMaxWidth(),
                     accessibilityLabel = uiString(R.string.l10n_today_screen_edit_key_metrics_f95e61a4),
                 )
-                // The detailed graphs' trailing window — 1 week / 2 weeks / 1 month (the NOOP signature
+                // The detailed graphs' trailing window — 1 week / 2 weeks / 1 month (the HOOP signature
                 // segmented pill, same control the trend screens use). Only shown while Detailed is on.
                 if (detailed) {
                     SegmentedPillControl(

@@ -72,7 +72,7 @@ object ExerciseTypes {
 
     /**
      * Sports the user can pick that Health Connect has NO dedicated type for, so they ride on a
-     * fallback HC type (here "Other") while keeping their own NOOP label. Kept OUT of [NAMES] because
+     * fallback HC type (here "Other") while keeping their own HOOP label. Kept OUT of [NAMES] because
      * that map is int-keyed — "Padel" and "Other" would collide on EXERCISE_TYPE_OTHER_WORKOUT — and
      * because an inbound HC record of that type must still read back as the generic name, not Padel.
      * Padel (#77 / #152): a racquet sport HC doesn't enumerate yet → writes as "Other", stays "Padel"
@@ -94,7 +94,7 @@ object ExerciseTypes {
         // keeps "Bodybuilding" on our own rows. No route → GPS off.
         "Bodybuilding" to EX.EXERCISE_TYPE_STRENGTH_TRAINING,
         // #222 follow-up: sports HC has no dedicated type for → ride a nearby type for writeback while
-        // keeping their own NOOP label. GPS off (EXTRA is kept out of DISTANCE_TYPES).
+        // keeping their own HOOP label. GPS off (EXTRA is kept out of DISTANCE_TYPES).
         "Lacrosse" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
         "Field hockey" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
         "CrossFit" to EX.EXERCISE_TYPE_HIGH_INTENSITY_INTERVAL_TRAINING,
@@ -115,7 +115,7 @@ object ExerciseTypes {
         "Netball" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
         "Gaelic football" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
         "Spikeball" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
-        // WHOOP-parity batch: activities in WHOOP's catalogue NOOP lacked. HC has no dedicated type, so
+        // WHOOP-parity batch: activities in WHOOP's catalogue HOOP lacked. HC has no dedicated type, so
         // they ride a nearby one for writeback and keep their own label. GPS off (EXTRA convention).
         "Meditation" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
         "Horseback riding" to EX.EXERCISE_TYPE_OTHER_WORKOUT,
@@ -126,7 +126,7 @@ object ExerciseTypes {
         // Connect has no pole-walking type, and WALKING is what it actually is. Keeps its own label
         // because the strain is not a plain walk.
         "Nordic walking" to EX.EXERCISE_TYPE_WALKING,
-        // WHOOP-parity batch 2: the rest of the sports in WHOOP's activity list that NOOP had no
+        // WHOOP-parity batch 2: the rest of the sports in WHOOP's activity list that HOOP had no
         // entry for. A specific HC type only where the activity genuinely belongs to it; everything
         // else rides OTHER_WORKOUT rather than overstating the match. All keep their own label.
         // Ballet: dance, so it writes back as dance.

@@ -3,7 +3,7 @@ package com.noop.analytics
 /**
  * Descriptive primary-sleep vs wake HR contrast. Behavioral twin of Swift `SleepHeartRateContrast`.
  *
- * This is NOT another resting-heart-rate definition. NOOP already ships a floor-style RHR (the scoring
+ * This is NOT another resting-heart-rate definition. HOOP already ships a floor-style RHR (the scoring
  * input) and collects a separate primary-session mean RHR candidate (#1174/#1188, evidence in #1169);
  * this engine leaves both untouched. It compares explicitly supplied fixed-grid wake and primary-sleep
  * HR windows and reports how the means differ.
@@ -43,7 +43,7 @@ object SleepHeartRateContrast {
      * irregular raw samples should first aggregate to a declared fixed cadence.
      *
      * `minimumValidSamples` is applied independently to each window; its default mirrors the provisional
-     * 30-valid-sample floor of NOOP's primary-session mean RHR experiment and is not a clinical threshold.
+     * 30-valid-sample floor of HOOP's primary-session mean RHR experiment and is not a clinical threshold.
      */
     fun evaluate(
         wakeHR: List<Double?>,

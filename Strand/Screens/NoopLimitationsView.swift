@@ -4,7 +4,7 @@ import StrandDesign
 // MARK: - NoopLimitationsView — "what HOOP can (and can't) read off each strap"
 //
 // The iOS/macOS twin of Android's NoopLimitationsScreen: a plain tri-state capability grid listing every
-// metric NOOP surfaces and whether it comes live off a WHOOP 4.0 vs a 5.0/MG. Marks mirror the
+// metric HOOP surfaces and whether it comes live off a WHOOP 4.0 vs a 5.0/MG. Marks mirror the
 // decoder/analytics truth (Interpreter / AnalyticsEngine / HistoricalStreams): full = read live; partial =
 // an on-device estimate or an experimental / firmware-gated read; none = not off the strap (SpO₂ % is
 // import-only on both; blood pressure has no path). A legend carries the meaning in place of per-row prose.

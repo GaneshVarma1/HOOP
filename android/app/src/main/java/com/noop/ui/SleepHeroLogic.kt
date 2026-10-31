@@ -114,7 +114,7 @@ internal fun heroPerformanceScore(
 
 /**
  * Whether a SPECIFIC night's sleep-performance score is WHOOP's own imported figure, an Oura
- * ring-provided figure, or NOOP's on-device approximation — so the hero is honest about provenance, like
+ * ring-provided figure, or HOOP's on-device approximation — so the hero is honest about provenance, like
  * Today's badges. Keyed by the night's wake-day (matching [heroPerformanceScore]) so a navigated night's
  * badge tracks ITS OWN score's provenance, not last night's. WHOOP import wins first; only a night
  * surfaced under a live Oura strap reads "Oura". Mirrors the macOS SleepView.heroSource.

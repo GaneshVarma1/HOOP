@@ -602,7 +602,7 @@ internal fun NightNavHeader(
     }
 
     // Confirm before removing the night — the same on-brand AlertDialog the time-edit chooser
-    // uses (surfaceRaised, Noop type tokens), not a bare Material default. (#281)
+    // uses (surfaceRaised, HOOP type tokens), not a bare Material default. (#281)
     if (showDeleteConfirm && session != null) {
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { showDeleteConfirm = false },

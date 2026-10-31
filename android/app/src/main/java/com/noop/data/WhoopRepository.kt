@@ -97,7 +97,7 @@ data class StreamBatch(
      * #891: one full-frame hex sample per type in [unhandledPacketTypes], keyed the same way, taken from
      * the first such frame in the batch.
      *
-     * The census alone tells a reporter that their firmware banks a record NOOP cannot read, and then
+     * The census alone tells a reporter that their firmware banks a record HOOP cannot read, and then
      * asks them to report it — while carrying none of the bytes anyone would need to map it. The dropped
      * frame is not archived either: `rejectedHistoricalRecords` only ever holds type-47, so these bytes
      * existed nowhere. Diag only (excluded from [isEmpty]). Mirrors Swift `Streams.unhandledPacketSamples`.
@@ -298,7 +298,7 @@ data class RespRow(val ts: Long, val raw: Int)
  * The 1 Hz gravity vector at [ts], plus the strap's OWN gravity-removed motion magnitude from the same
  * record ([dynAccel] = `dynamic_acceleration@41`, f32 g).
  *
- * The two are different measurements of the same second and belong together. NOOP's motion spine derives
+ * The two are different measurements of the same second and belong together. HOOP's motion spine derives
  * its stillness signal from `gravityDeltas` — the L2 distance between CONSECUTIVE 1 Hz gravity vectors —
  * which is a proxy: it sees orientation CHANGE at 1 Hz, not acceleration. [dynAccel] is the strap's
  * absolute gravity-removed magnitude at one instant, computed on-device from the full-rate IMU. It is
@@ -1049,7 +1049,7 @@ class WhoopRepository(
     ): Int {
         val maxTs = nowSec + futureMargin
         // The far-past floor day (local day of MIN_PLAUSIBLE_UNIX). A computed (`-noop`) row before this
-        // can't legitimately predate NOOP, so it is bad-clock garbage and is purged; the prune queries
+        // can't legitimately predate HOOP, so it is bad-clock garbage and is purged; the prune queries
         // apply this floor ONLY to `-noop` rows so a WHOOP CSV import (bare "my-whoop", REAL dates going
         // back years) is never touched (v8.2.1). A day after `today` is future-dated and always purged.
         val minDay = java.time.Instant.ofEpochSecond(minTs)
@@ -2449,7 +2449,7 @@ class WhoopRepository(
     suspend fun latestBattery(deviceId: String): BatterySample? = dao.latestBattery(deviceId)
 
     companion object {
-        /** A workout row is STRAP-NATIVE when NOOP recorded/scored it from a strap trace: a "manual"
+        /** A workout row is STRAP-NATIVE when HOOP recorded/scored it from a strap trace: a "manual"
          *  session or a detected bout (source "<id>-noop"). Everything else (Apple Health / Health Connect /
          *  WHOOP CSV / activity file) is IMPORTED and carries its own avg/max. Single source of truth for the
          *  classification shared by [fillWorkoutHrFromStrap] and [workoutHrDeviceIds]. */

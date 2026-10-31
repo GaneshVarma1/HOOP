@@ -45,7 +45,7 @@ import com.noop.ble.PuffinExperiment
 /**
  * Smart alarm (#207) — Android phone-based wake, with a guaranteed hard-deadline fallback.
  *
- * The user picks the EARLIEST acceptable wake time and a window length. NOOP watches the overnight
+ * The user picks the EARLIEST acceptable wake time and a window length. HOOP watches the overnight
  * strap stream and, if it spots a lighter sleep phase inside the window, wakes you then — but a
  * GUARANTEED exact OS alarm is always scheduled at the window's END (via AlarmManager), independent
  * of Bluetooth, the strap, or the app being alive. The smart logic can only ever move the alarm
@@ -256,7 +256,7 @@ fun SmartAlarmScreen(vm: AppViewModel) {
 
 /**
  * The strap's standalone silent wake-alarm (#766, moved from AutomationsScreen). Arms the strap's own
- * firmware alarm at the chosen time/weekdays over BLE, so it buzzes even if NOOP is closed. Reuses the
+ * firmware alarm at the chosen time/weekdays over BLE, so it buzzes even if HOOP is closed. Reuses the
  * shared [AlarmWeekdayPicker] / [AlarmDayOverridePicker] from AutomationsScreen (same behaviour, just a
  * new home). Functions are untouched: it drives the same `viewModel.setSmartAlarm*` calls as before.
  */

@@ -197,7 +197,7 @@ final class Repository: ObservableObject {
     /// Data Sources "Freshness Pipeline" card so the user can see imported vs computed vs Apple coverage.
     @Published private(set) var freshness: RepositoryFreshness = .empty
     /// Daily metric rows with source provenance, used by vital-sign surfaces that need honest
-    /// "WHOOP import / NOOP computed / Apple Health" captions instead of a silent merged row.
+    /// "WHOOP import / HOOP computed / Apple Health" captions instead of a silent merged row.
     @Published private(set) var vitalRows: [SourcedDailyMetric] = []
     /// Monotonic counter bumped on every successful `refresh()`. Intraday-updating views key their
     /// data load on this so they reload when fresh strap data lands , `today?.day` alone is a stable
@@ -719,7 +719,7 @@ final class Repository: ObservableObject {
     static let activityFileSource = "activity-file"
 
     /// Imported wearable-export sources whose DAILY aggregates (HRV / resting HR / sleep) can be scored
-    /// for a NOOP Charge/Rest on an import-only day, exactly like a live day (#823). These carry no raw HR
+    /// for a HOOP Charge/Rest on an import-only day, exactly like a live day (#823). These carry no raw HR
     /// stream, so the source-only fold in IntelligenceEngine scores them from the daily aggregate vs the
     /// person's own baseline. Matches `WearableBrand.sourceId` plus Health Connect (Android imports HC's
     /// daily metrics under the strap source, but a sideloaded/standalone HC source id is covered too).
@@ -1882,7 +1882,7 @@ final class Repository: ObservableObject {
             case .motion: return String(localized: "Motion")
             // #175: the strap's OWN band sleep_state track (0 wake/1 still/2 asleep/3 up), shown as a
             // distinct stepped track alongside the derived hypnogram. This is the band's reported state,
-            // NOT a stage NOOP trusts as truth — the pill names it "Band Sleep State" so it can't be
+            // NOT a stage HOOP trusts as truth — the pill names it "Band Sleep State" so it can't be
             // mistaken for the derived stages.
             case .bandSleepState: return String(localized: "Band Sleep State")
             // The Oura ring's OWN per-window motion: seconds of movement in each ~30 s window (0x47,
@@ -1941,7 +1941,7 @@ final class Repository: ObservableObject {
     /// 208 `dc_raw` rows land in that band — so they are not contamination. But real SpO2 CANNOT exceed
     /// 100 %, and open_oura's own pipeline clamps its computed SpO2 to [85, 100]
     /// (`docs/spo2-calibration.md`, tag `0x8b` path). So a smooth distribution peaking at 103–104 points
-    /// at an un-modelled offset/transform in NOOP's `0x6F` decode, NOT at real overshoot. Clamping here
+    /// at an un-modelled offset/transform in HOOP's `0x6F` decode, NOT at real overshoot. Clamping here
     /// would HIDE that discrepancy behind a flat line at 100; keeping the bound at 110 leaves it visible
     /// while still excluding the mis-scaled channel. Revisit once the `0x6F` scale is pinned — see
     /// OURA_PROTOCOL.md §6.5.

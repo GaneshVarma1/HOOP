@@ -11,7 +11,7 @@ import ZIPFoundation
 
 /// Full-database EXPORT / IMPORT for device migration.
 ///
-/// NOOP keeps everything in one SQLite file (`<AppSupport>/OpenWhoop/whoop.sqlite`, plus the
+/// HOOP keeps everything in one SQLite file (`<AppSupport>/OpenWhoop/whoop.sqlite`, plus the
 /// `-wal`/`-shm` WAL sidecars while the store is open). Export checkpoints the WAL (so the
 /// single file is whole), then wraps the SQLite in a ZIP written as `.noopbak`, alongside a
 /// small `settings.json` entry (#1000) carrying the whitelisted profile/display settings (see
@@ -620,7 +620,7 @@ enum DataBackup {
         return types
     }
 
-    /// Which platform produced a NOOP backup, judged by its migrator's bookkeeping table.
+    /// Which platform produced a HOOP backup, judged by its migrator's bookkeeping table.
     enum BackupOrigin: Equatable { case mac, android, unknown }
 
     /// Pure classification over a backup's `sqlite_master` table names: GRDB (this app) writes

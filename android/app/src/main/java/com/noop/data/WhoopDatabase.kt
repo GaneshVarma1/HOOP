@@ -510,7 +510,7 @@ abstract class WhoopDatabase : RoomDatabase() {
          * v18 -> v19: Oura/WHOOP efficiency-unit HEAL, the Room twin of the Swift WhoopStore v26
          * `v26-efficiency-heal` GRDB migration (#376). UPDATE-only, NO schema change: the Oura API
          * importer and (pre-fix) the WHOOP CSV importer wrote a 0-100 integer efficiency straight into
-         * `sleepSession.efficiency` / `dailyMetric.efficiency`, but NOOP's own sleep pipeline stores that
+         * `sleepSession.efficiency` / `dailyMetric.efficiency`, but HOOP's own sleep pipeline stores that
          * shared column as a 0-1 FRACTION everywhere it computes it (asleep ÷ in-bed) — same column, two
          * scales for rows written before the importer fix. Divides `efficiency` by 100 for every row
          * where it's > 1.5 — a threshold no genuine fraction can exceed (the column's convention caps at
@@ -658,7 +658,7 @@ abstract class WhoopDatabase : RoomDatabase() {
          *
          * `extractHistoricalStreams` is a narrow funnel — a field the decoder produces but the funnel
          * does not name is computed and dropped one line later. That drop is PERMANENT: the strap trims
-         * its banked history as soon as NOOP acks the offload, so those seconds are not re-fetchable.
+         * its banked history as soon as HOOP acks the offload, so those seconds are not re-fetchable.
          *
          *   gravitySample.dynAccel     `dynamic_acceleration@41` (f32 g), the strap's OWN gravity-removed
          *                              motion magnitude, stored BESIDE the 1 Hz vector the motion spine

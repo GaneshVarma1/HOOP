@@ -1,7 +1,7 @@
 import XCTest
 @testable import Strand
 
-/// Pins the pure 0x2A37 Heart Rate Measurement *encoder* used by `HrBroadcaster` when NOOP re-broadcasts
+/// Pins the pure 0x2A37 Heart Rate Measurement *encoder* used by `HrBroadcaster` when HOOP re-broadcasts
 /// its live strap HR back out as a standard Bluetooth HR peripheral (so a treadmill / Zwift / Peloton can
 /// read it). The encoder is the inverse of `StandardHeartRate.parse`, so each case here is round-tripped
 /// back through the parser to prove the two agree byte-for-byte. No CoreBluetooth is touched.

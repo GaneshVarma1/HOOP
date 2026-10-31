@@ -292,7 +292,7 @@ object AnalyticsEngine {
      * the night has too little of it to summarise. Pure → unit-testable, and byte-twinned in Swift.
      *
      * This is NOT the RSA estimate `SleepStager.respRateFromRR` computes: these rows are a measurement
-     * the device made and NOOP decoded (the Oura ring's 0x6A `breath`, stored in milli-bpm), so the
+     * the device made and HOOP decoded (the Oura ring's 0x6A `breath`, stored in milli-bpm), so the
      * question is coverage, not method. The night's value is the MEDIAN of the rows that fall inside a
      * matched in-bed session — the same statistic the ledger this decode was validated with used, and
      * robust to the odd out-of-band record.
@@ -684,7 +684,7 @@ object AnalyticsEngine {
 
         // ── HRV & Autonomic nightly trace (#141) ──────────────────────────────
         // Per-5-min-window RMSSD tagged by the sleep stage at its center, then a night summary comparing
-        // NOOP's whole-night mean (what it reports) against a deep-only mean and a WHOOP-style
+        // HOOP's whole-night mean (what it reports) against a deep-only mean and a WHOOP-style
         // last-slow-wave-sleep value — so an "HRV reads ~2x higher than WHOOP" report shows WHICH stages
         // lift it, and lets a deep-sleep-windowed fix be validated before it ships. Reuses the SAME
         // sessionHrvWindows the value is built from (can't diverge). Zero cost when the sink is null.
@@ -712,7 +712,7 @@ object AnalyticsEngine {
             val withR = allWin.filter { it.rmssd != null }
             val deepW = withR.filter { it.stage == "deep" }
             val lastSws = SleepStager.lastDeepRun(allWin).filter { it.rmssd != null }
-            // `reported` is the value NOOP actually displays (duration-weighted session-mean-of-means);
+            // `reported` is the value HOOP actually displays (duration-weighted session-mean-of-means);
             // `wholeNight` is the pooled-window mean it equals on single-session nights and the apples-to-
             // apples baseline for the deepOnly/lastSWS comparison (all three are pooled window means).
             // #2128: say WHY `reported` is nil, but ONLY when the night printed real window means beside
@@ -1529,7 +1529,7 @@ object AnalyticsEngine {
 }
 
 /*
- * RestScorer — NOOP "Rest" (sleep_performance) composite, 0–100.
+ * RestScorer — HOOP "Rest" (sleep_performance) composite, 0–100.
  *
  * Faithful Kotlin mirror of the Swift Rest composite (AnalyticsEngine / RestScorer). Keep every
  * constant and the weight set byte-identical to Swift — parity tests enforce it.

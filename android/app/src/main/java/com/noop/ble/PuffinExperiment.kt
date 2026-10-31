@@ -44,7 +44,7 @@ class PuffinExperiment(
         get() = prefs.getBoolean(KEY_DEEP_DATA, false)
         set(v) = prefs.edit().putBoolean(KEY_DEEP_DATA, v).apply()
 
-    /** True if the user opted in to "Broadcast heart rate": NOOP enables the family's reversible
+    /** True if the user opted in to "Broadcast heart rate": HOOP enables the family's reversible
      *  direct-broadcast control so the strap advertises the standard Heart Rate Service (0x180D),
      *  pairable by a Garmin/Zwift/gym HR client. Default false.
      *  Mirrors the macOS `PuffinExperiment.broadcastHrKey`. (#181) */
@@ -52,7 +52,7 @@ class PuffinExperiment(
         get() = prefs.getBoolean(KEY_BROADCAST_HR, false)
         set(v) = prefs.edit().putBoolean(KEY_BROADCAST_HR, v).apply()
 
-    /** True if the user opted in to the "ECG raw-data gate" (#891): NOOP writes the device-config key
+    /** True if the user opted in to the "ECG raw-data gate" (#891): HOOP writes the device-config key
      *  `enable_raw_data_w_ecg` — the key the strap's own 115/116 enumeration listed, which reads '0' on a
      *  subscription-free WHOOP MG whose three TOGGLE_LABRADOR commands all ack SUCCESS and emit nothing.
      *
@@ -247,7 +247,7 @@ class PuffinExperiment(
         }
     }
 
-    /** True if the user opted in to "Ask Android to pair" (#1635, default false): NOOP calls
+    /** True if the user opted in to "Ask Android to pair" (#1635, default false): HOOP calls
      *  `BluetoothDevice.createBond()` explicitly instead of relying on a write to the encrypted
      *  characteristic to provoke pairing — which the #1639 bond-state trace showed never happens at all.
      *  Its own switch, like every other probe that changes state outside the app: this one asks the OS to
@@ -278,7 +278,7 @@ class PuffinExperiment(
     }
 
     /**
-     * "Clear a stale phone pairing" - may NOOP call removeBond() when the OS holds a pairing the strap
+     * "Clear a stale phone pairing" - may HOOP call removeBond() when the OS holds a pairing the strap
      * no longer honours? Default OFF, like every other switch here that changes hardware or OS state.
      * See [shouldRemoveStaleBond] for the gate and why the threshold is above the guide's.
      */

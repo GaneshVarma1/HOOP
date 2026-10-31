@@ -12,7 +12,7 @@ import java.time.Instant
  * mirror into a ring of the last three runs, 1,000 lines each (#1263). A restart's cause survived only when
  * restarts were rare and the cause was recent. Three things were lost every time: the lines logged since the last
  * mirror (up to 31 — the seconds before the process is killed, the ones that explain it); everything but a run's
- * last 1,000 lines; and every run before the last three. On 21 Sep 2026 iOS killed NOOP for background CPU four
+ * last 1,000 lines; and every run before the last three. On 21 Sep 2026 iOS killed HOOP for background CPU four
  * times in 28 minutes of one session, and the log saved afterwards began half an hour after the moment it was
  * saved for; Android keeps the same ring, so it loses the same way.
  *

@@ -247,7 +247,7 @@ enum class CommandNumber(val rawValue: Int) {
     STOP_RAW_DATA(82),
     // WHOOP 5/MG realtime 6-axis IMU. The production WHOOP app sends revision 1 plus an enabled
     // byte while a Strength Builder workout is active (hardware-captured on a normal WHOOP 5).
-    // NOOP exposes this only through the explicitly user-started Ground Truth collector.
+    // HOOP exposes this only through the explicitly user-started Ground Truth collector.
     TOGGLE_IMU_MODE(106),
     // GET_EXTENDED_BATTERY_INFO (98) — read-only extended battery read (mV etc.). The NUMBER is disputed
     // (#592): an independent APK decompile reads this family 11 lower (87), while whoomp's table says 98 —
@@ -263,7 +263,7 @@ enum class CommandNumber(val rawValue: Int) {
     // user-triggered, Test-Centre-gated probeBodyLocationAndStatus(). Decoded to a diagnostic report only.
     GET_BODY_LOCATION_AND_STATUS(84),
     // START_FF_KEY_EXCHANGE (117 / 0x75) — READ-ONLY: ask the strap how many feature flags its firmware
-    // knows. The READ half of the flag surface NOOP has only ever written (SET_CONFIG/120): the protocol's
+    // knows. The READ half of the flag surface HOOP has only ever written (SET_CONFIG/120): the protocol's
     // own CommandNumber table names 117/118 alongside 119/120, and only the SET pair was implemented.
     // Driven ONLY by probeFeatureFlags() (user-initiated, Test Centre → Connection gated); parsing lives in
     // the pure com.noop.protocol.FeatureFlagProbe. Mirrors Swift WhoopCommand.startFeatureFlagKeyExchange.
@@ -325,7 +325,7 @@ enum class CommandNumber(val rawValue: Int) {
  *
  * This is NOT a send surface and must never become one. [CommandNumber] above is the curated *sender*
  * enum and deliberately omits every destructive opcode; this map is the *reader's* dictionary, so it
- * names opcodes NOOP will never emit (FORCE_TRIM, the firmware-load family, ENTER_BLE_DFU) purely so an
+ * names opcodes HOOP will never emit (FORCE_TRIM, the firmware-load family, ENTER_BLE_DFU) purely so an
  * inbound COMMAND_RESPONSE echoing one is legible in a strap log.
  *
  * Nothing here widens what can be sent, but note where that guarantee actually comes from: the 4.0
@@ -432,7 +432,7 @@ object CommandNames {
 /**
  * Candidate reboot frames for the WHOOP 4.0 reboot probe (Test Centre → Connection, WHOOP 4.0 only).
  *
- * A real WHOOP 4.0 silently ignores NOOP's production reboot frame (opcode 29 REBOOT_STRAP, empty body
+ * A real WHOOP 4.0 silently ignores HOOP's production reboot frame (opcode 29 REBOOT_STRAP, empty body
  * — #235: no reboot, no disconnect, no COMMAND_RESPONSE), and the correct 4.0 frame is unknown. These
  * are the plausible NON-DESTRUCTIVE candidates — a restart / power-cycle only, never a data-wiping
  * opcode — tried one at a time on real hardware so the strap log tells which one works: `reboot: link
@@ -451,7 +451,7 @@ enum class RebootProbeVariant(
     /** Tag written to the strap log so each attempt is correlatable (byte-identical to Swift). */
     val logTag: String,
 ) {
-    // A — opcode 29 REBOOT_STRAP, empty body: NOOP's current production frame (ignored on 4.0).
+    // A — opcode 29 REBOOT_STRAP, empty body: HOOP's current production frame (ignored on 4.0).
     REBOOT_29_EMPTY(CommandNumber.REBOOT_STRAP, byteArrayOf(),
         "A · REBOOT_STRAP(29) empty", "A/reboot29-empty"),
     // B — opcode 32 POWER_CYCLE_STRAP, empty body: a harder restart, never tried.

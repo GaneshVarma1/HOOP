@@ -39,7 +39,7 @@ enum class PolarModel {
             UNKNOWN -> emptySet()
         }
 
-    /** The PMD measurement NOOP would request for HRV: PPI where the optical bands expose it, else null
+    /** The PMD measurement HOOP would request for HRV: PPI where the optical bands expose it, else null
      *  (H10/H9 R-R comes off the standard HR service — no PMD needed). */
     val hrvPmdStream: PolarPmdMeasurement?
         get() = if (pmdStreams.contains(PolarPmdMeasurement.PPI)) PolarPmdMeasurement.PPI else null

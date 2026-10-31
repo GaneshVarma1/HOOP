@@ -16,7 +16,7 @@ package com.noop.ble
 object GarminBroadcast {
 
     /**
-     * Step-by-step guidance to put a Garmin watch into Broadcast Heart Rate mode so NOOP (and any other
+     * Step-by-step guidance to put a Garmin watch into Broadcast Heart Rate mode so HOOP (and any other
      * standard-HR app) can read it. Human, US-neutral, no em-dashes. The exact menu path varies a little
      * by model, so we keep it general and accurate.
      */

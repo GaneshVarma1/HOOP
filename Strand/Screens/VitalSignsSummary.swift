@@ -212,8 +212,8 @@ enum BodyVitalSigns {
         let hrvRow = latest(hrvPoints)
         let skinRowDeviation = latest(skinPoints)
         // #1118: mark HRV "unverified" when this night's in-sleep R-R was over-counted — the WHOOP 4.0
-        // two-optical-channel artifact that inflates R-R and contaminates RMSSD, so NOOP's HRV won't match
-        // WHOOP until the de-dup fix lands. The flag is written only for NOOP's OWN measured capture (an
+        // two-optical-channel artifact that inflates R-R and contaminates RMSSD, so HOOP's HRV won't match
+        // WHOOP until the de-dup fix lands. The flag is written only for HOOP's OWN measured capture (an
         // imported WHOOP-app night never sets it), so a pure-import night is never caveated. Gated on the
         // flag ALONE — no source check — to stay behaviourally identical to Android, whose DailyMetric
         // carries no per-row source (feature-level parity). (#1118)
@@ -224,7 +224,7 @@ enum BodyVitalSigns {
         // verdict is the very thing that makes `SleepStager.sessionAvgHRV` return nil. So on the night
         // this was written for, there is no row to attach it to and the tile falls through to its
         // missing caption, which said only "No HRV value". The wearer was told nothing, on the one
-        // failure NOOP can explain precisely. Say it in the slot that is actually reached.
+        // failure HOOP can explain precisely. Say it in the slot that is actually reached.
         let hrvMissingCaption = Self.hrvBlankedByOverCount(hrvOverCountByDay: hrvOverCountByDay,
                                                            todayKey: logicalDay)
             ? String(localized: "Over-reports R-R, so no value is shown")
@@ -334,7 +334,7 @@ enum BodyVitalSigns {
                 source: spo2Row?.source,
                 // Two different empty states, and conflating them is what sends people to the forums. When
                 // the night HAS raw red/IR counts, the strap's Blood-O₂ sensor plainly worked — only the
-                // calibrated % is missing, because WHOOP derives it in their cloud and NOOP will not
+                // calibrated % is missing, because WHOOP derives it in their cloud and HOOP will not
                 // fabricate one (spo2Pct is import-only; see Spo2ReTrace). Saying "No SpO₂ import or Health
                 // value" there reads as "your sensor recorded nothing", next to a Raw SpO₂ tile showing a
                 // live number.

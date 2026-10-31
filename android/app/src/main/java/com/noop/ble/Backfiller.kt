@@ -184,7 +184,7 @@ class Backfiller(
 
     /**
      * Per-session persistence tally — the success-side observability flagged as the forensics blind spot
-     * (#150): NOOP logged FAILURES (decoded-to-0) but never SUCCESSES, so a strap log couldn't tell a
+     * (#150): HOOP logged FAILURES (decoded-to-0) but never SUCCESSES, so a strap log couldn't tell a
      * banking strap from a broken one. Reset in [begin]; read by [WhoopBleClient] at session end to emit
      * "persisted N rows (M with motion) across K night(s)". Nights are day-keys (ts / 86400). Mirrors the
      * Swift Backfiller.
@@ -436,7 +436,7 @@ class Backfiller(
         // #773: corrupt future-RTC detection. A HISTORY_END carries the strap's own clock; a genuine offload
         // is always PAST-dated (it's banked history), so an end dated days into the future can only be a
         // corrupt strap RTC. Surface it ONCE per session with a recovery hint so the cause (the strap clock,
-        // not a NOOP bug) is named and the fix (charge + reconnect re-syncs the RTC) is given. Observability
+        // not a HOOP bug) is named and the fix (charge + reconnect re-syncs the RTC) is given. Observability
         // only - the ack still proceeds and the #547 ingest gate already keeps the bad-dated rows out of the
         // DB. The 0xFFFFFFFF sentinel above is a different state (it isn't a real date), so skip it here.
         if (trim != 0xFFFFFFFFL && !loggedFutureRtc) {
@@ -493,7 +493,7 @@ class Backfiller(
             for ((v, carriesSignal) in layoutsInChunk) {
                 if (!loggedLayoutVersions.add(v)) continue
                 log("Backfill: historical records use layout v$v")
-                // #1992: and say what that MEANS when it is not a layout NOOP can score from. Android used
+                // #1992: and say what that MEANS when it is not a layout HOOP can score from. Android used
                 // to print the bare version and stop, so a user whose nights were not staging had the fact
                 // in their log and none of the explanation, while the same strap on iOS was told why.
                 // Asked of the LAYOUT: it counts as carrying a signal when ANY of the chunk's records of
@@ -597,7 +597,7 @@ class Backfiller(
             // #547: the strap is emitting records with implausible timestamps (a bad clock/flash —
             // far-past, a year-2027 spike, or future-dated `unix`). The ingest gate dropped them so they
             // can't pollute the day-windowed analytics; surface it ONCE per session so a bad-clock strap
-            // is visible in a shared log (the strap clock is genuinely bad — this is NOOP being robust).
+            // is visible in a shared log (the strap clock is genuinely bad — this is HOOP being robust).
             sessionDroppedImplausible += decoded.droppedImplausibleTs
             if (decoded.droppedImplausibleTs > 0 && !loggedImplausibleClock) {
                 loggedImplausibleClock = true
@@ -1012,7 +1012,7 @@ class Backfiller(
 
         /**
          * #773: the recovery-hint line for a corrupt future-dated strap RTC. Names the cause plainly (the
-         * strap's clock, not a NOOP bug) and gives the fix (charge + reconnect re-syncs the RTC). Byte-
+         * strap's clock, not a HOOP bug) and gives the fix (charge + reconnect re-syncs the RTC). Byte-
          * identical to the Swift `Backfiller.futureRtcLine`. No em-dash (project rule).
          */
         fun futureRtcLine(endUnix: Long, wallNowUnix: Long): String {
@@ -1047,7 +1047,7 @@ class Backfiller(
          * same number is unremarkable. Asserting a corrupt RTC here would be claiming more than the data
          * supports, which is how this area has misled people before.
          *
-         * It also says the part the existing advice omits: NOOP re-sends SET_CLOCK on every connect, so
+         * It also says the part the existing advice omits: HOOP re-sends SET_CLOCK on every connect, so
          * "charge it" alone has already been retried every session. The escalation and the
          * compare-with-the-official-app test are what actually move a stuck case forward.
          *
@@ -1069,12 +1069,12 @@ class Backfiller(
          * The standing banner says "fully charge it to 100%, then reconnect, and it should start banking
          * again". It omits the one fact that makes the situation legible - how long the strap has been
          * silent - and it PROMISES a recovery that has already failed every session for weeks, because
-         * NOOP re-sends SET_CLOCK on every connect and the charge advice has therefore been retried all
+         * HOOP re-sends SET_CLOCK on every connect and the charge advice has therefore been retried all
          * along. A banner that keeps promising something that keeps not happening teaches people to
          * distrust the app rather than their strap.
          *
          * Shorter than the log line: a banner is glanced at, not read. Same discipline though - state the
-         * age, condition the diagnosis on having worn it, and name the check that says whether NOOP is
+         * age, condition the diagnosis on having worn it, and name the check that says whether HOOP is
          * even involved.
          *
          * Byte-identical to the Swift twin. Not localized, matching the sibling `lastSyncError` copy on

@@ -1,7 +1,7 @@
 package com.noop.data
 
 /**
- * Honest live-BLE capability set for a WHOOP strap that NOOP can actually drive **without** a CSV /
+ * Honest live-BLE capability set for a WHOOP strap that HOOP can actually drive **without** a CSV /
  * Health Connect import.
  *
  * Calibrated SpO₂ **%** is deliberately **excluded**: AnalyticsEngine nulls `spo2Pct` for every WHOOP
@@ -13,7 +13,7 @@ package com.noop.data
  */
 object WhoopLiveCapabilities {
 
-    /** Core metrics every WHOOP generation can feed in NOOP over BLE (no calibrated SpO₂ %). */
+    /** Core metrics every WHOOP generation can feed in HOOP over BLE (no calibrated SpO₂ %). */
     val base: Set<Metric> = setOf(
         Metric.hr, Metric.hrv, Metric.skinTemp, Metric.sleep, Metric.strainLoad,
     )

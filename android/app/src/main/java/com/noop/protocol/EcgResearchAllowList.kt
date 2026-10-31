@@ -74,7 +74,7 @@ object EcgResearchAllowList {
      */
     val FORBIDDEN: Map<Int, String> = mapOf(
         // Firmware load / DFU — the family that sits just above 139 in opcode space, and the reason an
-        // ECG sweep is dangerous. NOOP's curated CommandNumber enum omits all of these entirely.
+        // ECG sweep is dangerous. HOOP's curated CommandNumber enum omits all of these entirely.
         36 to "START_FIRMWARE_LOAD",
         37 to "LOAD_FIRMWARE_DATA",
         38 to "PROCESS_FIRMWARE_IMAGE",
@@ -91,7 +91,7 @@ object EcgResearchAllowList {
         // this panel.
         29 to "REBOOT_STRAP",
         32 to "POWER_CYCLE_STRAP",
-        // High-frequency sync entry — an uncertain, battery-heavy mode NOOP deliberately never enters
+        // High-frequency sync entry — an uncertain, battery-heavy mode HOOP deliberately never enters
         // (docs/PROTOCOL.md note on 96); the panel does not offer it.
         96 to "ENTER_HIGH_FREQ_SYNC",
         97 to "EXIT_HIGH_FREQ_SYNC",

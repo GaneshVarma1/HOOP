@@ -42,7 +42,7 @@ import com.noop.R
  * section card itself (the cards it wraps keep their own [SettingsSection] chrome). It's a header row
  * plus a default-collapsed reveal, modelled on the Test Centre "Advanced" group. Nothing is removed:
  * collapsed simply means the wrapped sections aren't composed until the row is tapped open. A custom
- * header (not Material's ExposedDropdown / accordion) keeps it on NOOP's near-black instrument look.
+ * header (not Material's ExposedDropdown / accordion) keeps it on HOOP's near-black instrument look.
  */
 @Composable
 internal fun SettingsDisclosureGroup(
@@ -99,7 +99,7 @@ internal fun SettingsDisclosureGroup(
 
 /**
  * A grouped settings card: a "Settings" overline + icon + title header, an explanatory blurb, then
- * content. A faint brand-green wash anchors the card to NOOP's neutral chrome (mirrors macOS).
+ * content. A faint brand-green wash anchors the card to HOOP's neutral chrome (mirrors macOS).
  */
 @Composable
 internal fun SettingsCard(

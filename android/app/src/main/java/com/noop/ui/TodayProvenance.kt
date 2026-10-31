@@ -12,7 +12,7 @@ import com.noop.data.Vo2MaxEstimator
 /**
  * The Today provenance label for the day's REAL merge winner, extends the existing By-Day badge
  * vocabulary consistently. NOOP-computed reads "On-device" (the spec's wording for the By-Day badge,
- * versus the FusedRecord screen's terser "NOOP"), an imported strap day reads "Whoop", and a phone
+ * versus the FusedRecord screen's terser "HOOP"), an imported strap day reads "Whoop", and a phone
  * aggregate reads "Apple Health" / "Health Connect". Null when no source owns the day (nothing to
  * stamp). Mirrors the Swift `provenanceBadgeLabel`.
  */
@@ -47,7 +47,7 @@ internal fun provenanceBadgeLabel(owner: FusionSource?): DisplayText? = when (ow
  * winning point, e.g. "my-whoop", "my-whoop-noop", "apple-health") onto the spec's provenance labels,
  * given the strap's real [deviceId]. ANY NOOP-computed strap sibling (a "-noop"-suffixed id, not just the
  * active strap's) reads "On-device" - matching by suffix rather than "$deviceId-noop" so a computed row
- * from a non-active strap can't fall through to [FusionSource.NOOP_COMPUTED]'s raw "NOOP" displayName
+ * from a non-active strap can't fall through to [FusionSource.NOOP_COMPUTED]'s raw "HOOP" displayName
  * (the internal id must never surface); the imported strap source ([deviceId], normally "my-whoop") reads
  * "Whoop"; the Apple-Health source reads "Apple Health". Any other real source (Health Connect, Mi Band,
  * nutrition) keeps its [FusionSource.displayName], still the genuine merge winner, never a blanket claim.

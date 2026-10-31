@@ -33,7 +33,7 @@ struct RootTabView: View {
     /// Cross-screen navigation requests (e.g. Live → "Manage devices"). Devices isn't a tab — it lives
     /// behind the More list — so a request presents it as a sheet, matching the quick-action screens.
     @EnvironmentObject private var router: NavRouter
-    /// The scene-local receiver for actions chosen from NOOP's Home Screen icon menu.
+    /// The scene-local receiver for actions chosen from HOOP's Home Screen icon menu.
     @EnvironmentObject private var homeScreenQuickActions: HomeScreenQuickActionSceneDelegate
 
     /// Which quick-action screen the centre FAB is presenting (nil = sheet closed).
@@ -492,7 +492,7 @@ struct RootTabView: View {
                     // #155: HealthKit-free Apple Health path for sideloaded installs (Siri Shortcut
                     // reads the opt-in Documents/noop_sync.txt drop file).
                     MoreRow("Shortcuts Export", "square.and.arrow.up.fill", .shortcutsExport)
-                    // The plain 4.0 vs 5.0/MG capability grid — what NOOP reads live off each strap.
+                    // The plain 4.0 vs 5.0/MG capability grid — what HOOP reads live off each strap.
                     MoreRow("HOOP Limitations", "list.bullet.rectangle", .noopLimitations)
                 }
                 moreSection("App") {

@@ -559,7 +559,7 @@ enum DebugDataDiagnostics {
                 line += " · strap clock at arm \(skew > 0 ? "+" : "")\(mag)"
             }
             // #34: live HR at arm, logged only to test whether the strap's own sleep/rest detection (not
-            // anything NOOP sends) gates the physical haptic — see the doc comment on recordAlarmArm.
+            // anything HOOP sends) gates the physical haptic — see the doc comment on recordAlarmArm.
             if let hr = d.object(forKey: "alarm.lastArmHeartRate") as? Int {
                 line += " · HR \(hr) bpm at arm"
             }

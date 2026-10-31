@@ -360,7 +360,7 @@ private fun WelcomeStep() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            // The NOOP mark centred on a flat brushed-titanium hero tile (the metallic titanium ramp, a
+            // The HOOP mark centred on a flat brushed-titanium hero tile (the metallic titanium ramp, a
             // reset token — no gold). Clean and flat: a hairline rim, no bloom.
             Box(contentAlignment = Alignment.Center, modifier = Modifier.size(150.dp)) {
                 Box(
@@ -599,7 +599,7 @@ private fun ConnectStep(viewModel: AppViewModel) {
                 message = uiString(R.string.onboarding_connect_background_body),
             )
 
-            // WHOOP is NOOP's primary band, so onboarding leads with it — but it isn't required.
+            // WHOOP is HOOP's primary band, so onboarding leads with it — but it isn't required.
             // Make that obvious so a non-WHOOP user doesn't feel stuck on this step (#415-adjacent):
             // they can continue now and pair a heart-rate strap or import data afterwards.
             if (!live.bonded) {
@@ -958,7 +958,7 @@ private fun NotificationsStep() {
     }
 }
 
-// A late step that tells new users NOOP's look is theirs to set — the same System / Light / Dark
+// A late step that tells new users HOOP's look is theirs to set — the same System / Light / Dark
 // choice that lives in Settings → Appearance, with a live preview. Writing the choice flips the whole
 // app immediately (AppearancePrefs.mode is snapshot state; Palette re-resolves live), so the picker
 // IS the preview — and two mini swatches show both the warm-paper Light and dark blue-grey looks.

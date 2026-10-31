@@ -739,7 +739,7 @@ struct LiveView: View {
         }
     }
 
-    // The connect / buzz / disconnect controls, all routed through the unified NOOP button system:
+    // The connect / buzz / disconnect controls, all routed through the unified HOOP button system:
     // a filled primary for the lead Scan action, a secondary surface for Buzz, and the destructive
     // role for Disconnect — sentence-case, single line, optical-centred at controlHeight.
     private var scanButton: some View {

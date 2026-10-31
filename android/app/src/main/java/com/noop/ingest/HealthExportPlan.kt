@@ -1,15 +1,15 @@
 package com.noop.ingest
 
 /**
- * Pure (Android-free, HC-SDK-free) planning logic for what NOOP exports INTO Health Connect.
+ * Pure (Android-free, HC-SDK-free) planning logic for what HOOP exports INTO Health Connect.
  *
  * Everything here operates on plain Kotlin types so it is unit-testable on the JVM, mirroring
  * [HealthConnectImporter.sumKcalInWindow]. [HealthConnectWriter] turns these descriptors into
  * actual Health Connect records (the untestable SDK glue is kept thin, as in `buildExerciseRecords`).
  *
  * #528 (reimplemented from @sunny-noop): close the export gaps so a strap-only user surfaces the
- * metrics NOOP genuinely computed — daily steps, active energy, heart-rate series, sleep sessions —
- * into Health Connect for other apps. Honest: only days/samples NOOP actually has are emitted; a
+ * metrics HOOP genuinely computed — daily steps, active energy, heart-rate series, sleep sessions —
+ * into Health Connect for other apps. Honest: only days/samples HOOP actually has are emitted; a
  * day with no steps and no active kcal produces nothing (never a fabricated zero).
  */
 object HealthExportPlan {

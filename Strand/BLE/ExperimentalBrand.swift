@@ -45,7 +45,7 @@ public enum ExperimentalBrand: String, CaseIterable, Sendable, Equatable {
         }
     }
 
-    /// Whether this brand can stream LIVE heart rate at all in NOOP's experimental tier. Derived from the
+    /// Whether this brand can stream LIVE heart rate at all in HOOP's experimental tier. Derived from the
     /// catalog (`false` for Oura — no open live stream — so the wizard routes those to file import instead
     /// of pretending to connect). Defaults to `false` if the catalog row is somehow missing (a test pins
     /// that every case resolves).

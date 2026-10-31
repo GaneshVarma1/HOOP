@@ -484,7 +484,7 @@ private val WHOOP5_V21_CHANNELS: List<Pair<String, Int>> = listOf(
 
 /**
  * True when [frame] is a WHOOP 5/MG type-47 record whose layout version has NO field map on this
- * platform — the records that are never re-derivable from anything NOOP stores. Non-type-47 and
+ * platform — the records that are never re-derivable from anything HOOP stores. Non-type-47 and
  * too-short frames are false. Twin of the Swift `isUnmappedWhoop5HistoricalRecord`.
  */
 fun isUnmappedWhoop5HistoricalRecord(frame: ByteArray): Boolean {
@@ -727,7 +727,7 @@ private fun decodeWhoop5HistoricalV26(frame: ByteArray, limit: Int): V26Record? 
 }
 
 /**
- * The HISTORICAL_DATA (type-47) record frames in [rawFrames] that NOOP cannot turn into rows — a CRC
+ * The HISTORICAL_DATA (type-47) record frames in [rawFrames] that HOOP cannot turn into rows — a CRC
  * failure, an unmapped firmware layout (5/MG: any `hist_version` outside
  * [MAPPED_WHOOP5_HISTORICAL_VERSIONS]), or a mapped layout whose envelope parsed but whose v24
  * plausibility gate (see [decodeHistorical]) rejected it. These are the record frames
@@ -793,7 +793,7 @@ fun rejectedHistoricalRecords(
         }
         // UNMAPPED LAYOUT (5/MG) — archive UNCONDITIONALLY, whatever it decoded.
         //
-        // The decode-outcome test below is the wrong QUESTION for a layout NOOP has no field map for.
+        // The decode-outcome test below is the wrong QUESTION for a layout HOOP has no field map for.
         // Today it happens to give the right ANSWER, because [decodeWhoop5Historical] returns null for
         // every version outside [MAPPED_WHOOP5_HISTORICAL_VERSIONS] — but that is an accident of the
         // decoder's current shape, not a property of the format. One static schema field for type 47, or
@@ -817,7 +817,7 @@ fun rejectedHistoricalRecords(
         //
         // This used to be `decodeHistorical(...) == null` — did it decode at all. That is the same wrong
         // question the unmapped-layout rule above exists to replace, one step further down: a record that
-        // decodes into channels no engine reads is not data NOOP has kept, it is data NOOP has looked at
+        // decodes into channels no engine reads is not data HOOP has kept, it is data HOOP has looked at
         // and dropped, and the strap frees it on the very next trim ack. Today the two questions give the
         // same answer here, because every layout mapped on this platform either yields a heart rate (v18)
         // or is short-circuited above as having its own durable stream (v26). They stop agreeing the
@@ -1360,7 +1360,7 @@ private fun appendHistBattery(out: MutableList<BatteryRow>, ts: Long, p: Map<Str
  *
  * The strap sends a 25-sample window as one absolute ADC code plus 24 deltas, so this is the only way to
  * get back the signal the strap measured: `sample[0] = baseCode`, `sample[i+1] = sample[i] + delta[i]`.
- * NOOP stores the two as they arrive rather than folding them together, because the delta blob is
+ * HOOP stores the two as they arrive rather than folding them together, because the delta blob is
  * little-endian i16 and a real code (about 378,000 on the captured fixture) does not fit in one.
  *
  * Null when [baseCode] is null, which is the honest answer for a row written before the base was read:

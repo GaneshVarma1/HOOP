@@ -260,7 +260,7 @@ print("""
 C. AGREEMENT WITH THE STRAP'S OWN BAND sleep_state  (reference (b), n = \(banded.count) nights)
 ================================================================================
 The v18 @81 high nibble (0 wake / 1 still / 2 asleep / 3 up) is the strap's OWN scored verdict, not a
-re-derivation of NOOP's. It carries no light/deep/REM, so this is a sleep-vs-wake comparison only.
+re-derivation of HOOP's. It carries no light/deep/REM, so this is a sleep-vs-wake comparison only.
 STRICT maps band 2 -> sleep and band 0/3 -> wake, and EXCLUDES band 1 ("still", genuinely ambiguous).
 """)
 for (name, get) in [("V1", { (n: Night) in n.v1 }), ("V2", { (n: Night) in n.v2 }),

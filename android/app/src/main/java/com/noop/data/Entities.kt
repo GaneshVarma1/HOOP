@@ -502,7 +502,7 @@ data class LabMarkerRow(
     val unit: String,
     val source: String,
     val note: String? = null,
-    val referenceText: String? = null, // user-entered range, shown verbatim; NOOP ships none
+    val referenceText: String? = null, // user-entered range, shown verbatim; HOOP ships none
 )
 
 /**
@@ -803,7 +803,7 @@ data class LiveSessionRow(
  * (MIGRATION_24_25 / Swift WhoopStore `v31-deep-capture-channels`).
  *
  * `extractHistoricalStreams` names a dozen fields and silently discards the rest; the strap trims its
- * banked history as soon as NOOP acks the offload, so a field not banked here is gone permanently and can
+ * banked history as soon as HOOP acks the offload, so a field not banked here is gone permanently and can
  * never be censused, correlated, or validated. [fields] is a compact blob of the fifteen leftover slots
  * (see [V18AuxCodec] for the wire format and the column-vs-blob tradeoff) rather than fifteen nullable
  * columns on a hot per-second table.

@@ -2,7 +2,7 @@ import SwiftUI
 import StrandDesign
 import StrandAnalytics
 
-/// Intelligence — NOOP's own recovery/strain/sleep scores, computed on-device from raw strap data
+/// Intelligence — HOOP's own recovery/strain/sleep scores, computed on-device from raw strap data
 /// using the WHOOP model shape. Makes the app independent of WHOOP's cloud for live-collected days.
 ///
 /// i18n: the By-Day core labels (Effort/Charge/Rest/HRV/RHR) and the Charge-model "Effort" heading are
@@ -267,7 +267,7 @@ struct IntelligenceView: View {
                         ConfidenceTierChip(confidence: d.confidence)
                     }
                     // The REAL source of the day's dashboard headline, not a hard-coded "HOOP-computed".
-                    // The By-Day numbers are always NOOP's on-device scores, but when an import covers the
+                    // The By-Day numbers are always HOOP's on-device scores, but when an import covers the
                     // day it WINS the dashboard merge, so the badge says so ("Whoop" / "Apple Health") and
                     // a strap-scored night reads "On-device". Dynamic String → wrap in "\()" so it's shown
                     // verbatim, not looked up as a LocalizedStringKey (the String≠LocalizedStringKey

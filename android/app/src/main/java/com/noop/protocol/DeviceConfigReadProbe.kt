@@ -12,16 +12,16 @@ package com.noop.protocol
  *
  * ## Why
  *
- * NOOP writes config two ways and reads it neither way. `SET_FF_VALUE` (120 / 0x78) writes the sixteen
+ * HOOP writes config two ways and reads it neither way. `SET_FF_VALUE` (120 / 0x78) writes the sixteen
  * R22 feature flags in [Whoop5Config.enableR22Sequence]; `SET_DEVICE_CONFIG_VALUE` (119 / 0x77) writes
- * the one device-config key NOOP knows (the Broadcast-HR flag, #181). Those are two *different
+ * the one device-config key HOOP knows (the Broadcast-HR flag, #181). Those are two *different
  * namespaces* sharing a body layout — and the 117/118 enumerate pair #761 built covers the feature-flag
  * namespace ONLY. The device-config namespace has never been read or enumerated here at all.
  *
- * That matters for #103. NOOP already decodes a byte the deep record carries at offset 82 that reads as
+ * That matters for #103. HOOP already decodes a byte the deep record carries at offset 82 that reads as
  * real SpO2 on some straps and is flat 0x00 on others, which is what a subscription gate would look
  * like. If a config value governs it, it is far more likely to live in the device-config namespace than
- * among the sixteen flags NOOP already writes — and nobody has ever asked a strap for one.
+ * among the sixteen flags HOOP already writes — and nobody has ever asked a strap for one.
  *
  * ## What this establishes, and the honest failure case
  *
@@ -39,14 +39,14 @@ package com.noop.protocol
  * allowlist does not carry the opcode — while an undecodable reply is affirmative evidence the strap DID
  * transmit, which is the opposite of "not served". Both are reported as **unconfirmed**.
  *
- * Only if a verb answers does the probe go on to read values: first the sixteen key names NOOP already
+ * Only if a verb answers does the probe go on to read values: first the sixteen key names HOOP already
  * has (their VALUES on a real strap have never been read, only written), then a short list of GUESSED
  * oxygen-related key names against the device-config namespace.
  *
  * ## Read-only by construction
  *
  * The probe writes command frames purely in order to read, the same shape as the Oura feature-status
- * probes NOOP already ships and as the #761 enumeration. The SET verbs are named in [WRITE_OPCODES] for
+ * probes HOOP already ships and as the #761 enumeration. The SET verbs are named in [WRITE_OPCODES] for
  * exactly one reason: so the send allowlist can be expressed as "[READ_ONLY_OPCODES] only" and a unit
  * test can prove 119/120 are rejected by it. Nothing in this file or on its BLE path can form a SET
  * frame.
@@ -100,7 +100,7 @@ object DeviceConfigReadProbe {
     /** Hard ceiling on round-trips in one probe, independent of how many keys the plan holds. */
     const val MAX_STEPS = 64
 
-    /** The one device-config key NOOP already knows a real strap accepts: the Broadcast-HR flag written
+    /** The one device-config key HOOP already knows a real strap accepts: the Broadcast-HR flag written
      *  via SET_DEVICE_CONFIG_VALUE and hardware-validated in #181. Used as the discovery key for opcode
      *  121 precisely because it is known-good — a FAILURE on this key is evidence about the verb. */
     const val DEVICE_CONFIG_DISCOVERY_KEY = "whoop_live_hr_in_adv_ind_pkt"
@@ -367,7 +367,7 @@ class DeviceConfigReadProbeReport(
     private fun stepInCurrentPhase(): Step? = when (phase) {
         0 -> {
             // Discovery: one round-trip per verb, each against a key that verb has a reason to know.
-            // 128 gets a flag NOOP writes; 121 gets the Broadcast-HR key, hardware-validated in #181.
+            // 128 gets a flag HOOP writes; 121 gets the Broadcast-HR key, hardware-validated in #181.
             val plan = listOf(
                 Step(
                     DeviceConfigReadProbe.GET_FEATURE_FLAG_VALUE_CMD,

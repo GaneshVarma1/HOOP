@@ -87,7 +87,7 @@ class BondRefusalGiveUp(
                 "settings choose Forget This Device. Then tap Connect to try again."
 
         /**
-         * #1635: the hint for a strap whose CLIENT_HELLO is never acknowledged, where NOOP now stays
+         * #1635: the hint for a strap whose CLIENT_HELLO is never acknowledged, where HOOP now stays
          * connected with the handshake switched off rather than pausing.
          *
          * Deliberately does NOT say "paused" (nothing is paused) and does NOT name a cause. An unanswered

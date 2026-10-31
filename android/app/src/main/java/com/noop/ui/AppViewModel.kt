@@ -277,7 +277,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Archive (remove) a device — keeps its row + samples (invariant I4). H3 (#520): when the removed
      *  device is a WHOOP, also RELEASE the BLE link so the band can enter pairing mode — archiving the
-     *  registry row alone left NOOP re-grabbing it (the 3s reconnect timer + the persisted pin still
+     *  registry row alone left HOOP re-grabbing it (the 3s reconnect timer + the persisted pin still
      *  pointed at it), so it stayed connected and couldn't show its blue pairing LEDs. iOS already does
      *  this in forgetDevice; this brings Android to parity. A non-WHOOP source (FTMS/HR strap) is owned by
      *  the SourceCoordinator, not the WHOOP client, so it isn't touched here. */
@@ -863,7 +863,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /**
      * #386 self-heal: a "kick" the app-resume hook sends to wake the 15-min analyze loop early, so an
-     * OEM-killed overnight re-score tick catches up the moment the user opens NOOP instead of showing a
+     * OEM-killed overnight re-score tick catches up the moment the user opens HOOP instead of showing a
      * stale Today card until the next sync/tick. The loop re-runs its EXISTING fingerprint-gated
      * analyzeRecent — a cheap no-op when the HR stream is unchanged, a real catch-up when a kill left
      * unscored data (the watermark only advances on a completed run). `recentDays` is a reactive Room
@@ -1388,7 +1388,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 // 15-min backstop cadence, but wake EARLY on an app-resume kick (#386 self-heal) so a
                 // night the overnight tick was killed before scoring catches up the moment the user opens
-                // NOOP. The next iteration's fingerprint gate makes an unnecessary wake a cheap no-op.
+                // HOOP. The next iteration's fingerprint gate makes an unnecessary wake a cheap no-op.
                 withTimeoutOrNull(ANALYZE_INTERVAL_MS) { analyzeKick.receive() }
             }
         }
@@ -1936,7 +1936,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      *
      *  A bed/wake correction can retire several fragments of a bridged night, and the single-session call
      *  above re-scores on each invocation — looping it would run a full analyzeRecent per restored
-     *  fragment, back to back, on the exact pass #1005/#836 found to be the heaviest thing NOOP does in the
+     *  fragment, back to back, on the exact pass #1005/#836 found to be the heaviest thing HOOP does in the
      *  background. The restores are independent; only the scoring needs to see the finished set. */
     suspend fun undoDeleteSleepSessions(sessions: List<com.noop.data.SleepSession>) {
         if (sessions.isEmpty()) return
@@ -2296,7 +2296,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             runCatching { repository.deleteWorkout(row) }
             loadWorkouts()
-            // #1195 follow-up: a workout removed in NOOP is removed from Health Connect too, so a session
+            // #1195 follow-up: a workout removed in HOOP is removed from Health Connect too, so a session
             // we wrote (manual or live) doesn't linger there after the user deletes it here. Opt-in, keyed
             // on the same "noop-workout-*" client id; a no-op for a workout we never wrote.
             if (_hcWriteback.value) {
@@ -2381,7 +2381,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Restart the connected strap (user-initiated, confirmation-gated in DevicesScreen). Non-destructive —
-     *  the strap keeps its data and re-advertises after boot; NOOP auto-reconnects. See WhoopBleClient.rebootStrap. */
+     *  the strap keeps its data and re-advertises after boot; HOOP auto-reconnects. See WhoopBleClient.rebootStrap. */
     fun rebootStrap() = ble.rebootStrap()
 
     /** Send one WHOOP 4.0 reboot-probe candidate (Test Centre → Connection, 4.0 only). Confirmation-gated
@@ -2526,11 +2526,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         ble.setDetailedCapture(enabled)
     }
 
-    // --- Broadcast heart rate (NOOP acts as a standard BLE HR peripheral; gym kit reads the strap HR) ---
+    // --- Broadcast heart rate (HOOP acts as a standard BLE HR peripheral; gym kit reads the strap HR) ---
     //
     // OPT-IN, OFF BY DEFAULT, OFFLINE. When on, [HrBroadcaster] advertises the standard Heart Rate Service
     // (0x180D) and notifies 0x2A37 with each live strap HR, so a treadmill / Zwift / Peloton can read the
-    // WHOOP HR NOOP receives. LOCAL Bluetooth only — nothing leaves the device. The broadcaster is a pure
+    // WHOOP HR HOOP receives. LOCAL Bluetooth only — nothing leaves the device. The broadcaster is a pure
     // CONSUMER of [ble.state].heartRate (fed in the state-collect loop in init); it never writes back into
     // the WHOOP path, so the strap connection and scoring can't regress.
     private val broadcaster = HrBroadcaster(appContext, log = { ble.externalLog(it) })
@@ -2538,7 +2538,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _hrBroadcast = MutableStateFlow(NoopPrefs.hrBroadcast(appContext))
     /** Whether the "Broadcast heart rate" toggle is on. Default OFF. */
     val hrBroadcast: StateFlow<Boolean> = _hrBroadcast.asStateFlow()
-    /** True while NOOP is actually advertising as an HR peripheral (radio on + permission granted). */
+    /** True while HOOP is actually advertising as an HR peripheral (radio on + permission granted). */
     val hrBroadcastAdvertising: StateFlow<Boolean> = broadcaster.advertising
     /** How many centrals (gym kit / apps) are subscribed to the broadcast right now. */
     val hrBroadcastSubscribers: StateFlow<Int> = broadcaster.subscriberCount
@@ -2569,7 +2569,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         if (enabled) broadcaster.start() else broadcaster.stop()
     }
 
-    // --- Health Connect periodic auto-sync (Samsung Health → Health Connect → NOOP) ---
+    // --- Health Connect periodic auto-sync (Samsung Health → Health Connect → HOOP) ---
     private val _hcAutoSync = MutableStateFlow(NoopPrefs.hcAutoSync(appContext))
     val hcAutoSync: StateFlow<Boolean> = _hcAutoSync.asStateFlow()
     private val _hcSyncHours = MutableStateFlow(NoopPrefs.hcSyncHours(appContext))
@@ -3237,7 +3237,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
          * a large DB even though only TODAY's daytime HR changed (a real-capture CPU drain: ~6-7 full
          * passes/hour). It is purely a BACKSTOP — every real update (sync-with-rows, import, edit,
          * recalibrate, the #547 heal) rescores via its OWN forced path, and an app-resume kick (#386,
-         * [analyzeKick]) still wakes it EARLY the moment the user opens NOOP — so halving its cadence only
+         * [analyzeKick]) still wakes it EARLY the moment the user opens HOOP — so halving its cadence only
          * delays the idle refresh of Today's live Effort/steps (recovery/sleep are night-computed and
          * unaffected), never a real data update. Android-only tuning; the Swift AppModel loop is a parity
          * follow-up.

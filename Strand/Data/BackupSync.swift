@@ -9,7 +9,7 @@ import UniformTypeIdentifiers
 /// Backup & Sync (folder destination) - the Apple twin of the Android `BackupSync`. Writes the full
 /// `.noopbak` snapshot (the existing `DataBackup` format) into a user-chosen folder, on demand and as
 /// an on-launch daily catch-up. Point that folder at a Google Drive / iCloud / Dropbox client and you
-/// get automatic off-device backup with no in-app cloud account - NOOP only writes a local file; the
+/// get automatic off-device backup with no in-app cloud account - HOOP only writes a local file; the
 /// sync client does the upload.
 ///
 /// `BackupSync` holds only the PURE, unit-tested filename / selection logic (no I/O, no state) so it is
@@ -174,7 +174,7 @@ enum FolderBackup {
 
     /// #52: on some iOS 26 builds the system folder picker's "Open" button never enables/fires, so users
     /// can't choose an external folder at all (three reports, works for one). This opt-in falls back to
-    /// NOOP's OWN Documents/Backups folder — already exposed in Files (UIFileSharingEnabled +
+    /// HOOP's OWN Documents/Backups folder — already exposed in Files (UIFileSharingEnabled +
     /// LSSupportsOpeningDocumentsInPlace) under "On My iPhone → HOOP" — so Backup & Sync works with zero
     /// dependence on the picker. No security-scoped bookmark is involved (the folder is inside our own
     /// sandbox), so `resolveFolder`/`saveFolder`'s scoped-access brackets simply no-op for it. The user
@@ -185,7 +185,7 @@ enum FolderBackup {
         set { UserDefaults.standard.set(newValue, forKey: internalKey) }
     }
 
-    /// Opt into backing up inside NOOP's own Files-visible folder (see `useInternalFolder`). Returns the
+    /// Opt into backing up inside HOOP's own Files-visible folder (see `useInternalFolder`). Returns the
     /// folder URL so the caller can refresh its label. iOS-only in practice; harmless elsewhere.
     @discardableResult
     static func useNoopFolder() -> URL? {
@@ -193,7 +193,7 @@ enum FolderBackup {
         return internalFolderURL()
     }
 
-    /// NOOP's own Files-visible backup folder: `<sandbox>/Documents/Backups`, created on first use.
+    /// HOOP's own Files-visible backup folder: `<sandbox>/Documents/Backups`, created on first use.
     /// Returns nil only if Documents can't be located (never in practice).
     private static func internalFolderURL() -> URL? {
         guard let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }

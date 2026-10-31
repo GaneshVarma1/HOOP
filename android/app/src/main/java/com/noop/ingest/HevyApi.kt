@@ -29,7 +29,7 @@ object HevyApi {
      *
      * This matters more than it looks: an exercise carries `exercise_template_id`, so this is
      * authoritative attribution for the exercise a set was performed on, from the people who own the
-     * catalogue. Anything NOOP derives by matching exercise TITLES is guessing at data published
+     * catalogue. Anything HOOP derives by matching exercise TITLES is guessing at data published
      * here.
      *
      * An unrecognised value parses to null rather than to [OTHER], because Hevy defines `other` as a
@@ -85,7 +85,7 @@ object HevyApi {
 
     /**
      * An entry in Hevy's exercise catalogue. [equipment] and [type] stay raw strings: nothing in
-     * NOOP consumes them yet, and an enum would only add a drift risk when Hevy adds a value.
+     * HOOP consumes them yet, and an enum would only add a drift risk when Hevy adds a value.
      */
     data class ExerciseTemplate(
         val id: String,
@@ -102,11 +102,11 @@ object HevyApi {
      *
      * The date is kept as Hevy writes it (a bare `yyyy-MM-dd`, no time and no zone) rather than
      * resolved to an instant here. Choosing a moment inside that day is a real decision with a real
-     * failure mode - NOOP already re-buckets nights when an offset changes - and it belongs to
+     * failure mode - HOOP already re-buckets nights when an offset changes - and it belongs to
      * whatever stores the sample, not to the parser.
      *
      * Hevy also returns fourteen circumference fields (neck, chest, each bicep, each thigh, and so
-     * on). They are deliberately not modelled: nothing in NOOP consumes them, and an unused field is
+     * on). They are deliberately not modelled: nothing in HOOP consumes them, and an unused field is
      * a schema commitment with no payer.
      */
     data class BodyMeasurement(
@@ -116,7 +116,7 @@ object HevyApi {
         val leanMassKg: Double?,
     ) {
         /**
-         * True when the entry carries none of the three figures NOOP could use, which is the case
+         * True when the entry carries none of the three figures HOOP could use, which is the case
          * for an entry that only recorded circumferences.
          */
         val isEmpty: Boolean get() = weightKg == null && fatPercent == null && leanMassKg == null
@@ -133,14 +133,14 @@ object HevyApi {
      * of one that is gone.
      *
      * This is the endpoint that would make an API import worth having over the CSV export, because
-     * it is the only one that reports DELETIONS. It is also the one that exposes what NOOP does not
+     * it is the only one that reports DELETIONS. It is also the one that exposes what HOOP does not
      * yet store: a workout row is keyed by (deviceId, startTs), and neither event can be applied
-     * through that key. A delete names a Hevy id NOOP never kept, and an edit that moved the start
+     * through that key. A delete names a Hevy id HOOP never kept, and an edit that moved the start
      * time would land as a second session rather than replacing the first. Persisting Hevy's id
      * alongside the row is the missing piece, and it is a schema change on both platforms.
      */
     sealed interface WorkoutEvent {
-        /** The Hevy workout id an event refers to, which is the key NOOP would have to have stored. */
+        /** The Hevy workout id an event refers to, which is the key HOOP would have to have stored. */
         val workoutId: String
 
         data class Updated(override val workoutId: String, val session: LiftingImporter.Session) : WorkoutEvent
@@ -208,7 +208,7 @@ object HevyApi {
 
     /**
      * Parse a body-measurement page. An entry with no date cannot be filed, and one carrying only
-     * circumferences has nothing NOOP can store, so both are skipped and counted.
+     * circumferences has nothing HOOP can store, so both are skipped and counted.
      */
     fun parseBodyMeasurements(data: ByteArray): Page<BodyMeasurement> =
         parsePage(data, "body_measurements") { dict ->

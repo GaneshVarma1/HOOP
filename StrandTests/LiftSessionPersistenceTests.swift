@@ -39,7 +39,7 @@ final class LiftSessionPersistenceTests: XCTestCase {
         """.utf8)
     }
 
-    /// iOS closes NOOP in the background and relaunches it — four times in one gym session (21 Sep 2026).
+    /// iOS closes HOOP in the background and relaunches it — four times in one gym session (21 Sep 2026).
     /// The session is picked up as the process starts, before any screen, and says so in the strap log.
     @MainActor
     func testASessionIsPickedUpAgainWhenNOOPStartsAndSaysSo() throws {

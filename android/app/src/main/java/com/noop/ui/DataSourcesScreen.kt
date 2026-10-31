@@ -523,7 +523,7 @@ fun DataSourcesScreen(vm: AppViewModel) {
                     modifier = Modifier.fillMaxWidth(),
                 ) { startHealthConnect() }
 
-                // Auto-sync: pull new Health Connect data when you open NOOP, if it's been longer than
+                // Auto-sync: pull new Health Connect data when you open HOOP, if it's been longer than
                 // the chosen interval — no manual taps. On-open only (no background worker): it avoids a
                 // sensitive background-health permission and is reliable, and opening the app is enough.
                 Row(
@@ -796,7 +796,7 @@ fun DataSourcesScreen(vm: AppViewModel) {
         }
         }
 
-        // --- Broadcast heart rate (NOOP as a standard BLE HR peripheral) ---
+        // --- Broadcast heart rate (HOOP as a standard BLE HR peripheral) ---
         item {
         SourceCard(
             title = uiString(R.string.l10n_data_sources_screen_broadcast_hr_from_this_phone_10e5605c),

@@ -22,7 +22,7 @@ data class OuraSleepSession(
  * them into a NIGHT with a stage breakdown the sleep surfaces read. Banking the ring-provided hypnogram
  * as a `SleepSession` under the ring's OWN deviceId (the imported/measured side, NOT the "-noop" computed
  * sibling) lets `WhoopRepository.mergeSleepRichness`'s imported-over-computed rule surface Oura's own
- * SleepNet staging over NOOP's sparse-motion computed night — "richer record wins", reusing the exact
+ * SleepNet staging over HOOP's sparse-motion computed night — "richer record wins", reusing the exact
  * arbitration that already picks a WHOOP/HC import over a computed night (#240).
  *
  * HONEST-DATA: this is PROVIDED data (Oura's on-ring classifier), only reshaped — never a new derivation.

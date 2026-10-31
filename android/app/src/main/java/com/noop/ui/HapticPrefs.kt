@@ -3,7 +3,7 @@ package com.noop.ui
 import android.content.Context
 
 /**
- * Per-event toggles for NOOP's IN-SESSION strap-haptic cues (#1115) — the cues that fire while you're
+ * Per-event toggles for HOOP's IN-SESSION strap-haptic cues (#1115) — the cues that fire while you're
  * actively using a feature (Breathing pacer, Interval timer, Live Session coach cues, workout start/end,
  * biofeedback/resonance).
  *

@@ -8,7 +8,7 @@ package com.noop.protocol
  * single line that used to cover both stated one of them wrongly. See [historicalLayoutSupport].
  */
 enum class HistoricalLayoutSupport {
-    /** The layout decodes and the record carries a named signal NOOP scores from. */
+    /** The layout decodes and the record carries a named signal HOOP scores from. */
     SUPPORTED,
 
     /**
@@ -25,8 +25,8 @@ enum class HistoricalLayoutSupport {
      * its own, so there is nothing missing and nothing for the user to report (#2847).
      *
      * This exists because the line for [DECODES_WITHOUT_NAMED_SIGNAL] asks the user to report the layout
-     * on #1992, and for a layout NOOP decodes, stores and deliberately scores nothing from, that request
-     * is for a report about working software. The MG ECG record is the case: it reaches NOOP only because
+     * on #1992, and for a layout HOOP decodes, stores and deliberately scores nothing from, that request
+     * is for a report about working software. The MG ECG record is the case: it reaches HOOP only because
      * the user took a reading, it is banked whole in `ecgWaveformSample`, and #752 is what keeps anything
      * from being derived off it.
      *
@@ -56,8 +56,8 @@ private val WHOOP5_HISTORICAL_VERSIONS_WITH_OWN_STREAM: Set<Int> = setOf(16)
  * Classify a historical record's layout version. Twin of the Swift `historicalLayoutSupport`.
  *
  * #1992. This used to be one question, "did the record decode any of `heart_rate`, `gravity_x` or
- * `ppg_waveform`?", and one message, which said NOOP could not decode the layout. That is a list which has
- * to be extended by hand every time NOOP learns a layout, and twice it silently was not: #156 was v25 and
+ * `ppg_waveform`?", and one message, which said HOOP could not decode the layout. That is a list which has
+ * to be extended by hand every time HOOP learns a layout, and twice it silently was not: #156 was v25 and
  * v26 being reported as undecodable after they had been decoding for releases.
  *
  * Simply suppressing the line for a mapped-but-unscoreable layout would be the wrong correction, because

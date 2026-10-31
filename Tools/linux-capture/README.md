@@ -482,8 +482,8 @@ If you want a smaller file, two optional flags narrow it down:
 - `--only-type 47` — just the main once-per-second records.
 - `--since <unix-time>` — only data newer than a given moment.
 
-Then transfer `capture.json` to your phone (any file transfer works), open NOOP, and pick it from
-**Data Sources → Raw capture**. Importing the same file twice is safe — NOOP skips anything it already
+Then transfer `capture.json` to your phone (any file transfer works), open HOOP, and pick it from
+**Data Sources → Raw capture**. Importing the same file twice is safe — HOOP skips anything it already
 has — so you can re-run it without making duplicates. Export one file per strap; a file is normally a
 single strap, but a mixed one still imports fine. The phone treats the file as untrusted input (size +
 frame-count bounded, malformed rows skipped), so a stray or corrupt file is rejected cleanly rather
@@ -521,7 +521,7 @@ than crashing the import.
 
 You don't need a Linux BLE adapter to contribute frames. A **Bluetooth HCI capture of the official
 WHOOP app** — the artifact issue [#103](https://github.com/ryanbr/noop/issues/103) asks for — records
-the real app unlocking and draining the deep streams, which is exactly the traffic NOOP can't yet
+the real app unlocking and draining the deep streams, which is exactly the traffic HOOP can't yet
 elicit itself. `hci_extract.py` converts such a log into the same `capture.json` the rest of this
 pipeline consumes.
 
@@ -550,7 +550,7 @@ mapped offsets), not the raw log.
 
 A capture gives raw records; your **WHOOP data export** gives the official readings for the same
 nights. Put them together and the un-decoded layout (the type-`0x2F` deep records, the 5/MG history
-types NOOP still skips — see [`WHOOP5_DEEP_DATA.md`](../../docs/WHOOP5_DEEP_DATA.md)) becomes a
+types HOOP still skips — see [`WHOOP5_DEEP_DATA.md`](../../docs/WHOOP5_DEEP_DATA.md)) becomes a
 *known-plaintext* problem: search each record for the byte offset + encoding whose value reproduces a
 known biometric across every night.
 
@@ -670,7 +670,7 @@ multi-device gate, because a device with no data has not failed a correlation. T
 capture must also have **watched** the strap: at least an hour of *observed* sleep (samples × cadence,
 not `max − min`, which counts gaps) and a cadence of **≤ 30 s**, since a coarser one can alias with the
 duty period and read `0x00` off a working strap. Either bar missed and it stays a plain FAIL, with the
-duty line saying why. NOOP still will not
+duty line saying why. HOOP still will not
 promote `spo2_candidate_82` → `spo2Pct` from a single device: need **≥ 2 devices** that each PASS
 (postable summary prints `multi_device_eligible` / `all_pass` / `feature_absent`).
 

@@ -20,7 +20,7 @@ import WhoopStore
 // SELF-CONTAINED: no AppModel/Settings edits; the sheet owns all its state.
 //
 // NON-CLINICAL: this only captures what the user types. The reference field is theirs,
-// shown back verbatim — NOOP defines no ranges and asserts no normality.
+// shown back verbatim — HOOP defines no ranges and asserts no normality.
 
 struct MarkerEditorView: View {
     /// Persist the validated draft row(s). Async so the caller can write + refresh.

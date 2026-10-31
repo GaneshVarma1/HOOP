@@ -392,7 +392,7 @@ fun HydrationScreen(viewModel: AppViewModel) {
                                     modifier = Modifier.weight(1f),
                                 ) { remove(last) }
                             }
-                            // #949: clears only what NOOP owns. Passing the COMBINED total here would ask
+                            // #949: clears only what HOOP owns. Passing the COMBINED total here would ask
                             // the store to subtract imported water from the hand-logged row — the row it
                             // isn't in — and the button is offered only when there is something of ours
                             // to clear, so it never sits there doing visibly nothing on an import-only day.

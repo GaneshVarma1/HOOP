@@ -183,7 +183,7 @@ internal enum class Destination(
     // name fits. Route id stays "smart_alarm" (display string only).
     SmartAlarm("smart_alarm", R.string.nav_alarms, Icons.Filled.Alarm),
     Devices("devices", R.string.nav_devices, Icons.Filled.Sensors),
-    // The plain 4.0 vs 5.0/MG capability grid — what NOOP reads live off each strap vs import-only.
+    // The plain 4.0 vs 5.0/MG capability grid — what HOOP reads live off each strap vs import-only.
     NoopLimitations("noop_limitations", R.string.nav_noop_limitations, Icons.AutoMirrored.Filled.Rule),
     DataSources("data_sources", R.string.nav_data_sources, Icons.Filled.Storage),
     BackupSync("backup_sync", R.string.nav_backup_sync, Icons.Filled.CloudSync),

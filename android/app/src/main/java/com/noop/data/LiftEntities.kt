@@ -39,7 +39,7 @@ import androidx.room.PrimaryKey
  */
 
 /**
- * The user's own exercise vocabulary. NOOP ships **no** exercise catalogue and no exercise→muscle
+ * The user's own exercise vocabulary. HOOP ships **no** exercise catalogue and no exercise→muscle
  * mapping: the name is whatever the user types, and the muscles are the ones they assigned. A closed
  * catalogue silently mis-attributes everything it fails to recognise.
  */

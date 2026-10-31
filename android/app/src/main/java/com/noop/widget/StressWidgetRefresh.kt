@@ -40,7 +40,7 @@ object StressWidgetRefresh {
 
     /**
      * KEEP rather than REPLACE: replacing on every call would restart the period each app launch, so a
-     * user who opens NOOP more often than every fifteen minutes would never reach a single run.
+     * user who opens HOOP more often than every fifteen minutes would never reach a single run.
      *
      * Called from [StressWidgetReceiver.onEnabled] when the first widget is placed, and again at app
      * start. The second is not redundant: a widget placed by an older version fired its `onEnabled`

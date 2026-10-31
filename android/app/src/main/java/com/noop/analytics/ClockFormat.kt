@@ -3,7 +3,7 @@ package com.noop.analytics
 /**
  * #1821: which clock the UI shows times in. Twin of the Apple `ClockFormatPreference`.
  *
- * NOOP had no such setting: every user-facing time came from the device region's convention, and on
+ * HOOP had no such setting: every user-facing time came from the device region's convention, and on
  * Apple the region identifier discards the user's explicit "24-Hour Time" switch entirely. A reader in a
  * 24-hour region who prefers 12-hour had no way to say so, which is the report this exists to answer.
  */

@@ -3,7 +3,7 @@ import Foundation
 /// The Terms of Use the first-run gate presents. Bump `currentVersion` when the terms MATERIALLY
 /// change (risk / liability / medical / affiliation wording) to re-prompt every user for a fresh
 /// acknowledgment; leave it for typo fixes. Mirrored on Android by `NoopPrefs.TERMS_VERSION`. The
-/// full text lives in `TERMS.md`, shipped with NOOP.
+/// full text lives in `TERMS.md`, shipped with HOOP.
 enum Terms {
     static let currentVersion = "2.0"
 

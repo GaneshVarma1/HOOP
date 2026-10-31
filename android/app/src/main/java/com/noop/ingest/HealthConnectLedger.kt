@@ -3,7 +3,7 @@ package com.noop.ingest
 import android.content.Context
 
 /**
- * What NOOP has already written to Health Connect, so it can take it back (#1677).
+ * What HOOP has already written to Health Connect, so it can take it back (#1677).
  *
  * The writer is idempotent by `clientRecordId` and versions each record so a later, fuller copy upserts
  * over an earlier one. That covers a record whose id STAYS THE SAME. It cannot cover a record whose id

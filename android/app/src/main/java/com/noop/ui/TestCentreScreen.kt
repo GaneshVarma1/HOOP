@@ -811,7 +811,7 @@ private fun DiagnosticToolsCard(vm: AppViewModel) {
     var showRecalibrate by remember { mutableStateOf(false) }
     // "Debug logging" moved here from Settings: dev-only, mirrors the strap log to logcat over adb.
     var debugLogging by remember { mutableStateOf(NoopPrefs.debugLogging(context)) }
-    // #polar-debug: the model NOOP auto-detects for a PAIRED Polar strap, from its stored advertised name
+    // #polar-debug: the model HOOP auto-detects for a PAIRED Polar strap, from its stored advertised name
     // (no live connection needed). null when no Polar strap is paired → the whole toggle stays hidden, so a
     // non-Polar user never sees Polar debug. Loaded once from the registry.
     var polarIdentity by remember { mutableStateOf<String?>(null) }

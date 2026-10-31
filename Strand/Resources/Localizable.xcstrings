@@ -67,7 +67,7 @@
           "de": {"stringUnit": {"state": "translated", "value": "Oura-Benachrichtigungsmaske ff (experimentell)"}}, "es": {"stringUnit": {"state": "translated", "value": "Máscara de notificación Oura ff (experimental)"}}, "fr": {"stringUnit": {"state": "translated", "value": "Masque de notification Oura ff (expérimental)"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Máscara de notificação Oura ff (experimental)"}}, "it": {"stringUnit": {"state": "translated", "value": "Maschera di notifica Oura ff (sperimentale)"}}, "pl": {"stringUnit": {"state": "translated", "value": "Maska powiadomień Oura ff (eksperymentalne)"}}, "ru": {"stringUnit": {"state": "translated", "value": "Маска уведомлений Oura ff (экспериментально)"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "Oura 通知掩码 ff（实验性）"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "Oura 通知遮罩 ff（實驗性）"}}
         } },
         "Sends the official app’s SetNotification mask (1c 01 ff) instead of HOOP’s 3f at the next connect. The ring packs ~10 packets per notification for the official app and one for HOOP (9× slower drains); this is the first candidate switch. Off by default; the next connect after turning it off is back on 3f. Watch the strap log for “-> notify_all(ff)” and compare notification sizes in the raw capture.": { "localizations": {
-          "de": {"stringUnit": {"state": "translated", "value": "Sendet beim nächsten Verbinden die SetNotification-Maske der offiziellen App (1c 01 ff) statt NOOPs 3f. Der Ring packt für die offizielle App ~10 Pakete in eine Benachrichtigung, für HOOP nur eines (9× langsameres Auslesen); das ist der erste Kandidat für den Schalter. Standardmäßig aus; die erste Verbindung nach dem Ausschalten läuft wieder mit 3f. Im Strap-Protokoll auf „-> notify_all(ff)“ achten und die Benachrichtigungsgrößen in der Rohaufzeichnung vergleichen."}}, "es": {"stringUnit": {"state": "translated", "value": "Envía la máscara SetNotification de la aplicación oficial (1c 01 ff) en lugar del 3f de HOOP en la próxima conexión. El anillo agrupa ~10 paquetes por notificación para la aplicación oficial y uno para HOOP (descarga 9× más lenta); este es el primer interruptor candidato. Desactivado por defecto; la conexión siguiente a desactivarlo vuelve a 3f. Busca «-> notify_all(ff)» en el registro de la pulsera y compara los tamaños de notificación en la captura sin procesar."}}, "fr": {"stringUnit": {"state": "translated", "value": "Envoie le masque SetNotification de l’application officielle (1c 01 ff) au lieu du 3f de HOOP à la prochaine connexion. La bague regroupe ~10 paquets par notification pour l’application officielle et un seul pour HOOP (vidage 9× plus lent) ; c’est le premier commutateur candidat. Désactivé par défaut ; la connexion suivant la désactivation repasse en 3f. Surveillez « -> notify_all(ff) » dans le journal du bracelet et comparez la taille des notifications dans la capture brute."}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Envia a máscara SetNotification da aplicação oficial (1c 01 ff) em vez do 3f do HOOP na próxima ligação. O anel agrupa ~10 pacotes por notificação para a aplicação oficial e um para o HOOP (descarga 9× mais lenta); este é o primeiro candidato a interruptor. Desligado por predefinição; a ligação seguinte após desligar volta a 3f. Procure «-> notify_all(ff)» no registo da pulseira e compare os tamanhos das notificações na captura em bruto."}}, "it": {"stringUnit": {"state": "translated", "value": "Alla prossima connessione invia la maschera SetNotification dell’app ufficiale (1c 01 ff) invece del 3f di HOOP. L’anello impacchetta ~10 pacchetti per notifica per l’app ufficiale e uno solo per HOOP (scarico 9× più lento); questo è il primo interruttore candidato. Disattivato per impostazione predefinita; la connessione successiva alla disattivazione torna a 3f. Cerca «-> notify_all(ff)» nel registro del cinturino e confronta le dimensioni delle notifiche nella cattura grezza."}}, "pl": {"stringUnit": {"state": "translated", "value": "Przy następnym połączeniu wysyła maskę SetNotification oficjalnej aplikacji (1c 01 ff) zamiast 3f używanego przez HOOP. Pierścień pakuje ~10 pakietów w jedno powiadomienie dla oficjalnej aplikacji, a dla HOOP tylko jeden (9× wolniejsze zrzuty); to pierwszy kandydat na przełącznik. Domyślnie wyłączone; pierwsze połączenie po wyłączeniu wraca do 3f. Szukaj „-> notify_all(ff)” w dzienniku opaski i porównaj rozmiary powiadomień w surowym przechwyceniu."}}, "ru": {"stringUnit": {"state": "translated", "value": "При следующем подключении отправляет маску SetNotification официального приложения (1c 01 ff) вместо 3f, которую использует HOOP. Для официального приложения кольцо упаковывает ~10 пакетов в одно уведомление, для HOOP — только один (выгрузка в 9× медленнее); это первый кандидат на переключатель. По умолчанию выключено; первое подключение после выключения снова использует 3f. Ищите «-> notify_all(ff)» в журнале браслета и сравните размеры уведомлений в сырой записи."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "下次连接时发送官方应用的 SetNotification 掩码（1c 01 ff），而不是 HOOP 的 3f。戒指为官方应用把约 10 个数据包打包进一条通知，为 HOOP 只发一个（读取慢 9 倍）；这是第一个候选开关。默认关闭；关闭后的下一次连接恢复为 3f。请在腕带日志中查看“-> notify_all(ff)”，并在原始捕获中比较通知大小。"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "下次連線時傳送官方應用程式的 SetNotification 遮罩（1c 01 ff），而非 HOOP 的 3f。戒指為官方應用程式把約 10 個封包打包進一則通知，為 HOOP 只送一個（讀取慢 9 倍）；這是第一個候選開關。預設關閉；關閉後的下一次連線恢復為 3f。請在腕帶記錄中查看「-> notify_all(ff)」，並在原始擷取中比較通知大小。"}}
+          "de": {"stringUnit": {"state": "translated", "value": "Sendet beim nächsten Verbinden die SetNotification-Maske der offiziellen App (1c 01 ff) statt HOOPs 3f. Der Ring packt für die offizielle App ~10 Pakete in eine Benachrichtigung, für HOOP nur eines (9× langsameres Auslesen); das ist der erste Kandidat für den Schalter. Standardmäßig aus; die erste Verbindung nach dem Ausschalten läuft wieder mit 3f. Im Strap-Protokoll auf „-> notify_all(ff)“ achten und die Benachrichtigungsgrößen in der Rohaufzeichnung vergleichen."}}, "es": {"stringUnit": {"state": "translated", "value": "Envía la máscara SetNotification de la aplicación oficial (1c 01 ff) en lugar del 3f de HOOP en la próxima conexión. El anillo agrupa ~10 paquetes por notificación para la aplicación oficial y uno para HOOP (descarga 9× más lenta); este es el primer interruptor candidato. Desactivado por defecto; la conexión siguiente a desactivarlo vuelve a 3f. Busca «-> notify_all(ff)» en el registro de la pulsera y compara los tamaños de notificación en la captura sin procesar."}}, "fr": {"stringUnit": {"state": "translated", "value": "Envoie le masque SetNotification de l’application officielle (1c 01 ff) au lieu du 3f de HOOP à la prochaine connexion. La bague regroupe ~10 paquets par notification pour l’application officielle et un seul pour HOOP (vidage 9× plus lent) ; c’est le premier commutateur candidat. Désactivé par défaut ; la connexion suivant la désactivation repasse en 3f. Surveillez « -> notify_all(ff) » dans le journal du bracelet et comparez la taille des notifications dans la capture brute."}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Envia a máscara SetNotification da aplicação oficial (1c 01 ff) em vez do 3f do HOOP na próxima ligação. O anel agrupa ~10 pacotes por notificação para a aplicação oficial e um para o HOOP (descarga 9× mais lenta); este é o primeiro candidato a interruptor. Desligado por predefinição; a ligação seguinte após desligar volta a 3f. Procure «-> notify_all(ff)» no registo da pulseira e compare os tamanhos das notificações na captura em bruto."}}, "it": {"stringUnit": {"state": "translated", "value": "Alla prossima connessione invia la maschera SetNotification dell’app ufficiale (1c 01 ff) invece del 3f di HOOP. L’anello impacchetta ~10 pacchetti per notifica per l’app ufficiale e uno solo per HOOP (scarico 9× più lento); questo è il primo interruttore candidato. Disattivato per impostazione predefinita; la connessione successiva alla disattivazione torna a 3f. Cerca «-> notify_all(ff)» nel registro del cinturino e confronta le dimensioni delle notifiche nella cattura grezza."}}, "pl": {"stringUnit": {"state": "translated", "value": "Przy następnym połączeniu wysyła maskę SetNotification oficjalnej aplikacji (1c 01 ff) zamiast 3f używanego przez HOOP. Pierścień pakuje ~10 pakietów w jedno powiadomienie dla oficjalnej aplikacji, a dla HOOP tylko jeden (9× wolniejsze zrzuty); to pierwszy kandydat na przełącznik. Domyślnie wyłączone; pierwsze połączenie po wyłączeniu wraca do 3f. Szukaj „-> notify_all(ff)” w dzienniku opaski i porównaj rozmiary powiadomień w surowym przechwyceniu."}}, "ru": {"stringUnit": {"state": "translated", "value": "При следующем подключении отправляет маску SetNotification официального приложения (1c 01 ff) вместо 3f, которую использует HOOP. Для официального приложения кольцо упаковывает ~10 пакетов в одно уведомление, для HOOP — только один (выгрузка в 9× медленнее); это первый кандидат на переключатель. По умолчанию выключено; первое подключение после выключения снова использует 3f. Ищите «-> notify_all(ff)» в журнале браслета и сравните размеры уведомлений в сырой записи."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "下次连接时发送官方应用的 SetNotification 掩码（1c 01 ff），而不是 HOOP 的 3f。戒指为官方应用把约 10 个数据包打包进一条通知，为 HOOP 只发一个（读取慢 9 倍）；这是第一个候选开关。默认关闭；关闭后的下一次连接恢复为 3f。请在腕带日志中查看“-> notify_all(ff)”，并在原始捕获中比较通知大小。"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "下次連線時傳送官方應用程式的 SetNotification 遮罩（1c 01 ff），而非 HOOP 的 3f。戒指為官方應用程式把約 10 個封包打包進一則通知，為 HOOP 只送一個（讀取慢 9 倍）；這是第一個候選開關。預設關閉；關閉後的下一次連線恢復為 3f。請在腕帶記錄中查看「-> notify_all(ff)」，並在原始擷取中比較通知大小。"}}
         } },
         "Over-reports R-R, so no value is shown": { "localizations": {
           "de": {"stringUnit": {"state": "translated", "value": "Meldet zu viele RR-Intervalle, daher kein Wert"}}, "es": {"stringUnit": {"state": "translated", "value": "Cuenta de más los intervalos R-R, por eso no se muestra"}}, "fr": {"stringUnit": {"state": "translated", "value": "Surestime les intervalles R-R, donc aucune valeur"}}, "it": {"stringUnit": {"state": "translated", "value": "Conta troppi intervalli R-R, quindi nessun valore"}}, "pl": {"stringUnit": {"state": "translated", "value": "Zawyża liczbę interwałów R-R, więc nie pokazujemy wartości"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Conta intervalos R-R a mais, por isso não há valor"}}, "ru": {"stringUnit": {"state": "translated", "value": "Завышает число интервалов R-R, поэтому значение не показано"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "R-R 间期计数偏多，因此不显示数值"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "R-R 間期計數偏多，因此不顯示數值"}}
@@ -24154,7 +24154,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ein klassischer Überblick über NOOPs eigene Werte auf einen Blick. Gleiche Daten, andere Perspektive."
+            "value": "Ein klassischer Überblick über HOOPs eigene Werte auf einen Blick. Gleiche Daten, andere Perspektive."
           }
         },
         "ru": {
@@ -30964,7 +30964,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entsperre dein iPhone nach einem Neustart einmal. Bis dahin hält iOS NOOPs Dateien gesperrt (Data Protection), sodass kein neuer Verlauf geschrieben oder synchronisiert werden kann."
+            "value": "Entsperre dein iPhone nach einem Neustart einmal. Bis dahin hält iOS HOOPs Dateien gesperrt (Data Protection), sodass kein neuer Verlauf geschrieben oder synchronisiert werden kann."
           }
         },
         "es": {
@@ -55678,7 +55678,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AltStore oder SideStore installieren es automatisch für dich, wenn du NOOPs Quelle hinzugefügt hast; eine direkte .ipa muss weiterhin auf deinem Gerät signiert werden."
+            "value": "AltStore oder SideStore installieren es automatisch für dich, wenn du HOOPs Quelle hinzugefügt hast; eine direkte .ipa muss weiterhin auf deinem Gerät signiert werden."
           }
         },
         "en": {
@@ -57988,7 +57988,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zählerticks pro Schritt. Lass es auf 1,0, außer deine Schritte fallen zu hoch aus. Auf einem WHOOP 5/MG können sie sehr hoch ausfallen (10× oder mehr), daher geht das hier bis 30. Geh bekannte 1.000 Schritte und teile NOOPs Zählung durch die echte Zahl, um deinen Wert zu erhalten."
+            "value": "Zählerticks pro Schritt. Lass es auf 1,0, außer deine Schritte fallen zu hoch aus. Auf einem WHOOP 5/MG können sie sehr hoch ausfallen (10× oder mehr), daher geht das hier bis 30. Geh bekannte 1.000 Schritte und teile HOOPs Zählung durch die echte Zahl, um deinen Wert zu erhalten."
           }
         },
         "es": {
@@ -85479,7 +85479,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "So liest du das: HRV, Ruhe-HF, Schlafdauer, Atemfrequenz und Hauttemperatur werden vom Strap gemessen (Hauttemperatur wird als Abweichung von deiner eigenen Basislinie angezeigt). Workouts ist die Zahl der Aktivitäten, die du erfasst hast oder die erkannt wurden. Erholung, Belastung und Stress sind NOOPs eigene Werte auf dem Gerät, keine klinischen Messungen: Erholung ist ein täglicher Bereitschafts-Kompositwert (HRV, Ruhe-HF, Schlaf und Hauttemperatur-Trend), Belastung ist die aus der Herzfrequenz abgeleitete kardiovaskuläre Last, und Stress ist ein 0–3-Index der autonomen Belastung aus Ruhe-HF und HRV."
+            "value": "So liest du das: HRV, Ruhe-HF, Schlafdauer, Atemfrequenz und Hauttemperatur werden vom Strap gemessen (Hauttemperatur wird als Abweichung von deiner eigenen Basislinie angezeigt). Workouts ist die Zahl der Aktivitäten, die du erfasst hast oder die erkannt wurden. Erholung, Belastung und Stress sind HOOPs eigene Werte auf dem Gerät, keine klinischen Messungen: Erholung ist ein täglicher Bereitschafts-Kompositwert (HRV, Ruhe-HF, Schlaf und Hauttemperatur-Trend), Belastung ist die aus der Herzfrequenz abgeleitete kardiovaskuläre Last, und Stress ist ein 0–3-Index der autonomen Belastung aus Ruhe-HF und HRV."
           }
         },
         "es": {
@@ -89707,7 +89707,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "NOOPs Schlüssel wird installiert und bestätigt, dass der Ring nur noch HOOP antwortet. Halte den Ring in der Nähe und öffne die Oura-App nicht."
+            "value": "HOOPs Schlüssel wird installiert und bestätigt, dass der Ring nur noch HOOP antwortet. Halte den Ring in der Nähe und öffne die Oura-App nicht."
           }
         },
         "es": {
@@ -108351,7 +108351,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "NOOPs eigene Energie, Belastung und Erholung, berechnet auf deinem Gerät nach veröffentlichten Methoden."
+            "value": "HOOPs eigene Energie, Belastung und Erholung, berechnet auf deinem Gerät nach veröffentlichten Methoden."
           }
         },
         "es": {
@@ -108409,7 +108409,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "NOOPs primäres, voll unterstütztes Band"
+            "value": "HOOPs primäres, voll unterstütztes Band"
           }
         },
         "es": {
@@ -131485,7 +131485,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lies deine Herzfrequenz, HRV, deinen Blutsauerstoff, deine Atemfrequenz, deinen Schlaf, deine Schritte und Energie direkt aus Apple Health und schreibe NOOPs strap-basierte Metriken zurück. Alles bleibt auf %@."
+            "value": "Lies deine Herzfrequenz, HRV, deinen Blutsauerstoff, deine Atemfrequenz, deinen Schlaf, deine Schritte und Energie direkt aus Apple Health und schreibe HOOPs strap-basierte Metriken zurück. Alles bleibt auf %@."
           }
         },
         "es": {
@@ -134818,7 +134818,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Erholung, NOOPs Energiewert, wird von deiner Herzfrequenzvariabilität gegenüber deiner persönlichen Basislinie angeführt. Ein Brustgurt streamt Schlag-zu-Schlag-Daten die ganze Nacht dicht, er kann diese Basislinie also schnell lernen. Eine Apple Watch misst HRV dagegen stichprobenartig, eine Handvoll Messungen über den Tag plus nachts – das Signal ist echt, aber dünner."
+            "value": "Die Erholung, HOOPs Energiewert, wird von deiner Herzfrequenzvariabilität gegenüber deiner persönlichen Basislinie angeführt. Ein Brustgurt streamt Schlag-zu-Schlag-Daten die ganze Nacht dicht, er kann diese Basislinie also schnell lernen. Eine Apple Watch misst HRV dagegen stichprobenartig, eine Handvoll Messungen über den Tag plus nachts – das Signal ist echt, aber dünner."
           }
         },
         "es": {
@@ -144064,7 +144064,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ in NOOPs Ordner in der Dateien-App gesichert."
+            "value": "%@ in HOOPs Ordner in der Dateien-App gesichert."
           }
         },
         "es": {
@@ -165621,7 +165621,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Der Weckalarm oben vibriert dein Handgelenk aus der Firmware des Straps. Er kann keinen lauten Alarm abspielen, und eine sideloadete App kann auf diesem Gerät auch kein zuverlässiges Hintergrund-Wecken abspielen (dafür braucht es eine Berechtigung für kritische Hinweise, die dieser Build nicht hat). Behalte den eingebauten Wecker deines Telefons als Backup. NOOPs telefonbasiertes Smart-Wecken (Leichtschlaf-Erkennung) gibt es in der Android-App."
+            "value": "Der Weckalarm oben vibriert dein Handgelenk aus der Firmware des Straps. Er kann keinen lauten Alarm abspielen, und eine sideloadete App kann auf diesem Gerät auch kein zuverlässiges Hintergrund-Wecken abspielen (dafür braucht es eine Berechtigung für kritische Hinweise, die dieser Build nicht hat). Behalte den eingebauten Wecker deines Telefons als Backup. HOOPs telefonbasiertes Smart-Wecken (Leichtschlaf-Erkennung) gibt es in der Android-App."
           }
         },
         "es": {
@@ -165679,7 +165679,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Der Weckalarm oben vibriert dein Handgelenk aus der Firmware des Straps. Er kann keinen lauten Alarm abspielen. Wir planen zusätzlich eine Backup-Mitteilung zu deiner Aufwachzeit, aber eine sideloadete App kann auf diesem Gerät kein garantiertes Wecken abspielen (dafür braucht es eine Berechtigung für kritische Hinweise, die dieser Build nicht hat) – Fokus oder Lautlos können sie also stummschalten. Behalte den eingebauten Wecker deines Telefons als echtes Backup. NOOPs telefonbasiertes Smart-Wecken (Leichtschlaf-Erkennung) gibt es in der Android-App."
+            "value": "Der Weckalarm oben vibriert dein Handgelenk aus der Firmware des Straps. Er kann keinen lauten Alarm abspielen. Wir planen zusätzlich eine Backup-Mitteilung zu deiner Aufwachzeit, aber eine sideloadete App kann auf diesem Gerät kein garantiertes Wecken abspielen (dafür braucht es eine Berechtigung für kritische Hinweise, die dieser Build nicht hat) – Fokus oder Lautlos können sie also stummschalten. Behalte den eingebauten Wecker deines Telefons als echtes Backup. HOOPs telefonbasiertes Smart-Wecken (Leichtschlaf-Erkennung) gibt es in der Android-App."
           }
         },
         "es": {
@@ -176703,7 +176703,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "WHOOP ist NOOPs primäres, voll unterstütztes Band. Andere Herzfrequenzgurte sind eine frühe Ergänzung in Entwicklung: Sie streamen Live-Herzfrequenz und HRV, aber nicht WHOOPs tiefere Schlaf- und Erholungsdaten."
+            "value": "WHOOP ist HOOPs primäres, voll unterstütztes Band. Andere Herzfrequenzgurte sind eine frühe Ergänzung in Entwicklung: Sie streamen Live-Herzfrequenz und HRV, aber nicht WHOOPs tiefere Schlaf- und Erholungsdaten."
           }
         },
         "es": {
@@ -176761,7 +176761,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "WHOOP ist NOOPs primäres, voll unterstütztes Band. Andere Herzfrequenzgurte streamen Live-Herzfrequenz und HRV, aber nicht WHOOPs tiefere Schlaf- und Erholungsdaten."
+            "value": "WHOOP ist HOOPs primäres, voll unterstütztes Band. Andere Herzfrequenzgurte streamen Live-Herzfrequenz und HRV, aber nicht WHOOPs tiefere Schlaf- und Erholungsdaten."
           }
         },
         "es": {
@@ -182276,7 +182276,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wohin NOOPs Speicher auf dem Gerät geht, und ein Ein-Tipp-Aufräumen."
+            "value": "Wohin HOOPs Speicher auf dem Gerät geht, und ein Ein-Tipp-Aufräumen."
           }
         },
         "es": {
@@ -183449,7 +183449,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verdrahte NOOPs Aktionen mit einem Back-Tap, einer Fokus-Automation oder einem längeren Kurzbefehl. Zum Beispiel: Doppeltippe auf die Rückseite deines iPhones, um den Strap vibrieren zu lassen."
+            "value": "Verdrahte HOOPs Aktionen mit einem Back-Tap, einer Fokus-Automation oder einem längeren Kurzbefehl. Zum Beispiel: Doppeltippe auf die Rückseite deines iPhones, um den Strap vibrieren zu lassen."
           }
         },
         "es": {
@@ -184524,7 +184524,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Schreibt einmal täglich eine zeitgestempelte Kopie deines Strap-Logs in NOOPs Ordner in der Dateien-App. Praktisch für einen Fehlerbericht, ohne daran denken zu müssen. Auf dem iPhone läuft es, wenn iOS HOOP das nächste Mal nahe deiner gewählten Zeit weckt, nicht minutengenau garantiert (lass HOOP über Nacht offen für die beste Chance). Alles bleibt auf %@; nichts wird hochgeladen."
+            "value": "Schreibt einmal täglich eine zeitgestempelte Kopie deines Strap-Logs in HOOPs Ordner in der Dateien-App. Praktisch für einen Fehlerbericht, ohne daran denken zu müssen. Auf dem iPhone läuft es, wenn iOS HOOP das nächste Mal nahe deiner gewählten Zeit weckt, nicht minutengenau garantiert (lass HOOP über Nacht offen für die beste Chance). Alles bleibt auf %@; nichts wird hochgeladen."
           }
         },
         "es": {
@@ -188949,7 +188949,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deine Uhr, NOOPs Gehirn"
+            "value": "Deine Uhr, HOOPs Gehirn"
           }
         },
         "es": {
@@ -218191,7 +218191,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktiviert oder deaktiviert SpO2 oder Echte Schritte direkt per SetFeatureMode und liest danach den Funktionsstatus erneut. Auf NOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — diese Buttons dienen dazu, einen Bericht eines Drittanbieters zu testen."
+            "value" : "Aktiviert oder deaktiviert SpO2 oder Echte Schritte direkt per SetFeatureMode und liest danach den Funktionsstatus erneut. Auf HOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — diese Buttons dienen dazu, einen Bericht eines Drittanbieters zu testen."
           }
         },
         "es" : {
@@ -218249,7 +218249,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktiviert oder deaktiviert SpO2, Echte Schritte, Trainings-HF oder den CVA-PPG-Sampler direkt per SetFeatureMode und liest danach den Funktionsstatus erneut. Auf NOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — diese Buttons dienen dazu, einen Bericht eines Drittanbieters zu testen. Tages-HF und Ruhe-HF werden hier bewusst nicht angeboten: Tages-HF hat einen eigenen Live-HF-Pfad, und Ruhe-HF hat überhaupt keinen App-seitigen Schalter."
+            "value" : "Aktiviert oder deaktiviert SpO2, Echte Schritte, Trainings-HF oder den CVA-PPG-Sampler direkt per SetFeatureMode und liest danach den Funktionsstatus erneut. Auf HOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — diese Buttons dienen dazu, einen Bericht eines Drittanbieters zu testen. Tages-HF und Ruhe-HF werden hier bewusst nicht angeboten: Tages-HF hat einen eigenen Live-HF-Pfad, und Ruhe-HF hat überhaupt keinen App-seitigen Schalter."
           }
         },
         "es" : {
@@ -218829,7 +218829,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sendet %@ an den Ring. Auf NOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5). Modus 0x00 stellt immer den ursprünglichen Zustand wieder her. Achte im Strap-Log auf das anschließende Feature-Status-Lesen."
+            "value" : "Sendet %@ an den Ring. Auf HOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5). Modus 0x00 stellt immer den ursprünglichen Zustand wieder her. Achte im Strap-Log auf das anschließende Feature-Status-Lesen."
           }
         },
         "es" : {
@@ -218887,7 +218887,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sendet %@ an den Ring. Auf NOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5). Achte im Strap-Log auf das anschließende Feature-Status-Lesen."
+            "value" : "Sendet %@ an den Ring. Auf HOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5). Achte im Strap-Log auf das anschließende Feature-Status-Lesen."
           }
         },
         "es" : {
@@ -218945,7 +218945,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sendet einen SetFeatureMode-Schreibbefehl für SpO2 oder Echte Schritte und liest den Funktionsstatus danach erneut. Auf NOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — dieser Button dient dazu, einen Bericht eines Drittanbieters zu testen. Modus „aus“ stellt immer den ursprünglichen Zustand wieder her."
+            "value" : "Sendet einen SetFeatureMode-Schreibbefehl für SpO2 oder Echte Schritte und liest den Funktionsstatus danach erneut. Auf HOOPs eigener Hardware nicht validiert (OURA_PROTOCOL.md §7.5) — dieser Button dient dazu, einen Bericht eines Drittanbieters zu testen. Modus „aus“ stellt immer den ursprünglichen Zustand wieder her."
           }
         },
         "es" : {
@@ -219431,7 +219431,7 @@
         "Autonomic load across your waking day": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "Autonome Belastung im Verlauf deines wachen Tages"}}, "es": {"stringUnit": {"state": "translated", "value": "Carga autonómica durante las horas de vigilia"}}, "fr": {"stringUnit": {"state": "translated", "value": "Charge autonome au fil de votre journée éveillée"}}, "it": {"stringUnit": {"state": "translated", "value": "Carico autonomico durante le ore di veglia"}}, "pl": {"stringUnit": {"state": "translated", "value": "Obciążenie autonomiczne w ciągu dnia"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Carga autonómica ao longo do teu dia acordado"}}, "ru": {"stringUnit": {"state": "translated", "value": "Вегетативная нагрузка в течение дня бодрствования"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "清醒时段的自主神经负荷"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "清醒時段的自主神經負荷"}}}},
         "The line is each waking hour's 0-3 proxy, scored against your personal daytime baseline (how your own days usually run). The bar below splits your day into calm, moderate and high stress time.": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "Die Linie zeigt den 0–3-Näherungswert jeder Wachstunde, bewertet anhand deiner persönlichen Tages-Baseline (wie deine Tage normalerweise verlaufen). Der Balken darunter teilt deinen Tag in ruhige, mäßige und hohe Stresszeiten."}}, "es": {"stringUnit": {"state": "translated", "value": "La línea muestra el indicador de 0 a 3 de cada hora de vigilia, comparado con tu referencia diurna personal (cómo suelen transcurrir tus días). La barra inferior divide el día en periodos de estrés bajo, moderado y alto."}}, "fr": {"stringUnit": {"state": "translated", "value": "La ligne représente l'indice 0–3 de chaque heure éveillée, évalué par rapport à votre référence diurne personnelle (le déroulement habituel de vos journées). La barre ci-dessous répartit votre journée en périodes de stress faible, modéré et élevé."}}, "it": {"stringUnit": {"state": "translated", "value": "La linea mostra l'indicatore da 0 a 3 per ogni ora di veglia, valutato rispetto al tuo riferimento diurno personale (l'andamento abituale delle tue giornate). La barra sottostante divide la giornata in periodi di stress basso, moderato e alto."}}, "pl": {"stringUnit": {"state": "translated", "value": "Linia pokazuje wskaźnik 0–3 dla każdej godziny czuwania, oceniany względem Twojej osobistej dziennej linii bazowej (typowego przebiegu Twoich dni). Pasek poniżej dzieli dzień na okresy niskiego, umiarkowanego i wysokiego stresu."}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "A linha mostra o indicador de 0–3 de cada hora de vigília, avaliado em relação à tua linha de base diurna pessoal (como os teus dias costumam decorrer). A barra abaixo divide o teu dia em períodos de stress baixo, moderado e elevado."}}, "ru": {"stringUnit": {"state": "translated", "value": "Линия показывает показатель 0–3 за каждый час бодрствования относительно вашей личной дневной нормы (обычного хода ваших дней). Полоса ниже делит день на периоды низкого, умеренного и высокого стресса."}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "折线显示每个清醒小时的 0–3 指标，并以你的个人日间基线（你平时一天的状态）为基准评分。下方的条形将你的一天划分为低、中、高压力时段。"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "折線顯示每個清醒小時的 0–3 指標，並以你的個人日間基線（你平時一天的狀態）為基準評分。下方的長條將你的一天劃分為低、中、高壓力時段。"}}}},
         "End session": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "Sitzung beenden"}}, "es": {"stringUnit": {"state": "translated", "value": "Finalizar sesión"}}, "fr": {"stringUnit": {"state": "translated", "value": "Terminer la session"}}, "it": {"stringUnit": {"state": "translated", "value": "Termina sessione"}}, "pl": {"stringUnit": {"state": "translated", "value": "Zakończ sesję"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Encerrar sessão"}}, "ru": {"stringUnit": {"state": "translated", "value": "Завершить сессию"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "结束监测"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "結束監測"}}}},
-        "Use HOOP's own folder (browse in Files)": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "NOOPs eigenen Ordner verwenden (in Dateien durchsuchen)"}}, "es": {"stringUnit": {"state": "translated", "value": "Usar la carpeta propia de HOOP (explorar en Archivos)"}}, "fr": {"stringUnit": {"state": "translated", "value": "Utiliser le dossier de HOOP (parcourir dans Fichiers)"}}, "it": {"stringUnit": {"state": "translated", "value": "Usa la cartella di HOOP (sfoglia in File)"}}, "pl": {"stringUnit": {"state": "translated", "value": "Użyj własnego folderu HOOP (przeglądaj w Plikach)"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Usar a pasta própria do HOOP (explorar em Ficheiros)"}}, "ru": {"stringUnit": {"state": "translated", "value": "Использовать собственную папку HOOP (открыть в «Файлах»)"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "使用 HOOP 自己的文件夹（在“文件”中浏览）"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "使用 HOOP 自己的檔案夾（在「檔案」中瀏覽）"}}}},
+        "Use HOOP's own folder (browse in Files)": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "HOOPs eigenen Ordner verwenden (in Dateien durchsuchen)"}}, "es": {"stringUnit": {"state": "translated", "value": "Usar la carpeta propia de HOOP (explorar en Archivos)"}}, "fr": {"stringUnit": {"state": "translated", "value": "Utiliser le dossier de HOOP (parcourir dans Fichiers)"}}, "it": {"stringUnit": {"state": "translated", "value": "Usa la cartella di HOOP (sfoglia in File)"}}, "pl": {"stringUnit": {"state": "translated", "value": "Użyj własnego folderu HOOP (przeglądaj w Plikach)"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Usar a pasta própria do HOOP (explorar em Ficheiros)"}}, "ru": {"stringUnit": {"state": "translated", "value": "Использовать собственную папку HOOP (открыть в «Файлах»)"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "使用 HOOP 自己的文件夹（在“文件”中浏览）"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "使用 HOOP 自己的檔案夾（在「檔案」中瀏覽）"}}}},
         "Generate now": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "Jetzt erstellen"}}, "es": {"stringUnit": {"state": "translated", "value": "Generar ahora"}}, "fr": {"stringUnit": {"state": "translated", "value": "Générer maintenant"}}, "it": {"stringUnit": {"state": "translated", "value": "Genera ora"}}, "pl": {"stringUnit": {"state": "translated", "value": "Wygeneruj teraz"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "Gerar agora"}}, "ru": {"stringUnit": {"state": "translated", "value": "Сгенерировать сейчас"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "立即生成"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "立即生成"}}}},
         "Generating…": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "Wird erstellt…"}}, "es": {"stringUnit": {"state": "translated", "value": "Generando…"}}, "fr": {"stringUnit": {"state": "translated", "value": "Génération…"}}, "it": {"stringUnit": {"state": "translated", "value": "Generazione…"}}, "pl": {"stringUnit": {"state": "translated", "value": "Generowanie…"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "A gerar…"}}, "ru": {"stringUnit": {"state": "translated", "value": "Генерация…"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "生成中…"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "生成中…"}}}},
         "YOUR BANDS": {"localizations": {"de": {"stringUnit": {"state": "translated", "value": "DEINE BÄNDER"}}, "es": {"stringUnit": {"state": "translated", "value": "TUS PULSERAS"}}, "fr": {"stringUnit": {"state": "translated", "value": "VOS BRACELETS"}}, "it": {"stringUnit": {"state": "translated", "value": "LE TUE FASCE"}}, "pl": {"stringUnit": {"state": "translated", "value": "TWOJE PASKI"}}, "pt-PT": {"stringUnit": {"state": "translated", "value": "AS TUAS BRACELETES"}}, "ru": {"stringUnit": {"state": "translated", "value": "ВАШИ БРАСЛЕТЫ"}}, "zh-Hans": {"stringUnit": {"state": "translated", "value": "你的手环"}}, "zh-Hant": {"stringUnit": {"state": "translated", "value": "你的手環"}}}},

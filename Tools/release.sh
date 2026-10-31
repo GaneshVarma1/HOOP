@@ -1,32 +1,28 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# release.sh — cut a HOOP release on BOTH forges.
-# Run from your Mac at release time, after the anonymized binaries are built.
+# release.sh — cut a HOOP release on GitHub.
+# Run from your Mac at release time, after the binaries are built.
 #
 #   Tools/release.sh <version> <asset> [<asset> ...] [-- "release notes"]
 #   e.g. Tools/release.sh 4.7.0 \
 #          dist/HOOP-v4.7.0-macos.zip dist/HOOP-v4.7.0.ipa dist/HOOP-v4.7.0.apk \
 #          -- "Bug fixes and the new Lab Book."
 #
-# GitHub is CANONICAL — the release is created there FIRST (ryanbr/noop, marked
-# --latest). The self-hosted Forgejo is published SECOND as a mirror by handing
-# the same args straight to forgejo-release.sh. A Forgejo failure is tolerated:
-# it warns but does NOT abort or fail the run, because the GitHub release already
-# succeeded.
+# GitHub is canonical (GaneshVarma1/HOOP). An optional Forgejo mirror runs only
+# when FORGE_DOMAIN, FORGE_ORG and FORGE_REPO are explicitly configured.
 #
 # Same args as forgejo-release.sh: <version> <asset...> [-- notes].
 # Idempotent: re-running clobbers the release's assets (and edits the title/notes)
 # rather than erroring on an existing tag.
 #
-# GitHub token from ~/.config/noop/gh_token. Forge token handled by forgejo-release.sh.
-# No secret ever appears on a command line.
+# GitHub authentication uses gh CLI. An optional Forgejo mirror needs explicit FORGE_* settings.
 # ─────────────────────────────────────────────────────────────────────────────
 set -uo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 
 # canonical GitHub mirror coordinates (override via env if ever needed)
-GH_REPO="${GH_REPO:-ryanbr/noop}"
+GH_REPO="${GH_REPO:-GaneshVarma1/HOOP}"
 
 VER="${1:?usage: release.sh <version> <asset...> [-- notes]}"; shift
 TAG="v$VER"
@@ -81,8 +77,6 @@ ASSETS=("${NEW_ASSETS[@]}")
 FORGE_ARGS=(${ASSETS[@]+"${ASSETS[@]}"} -- "$NOTES")
 
 # ── 1. GitHub (canonical) ────────────────────────────────────────────────────
-GH_TOKEN_FILE="$HOME/.config/noop/gh_token"
-[ -f "$GH_TOKEN_FILE" ] || { echo "missing $GH_TOKEN_FILE" >&2; exit 1; }
 command -v gh >/dev/null 2>&1 || { echo "gh CLI not found on PATH" >&2; exit 1; }
 
 # ── Cadence guard (anti-suspension safeguard — see docs/SAFEGUARDS.md) ────────
@@ -95,7 +89,7 @@ command -v gh >/dev/null 2>&1 || { echo "gh CLI not found on PATH" >&2; exit 1; 
 CADENCE_LIMIT="${CADENCE_LIMIT:-3}"                 # releases/day before the gate trips
 CADENCE_MIN_GAP_MIN="${CADENCE_MIN_GAP_MIN:-20}"    # minutes that must pass since the last
 if [ "${ALLOW_RAPID_RELEASE:-0}" != "1" ]; then
-  _rel_json="$(GH_TOKEN="$(cat "$GH_TOKEN_FILE")" gh api "repos/$GH_REPO/releases?per_page=20" 2>/dev/null || echo '[]')"
+  _rel_json="$(gh api "repos/$GH_REPO/releases?per_page=20" 2>/dev/null || echo '[]')"
   _today="$(date -u +%Y-%m-%d)"
   _count_today="$(printf '%s' "$_rel_json" | python3 -c "import sys,json
 try: d=json.load(sys.stdin)
@@ -131,22 +125,18 @@ done
 
 echo "→ release $TAG on GitHub $GH_REPO (canonical)"
 GH_OK=1
-if GH_TOKEN="$(cat "$GH_TOKEN_FILE")" \
-   gh release view "$TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
+if gh release view "$TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
   # idempotent: release already exists → refresh notes + clobber assets
   echo "  release exists — refreshing notes + clobbering assets"
-  GH_TOKEN="$(cat "$GH_TOKEN_FILE")" \
-    gh release edit "$TAG" --repo "$GH_REPO" \
+  gh release edit "$TAG" --repo "$GH_REPO" \
       --title "HOOP $TAG" --notes "$NOTES" --latest >/dev/null \
     || { echo "  ⚠ gh release edit failed" >&2; GH_OK=0; }
   if [ "${#GH_ASSETS[@]}" -gt 0 ]; then
-    GH_TOKEN="$(cat "$GH_TOKEN_FILE")" \
-      gh release upload "$TAG" "${GH_ASSETS[@]}" --repo "$GH_REPO" --clobber \
+    gh release upload "$TAG" "${GH_ASSETS[@]}" --repo "$GH_REPO" --clobber \
       || { echo "  ⚠ gh release upload failed" >&2; GH_OK=0; }
   fi
 else
-  GH_TOKEN="$(cat "$GH_TOKEN_FILE")" \
-    gh release create "$TAG" ${GH_ASSETS[@]+"${GH_ASSETS[@]}"} --repo "$GH_REPO" \
+  gh release create "$TAG" ${GH_ASSETS[@]+"${GH_ASSETS[@]}"} --repo "$GH_REPO" \
       --title "HOOP $TAG" --notes "$NOTES" --latest \
     || { echo "  ⚠ gh release create failed" >&2; GH_OK=0; }
 fi
@@ -155,31 +145,19 @@ fi
   || echo "✗ GitHub release for $TAG had errors (see above)" >&2
 
 # ── 2. Forgejo mirror (best-effort; never aborts) ────────────────────────────
-echo "→ mirroring $TAG to Forgejo"
-if [ -x "$HERE/forgejo-release.sh" ]; then
-  if "$HERE/forgejo-release.sh" "$VER" ${FORGE_ARGS[@]+"${FORGE_ARGS[@]}"}; then
-    :  # forgejo-release.sh prints its own success line
-  else
-    echo "  ⚠ Forgejo mirror failed (non-fatal — GitHub is canonical)" >&2
-  fi
-else
-  echo "  ⚠ $HERE/forgejo-release.sh not found/executable — skipping mirror" >&2
+if [ -n "${FORGE_DOMAIN:-}" ] && [ -n "${FORGE_ORG:-}" ] && [ -n "${FORGE_REPO:-}" ]; then
+  echo "→ mirroring $TAG to the configured Forgejo repository"
+  "$HERE/forgejo-release.sh" "$VER" ${FORGE_ARGS[@]+"${FORGE_ARGS[@]}"} \
+    || echo "  ⚠ Forgejo mirror failed (GitHub release is available)" >&2
 fi
 
-# ── 3. Distribution manifests (AltStore source + Homebrew cask) ───────────────
-# These were historically run BY HAND and got silently skipped for the whole
-# 6.0.x batch, stranding every iOS-sideload and `brew` user on 5.3.0 (#560/#562).
-# Wire them into the release so the manifests can never fall behind a release
-# again. Best-effort: a manifest miss warns but never fails the run (the GitHub
-# release already succeeded). Only fires when the matching asset is present and
-# the GitHub release was OK. The AltStore source file is committed/pushed by the
-# normal `git push` of altstore-source.json; the cask script self-pushes its tap.
+# ── 3. AltStore source (when an iOS IPA is published) ─────────────────────────
+# The source file is committed and pushed separately after this script updates it.
 if [ "$GH_OK" = 1 ]; then
-  IPA_ASSET=""; ZIP_ASSET=""
+  IPA_ASSET=""
   for f in ${ASSETS[@]+"${ASSETS[@]}"}; do
     case "$f" in
       *HOOP-v*-ios.ipa|*HOOP-v*.ipa) [ -z "$IPA_ASSET" ] && [ -f "$f" ] && IPA_ASSET="$f" ;;
-      *HOOP-v*-macos.zip|*HOOP-v*macos*.zip) [ -f "$f" ] && ZIP_ASSET="$f" ;;
     esac
   done
   if [ -n "$IPA_ASSET" ] && [ -x "$HERE/update-altstore-source.sh" ]; then
@@ -187,11 +165,6 @@ if [ "$GH_OK" = 1 ]; then
     "$HERE/update-altstore-source.sh" "$VER" "$IPA_ASSET" \
       || echo "  ⚠ AltStore source update failed — run Tools/update-altstore-source.sh by hand" >&2
     echo "  ↳ remember to commit + push altstore-source.json"
-  fi
-  if [ -n "$ZIP_ASSET" ] && [ -x "$HERE/update-homebrew-cask.sh" ]; then
-    echo "→ refreshing Homebrew cask for $VER"
-    "$HERE/update-homebrew-cask.sh" "$VER" "$ZIP_ASSET" \
-      || echo "  ⚠ Homebrew cask update failed — run Tools/update-homebrew-cask.sh by hand" >&2
   fi
 fi
 

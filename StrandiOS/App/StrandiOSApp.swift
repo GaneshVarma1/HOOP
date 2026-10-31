@@ -24,7 +24,7 @@ struct StrandiOSApp: App {
     /// Shared cross-screen navigation hook (e.g. Live → Devices). The iOS shell (`RootTabView`)
     /// observes it and presents the Devices manager.
     @StateObject private var router: NavRouter
-    /// NOOP's live heart rate banner. Built in `init` and fed from there (`LiveActivityController.follow`), not from
+    /// HOOP's live heart rate banner. Built in `init` and fed from there (`LiveActivityController.follow`), not from
     /// a view: a process iOS starts in the background need not build one.
     @State private var liveActivity: LiveActivityController
     /// The Lift Log session's own Live Activity. Separate from the live-HR one above: while a gym
@@ -77,7 +77,7 @@ struct StrandiOSApp: App {
         // never fires; the macOS timer, foreground catch-up, and "Run now" already work without it.
         ScheduledDebugExport.register()
         // Foreground presentation: without a delegate, iOS suppresses a notification's banner while the app
-        // is open, so a user testing the wind-down reminder with NOOP foregrounded sees nothing. Register
+        // is open, so a user testing the wind-down reminder with HOOP foregrounded sees nothing. Register
         // before the first scene so any early-fired notification is presented.
         UNUserNotificationCenter.current().delegate = NotificationPresenter.shared
         // K5: tapping a scheduled morning-brief notification routes to Coach via the shared NavRouter.
@@ -96,7 +96,7 @@ struct StrandiOSApp: App {
         // The strap-sync Live Activity (Lock Screen + Dynamic Island). Same placement, same reason — and
         // it must also run in a process the Sync Strap shortcut launched with no scene.
         SyncLiveActivityController.shared.attach(to: model.live)
-        // iOS's own daily report of NOOP's CPU, memory, disk writes, hangs and exits, and its crash/hang reports,
+        // iOS's own daily report of HOOP's CPU, memory, disk writes, hangs and exits, and its crash/hang reports,
         // one strap-log line each. Registering is the whole cost; iOS gathers and delivers them (MetricKitLog).
         MetricKitLog.shared.attach(to: model.live)
         // The buzz and the strap-gesture claim are injected, so the controller itself knows nothing
@@ -161,7 +161,7 @@ struct StrandiOSApp: App {
         HealthWritebackBackgroundScheduler.register { [weak bridge] in
             guard let bridge else { return false }
             let succeeded = await bridge.writeBackAfterNewData()
-            // A person can revoke every write type in Settings while NOOP is closed. Stop requesting
+            // A person can revoke every write type in Settings while HOOP is closed. Stop requesting
             // wakes once the cold-launched bridge can no longer resume a prior share grant.
             if bridge.auth != .authorized {
                 HealthWritebackBackgroundScheduler.cancel()
@@ -349,7 +349,7 @@ struct StrandiOSApp: App {
             if phase == .active {
                 CoachBriefScheduler.activateIfEnabled { await model.coach.generateBrief() }
                 model.drainPendingIntents(router: router)
-                // iOS starts a Lift Log banner only for an app on screen, so a banner lost while NOOP was in
+                // iOS starts a Lift Log banner only for an app on screen, so a banner lost while HOOP was in
                 // the background comes back now, whether or not the strap is sending anything.
                 pushLiftActivity()
                 // Only the foreground may start the live heart rate banner: offer it now.
@@ -439,7 +439,7 @@ struct StrandiOSApp: App {
                 stageStartedAt: p.stageStartedAt,
                 restEndsAt: p.restEndsAt),
             alert: alert)
-        // One line per strap step into NOOP's strap log: whether the Lock Screen was asked to light.
+        // One line per strap step into HOOP's strap log: whether the Lock Screen was asked to light.
         if let lightUp { model.live.append(log: AppModel.stamped(lightUp.logLine)) }
     }
 }
@@ -525,7 +525,7 @@ private struct iOSRootView: View {
             // collects it even if the user dismisses the auto sheet.
             UpdateStore.shared.seedWhatsNewIfNeeded()
             // #1659: iOS cannot auto-update a sideloaded build - no API lets an app install or re-sign an
-            // .ipa - so the most NOOP can do is NOTICE a release and say so.
+            // .ipa - so the most HOOP can do is NOTICE a release and say so.
             //
             // Gated on the SAME condition as showWhatsNewIfDue above, and the Android hook. This matters
             // now that the check is on by default: without it a brand-new install would reach the network

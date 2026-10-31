@@ -9,9 +9,9 @@ import com.noop.ui.NotifPrefs
 /**
  * Wrist alerts — mirror selected app notifications to a strap buzz.
  *
- * Declaring this service (with BIND_NOTIFICATION_LISTENER_SERVICE in the manifest) is what makes NOOP
+ * Declaring this service (with BIND_NOTIFICATION_LISTENER_SERVICE in the manifest) is what makes HOOP
  * appear in Android's **Notification Access** list at all (issue #52 — before this, the "Open
- * Notification Access" button opened a list NOOP wasn't in). When the user grants access, Android binds
+ * Notification Access" button opened a list HOOP wasn't in). When the user grants access, Android binds
  * this service and delivers [onNotificationPosted]; we gate on the persisted [NotifPrefs] settings the
  * Notifications screen already writes (master toggle, per-app opt-in, quiet hours, only-when-worn) and
  * buzz the strap with the app's chosen pattern.
@@ -50,10 +50,10 @@ class NoopNotificationListener : NotificationListenerService() {
         // Own opt-in (default OFF), still under the notification master + quiet-hours + only-when-worn.
         // Only INTERCEPTS when the toggle is on (then returns, so it can't also double-buzz via per-app);
         // with the toggle off a Clock notification falls through to the per-app path unchanged.
-        // EXCLUDE NOOP's OWN notifications: our SmartAlarmNotifier + SmartAlarmReceiver also set
+        // EXCLUDE HOOP's OWN notifications: our SmartAlarmNotifier + SmartAlarmReceiver also set
         // CATEGORY_ALARM, and this service receives its own app's posts — without this guard the toggle
-        // would buzz for NOOP's OWN smart alarm (a surprise for a "phone Clock" toggle, and a double-buzz
-        // with its firmware-alarm path). NOOP's alarm keeps its own settings; an app-buzz for it is a
+        // would buzz for HOOP's OWN smart alarm (a surprise for a "phone Clock" toggle, and a double-buzz
+        // with its firmware-alarm path). HOOP's alarm keeps its own settings; an app-buzz for it is a
         // separate, deliberate feature, not this.
         if (n.category == Notification.CATEGORY_ALARM &&
             sbn.packageName != ctx.packageName &&

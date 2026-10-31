@@ -11,7 +11,7 @@ import java.io.File
 import java.util.Locale
 
 /**
- * EXPERIMENTAL diagnostic: dump the decoded per-sample sensor streams NOOP already stores to ONE
+ * EXPERIMENTAL diagnostic: dump the decoded per-sample sensor streams HOOP already stores to ONE
  * combined long-format CSV (last 24 h) and share it. Lets power users / external devs prototype
  * sleep / activity / VBT algorithms on real data without a BLE stream (#308/#276/#322).
  *

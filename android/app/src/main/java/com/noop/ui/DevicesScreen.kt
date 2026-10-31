@@ -93,7 +93,7 @@ import kotlinx.coroutines.launch
 
 // MARK: - Devices
 //
-// Pair and manage the bands NOOP reads from. WHOOP-FIRST: the WHOOP is the primary, fully-supported
+// Pair and manage the bands HOOP reads from. WHOOP-FIRST: the WHOOP is the primary, fully-supported
 // device; generic heart-rate straps (Polar / Wahoo / Coospo / Garmin HRM …) are an early, in-development
 // addition. The screen is a thin UI over [com.noop.data.DeviceRegistry] (the Phase 1A/1B data layer):
 // every mutation goes through an [AppViewModel] registry op, and the [SourceCoordinator] (wired in
@@ -266,7 +266,7 @@ fun DevicesScreen(
                     live.batteryMv else null,
                 livePackSocPct = if (device.status == DeviceStatus.active.name && live.connected)
                     live.packSocPct else null,
-                // Firmware version for the ACTIVE strap. It's a STABLE property (NOOP can't change a strap's
+                // Firmware version for the ACTIVE strap. It's a STABLE property (HOOP can't change a strap's
                 // firmware), so prefer the live handshake value but fall back to the last-known persisted
                 // firmware (NoopPrefs, written on connect) when the live value is momentarily null — mid-
                 // handshake, or a connection that hasn't re-read REPORT_VERSION_INFO yet this session. Without
@@ -731,7 +731,7 @@ private fun DeviceCard(
     /** #221: the full #78 pairing-refusal guidance (bonded-elsewhere / pairing-mode / forget-device
      *  steps), shown on the card when [bondRefused] so the fix is self-service. null otherwise. */
     pairingHint: String? = null,
-    /** The active strap's link dropped for a user-initiated reboot and NOOP is auto-reconnecting (#166).
+    /** The active strap's link dropped for a user-initiated reboot and HOOP is auto-reconnecting (#166).
      *  Drives the transient "Reconnecting…" pill; false for every non-reboot state. */
     isReconnecting: Boolean = false,
     dimmed: Boolean = false,
@@ -826,7 +826,7 @@ private fun DeviceCard(
 
             // Honest local-takeover state row for an adopted Oura ring that is paired but not the
             // active+connected source right now. States the single-owner reality plainly (if the ring was
-            // reset again or re-claimed in the Oura app, NOOP no longer owns it) without faking a live
+            // reset again or re-claimed in the Oura app, HOOP no longer owns it) without faking a live
             // reading. Suppressed for the active+connected ring and for removed rings. Mirrors the macOS
             // ouraLocalStateNote.
             if (device.sourceKind == SourceKind.oura.name && !isLiveConnected &&
@@ -838,7 +838,7 @@ private fun DeviceCard(
             // What this device CAPTURES — honest, per-model (not the generic stored set, which would
             // mislabel e.g. a "Blood oxygen" chip when no SpO₂ % ever comes off the strap).
             CapabilityInfoRow(Icons.Filled.FavoriteBorder, profile.captures)
-            // What NOOP USES it for — the scores / screens this device drives.
+            // What HOOP USES it for — the scores / screens this device drives.
             CapabilityInfoRow(Icons.Filled.Bolt, profile.powers)
             // Honest footnote: the "*" estimates + the SpO₂/steps caveats.
             if (profile.footnote.isNotEmpty()) {
@@ -976,7 +976,7 @@ internal fun devicePillState(
 ): DevicePillState = when {
     isArchived -> DevicePillState("Removed", StrandTone.Neutral, showsDot = false)
     !isActive -> DevicePillState("Paired", StrandTone.Neutral)
-    // Reboot window (#166): the user's Restart dropped the link and NOOP is auto-reconnecting. Show it
+    // Reboot window (#166): the user's Restart dropped the link and HOOP is auto-reconnecting. Show it
     // as intentional rather than a silent drop to "Active"; clears to "Active · Live" once the link is back.
     isReconnecting -> DevicePillState("Reconnecting…", StrandTone.Warning, pulsing = true)
     // #221: BLE-connected but the encrypted bond was refused — no data flows, so this must not read
@@ -1751,7 +1751,7 @@ private fun deviceIcon(device: PairedDeviceRow): ImageVector = when {
 private data class DeviceCapabilityProfile(
     val displayModel: String,  // clean card subtitle (replaces the redundant "WHOOP · WHOOP")
     val captures: String,      // "·"-joined honest capture labels for THIS model
-    val powers: String,        // the NOOP scores / screens this device drives
+    val powers: String,        // the HOOP scores / screens this device drives
     val footnote: String,      // one short honest caveat line ("*" estimates + the SpO₂/steps notes)
 )
 
@@ -1779,7 +1779,7 @@ private fun deviceProfile(device: PairedDeviceRow): DeviceCapabilityProfile {
         )
     }
     // EXPERIMENTAL locally-adopted Oura ring (gen 3/4/5). The gen is carried on `model` ("Oura Ring
-    // 3/4/5") and recovered with OuraRingGen.from(model). NOOP reads the ring's OWN raw signals + open
+    // 3/4/5") and recovered with OuraRingGen.from(model). HOOP reads the ring's OWN raw signals + open
     // HRV/sleep-phase tags and computes its own Charge/Effort/Rest; it NEVER reads Oura's encrypted
     // Readiness/Sleep scores, and claims NO absolute SpO₂ %. Estimates carry "*"; a signal it can't read
     // stays "-". Per-gen copy + the canonical Beta caveat (spec
@@ -1827,7 +1827,7 @@ private fun deviceProfile(device: PairedDeviceRow): DeviceCapabilityProfile {
                 "motion count (#78). No SpO₂ % off the strap; import a WHOOP CSV for a real %.",
         )
     }
-    // WHOOP 4.0 — NOOP's primary band; no steps over BLE.
+    // WHOOP 4.0 — HOOP's primary band; no steps over BLE.
     if (model.contains("4")) {
         return DeviceCapabilityProfile(
             displayModel = "WHOOP 4.0",
@@ -1862,7 +1862,7 @@ private fun CapabilityInfoRow(icon: androidx.compose.ui.graphics.vector.ImageVec
 /**
  * Honest paired-but-not-connected note for a locally-adopted Oura ring (Beta). Amber heads-up, no
  * fabricated reading: re-states the single-owner reality so the user understands why a re-reset or an Oura
- * re-claim would break NOOP's ownership. Mirrors the macOS DeviceCard.ouraLocalStateNote (no em-dashes).
+ * re-claim would break HOOP's ownership. Mirrors the macOS DeviceCard.ouraLocalStateNote (no em-dashes).
  */
 @Composable
 private fun OuraLocalStateNote() {
